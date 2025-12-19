@@ -1,8 +1,10 @@
 import { authAPI } from "@/api/auth.api";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { auth, googleProvider } from "@/config/firebase";
 import { useAuth } from "@/context/AuthContext";
 import { useMutation } from "@tanstack/react-query";
+import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
@@ -21,7 +23,7 @@ const LoginPage = () => {
     formState: { errors },
   } = useForm();
 
-  // Login with email/password mutation
+  // Login mutation (handles both email and google tokens)
   const loginMutation = useMutation({
     mutationFn: authAPI.login,
     onSuccess: (data) => {
@@ -38,31 +40,41 @@ const LoginPage = () => {
     },
   });
 
-  // Google login mutation
-  const googleLoginMutation = useMutation({
-    mutationFn: authAPI.googleLogin,
-    onSuccess: (data) => {
-      setAuthLogin(data.token, data.user);
-      toast.success("Login successful!");
-
-      const from =
-        location.state?.from?.pathname || `/dashboard/${data.user.role}`;
-      navigate(from, { replace: true });
-    },
-    onError: (error) => {
-      toast.error(error.response?.data?.message || "Google login failed");
-    },
-  });
-
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     if (loginMethod === "email") {
-      loginMutation.mutate(data);
+      try {
+        const userCredential = await signInWithEmailAndPassword(
+          auth,
+          data.email,
+          data.password
+        );
+        const idToken = await userCredential.user.getIdToken();
+        loginMutation.mutate(idToken);
+      } catch (error) {
+        console.error("Firebase Login Error:", error);
+        let message = "Login failed";
+        if (error.code === "auth/invalid-credential") {
+          message = "Invalid email or password";
+        } else if (error.code === "auth/user-not-found") {
+          message = "User not found";
+        } else if (error.code === "auth/wrong-password") {
+          message = "Invalid password";
+        }
+        toast.error(message);
+      }
     }
   };
 
-  const handleGoogleLogin = () => {
+  const handleGoogleLogin = async () => {
     setLoginMethod("google");
-    googleLoginMutation.mutate();
+    try {
+      const result = await signInWithPopup(auth, googleProvider);
+      const idToken = await result.user.getIdToken();
+      loginMutation.mutate(idToken);
+    } catch (error) {
+      console.error("Google Login Error:", error);
+      toast.error(error.message || "Google login failed");
+    }
   };
 
   return (
@@ -232,7 +244,7 @@ const LoginPage = () => {
                 variant="outline"
                 className="w-full flex items-center justify-center gap-2"
                 onClick={handleGoogleLogin}
-                disabled={googleLoginMutation.isLoading}
+                disabled={loginMutation.isLoading}
               >
                 <svg className="h-5 w-5" viewBox="0 0 24 24">
                   <path
@@ -253,7 +265,7 @@ const LoginPage = () => {
                   />
                 </svg>
                 <span>
-                  {googleLoginMutation.isLoading
+                  {loginMutation.isLoading
                     ? "Signing in with Google..."
                     : "Continue with Google"}
                 </span>

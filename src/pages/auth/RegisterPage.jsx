@@ -1,8 +1,10 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { auth } from "@/config/firebase";
 import { useAuth } from "@/context/AuthContext";
 import { useMutation } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router";
@@ -22,12 +24,11 @@ const RegisterPage = () => {
     formState: { errors },
     watch,
     setValue,
-    trigger,
   } = useForm();
 
   const password = watch("password");
 
-  // Email/Password register mutation
+  // Register mutation
   const registerMutation = useMutation({
     mutationFn: authAPI.register,
     onSuccess: (data) => {
@@ -44,49 +45,36 @@ const RegisterPage = () => {
     },
   });
 
-  // Google register mutation
-  const googleRegisterMutation = useMutation({
-    mutationFn: authAPI.googleRegister,
-    onSuccess: (data) => {
-      setAuthLogin(data.token, data.user);
-      toast.success("Registration successful!");
-
-      const dashboardPath =
-        data.user.role === "tutor"
-          ? "/dashboard/tutor/profile"
-          : "/dashboard/student";
-      navigate(dashboardPath, { replace: true });
-    },
-    onError: (error) => {
-      toast.error(
-        error.response?.data?.message || "Google registration failed"
-      );
-    },
-  });
-
-  const handleGoogleSignup = () => {
-    setSignupMethod("google");
-    // In a real app, this would trigger Google OAuth flow
-    // For now, we'll simulate it
-    googleRegisterMutation.mutate();
-  };
-
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     if (signupMethod === "email") {
-      registerMutation.mutate(data);
+      try {
+        const userCredential = await createUserWithEmailAndPassword(
+          auth,
+          data.email,
+          data.password
+        );
+
+        // Update profile in Firebase
+        await updateProfile(userCredential.user, {
+          displayName: data.name,
+        });
+
+        const idToken = await userCredential.user.getIdToken();
+
+        registerMutation.mutate({
+          idToken,
+          name: data.name,
+          email: data.email,
+          phone: data.phone,
+          city: data.city,
+          role: data.role,
+        });
+      } catch (error) {
+        console.error("Firebase Register Error:", error);
+        toast.error(error.message || "Registration failed");
+      }
     }
   };
-
-  // Handle Google signup completion
-  useEffect(() => {
-    if (signupMethod === "google" && googleUser) {
-      const formData = {
-        ...googleUser,
-        role: googleUser.role || "student",
-      };
-      googleRegisterMutation.mutate(formData);
-    }
-  }, [signupMethod, googleUser, googleRegisterMutation]);
 
   const handleRoleSelection = (role) => {
     setValue("role", role);
@@ -128,7 +116,7 @@ const RegisterPage = () => {
                   ? "bg-white text-brand shadow-sm"
                   : "text-gray-500 hover:text-gray-700"
               }`}
-              onClick={handleGoogleSignup}
+              onClick={() => toast("Google signup not available right now")}
             >
               Google
             </button>
@@ -201,6 +189,24 @@ const RegisterPage = () => {
                   },
                 })}
                 error={errors.phone?.message}
+              />
+            </div>
+
+            <div>
+              <label
+                htmlFor="city"
+                className="block text-sm font-medium text-gray-700 mb-1"
+              >
+                City
+              </label>
+              <Input
+                id="city"
+                type="text"
+                placeholder="Dhaka"
+                {...register("city", {
+                  required: "City is required",
+                })}
+                error={errors.city?.message}
               />
             </div>
 
@@ -361,83 +367,19 @@ const RegisterPage = () => {
           </form>
         )}
 
-        {/* Google Signup */}
+        {/* Google Signup - Temporarily Disabled */}
         {signupMethod === "google" && (
-          <div className="space-y-4">
-            <div className="text-center py-4">
-              <p className="text-sm text-gray-600 mb-4">
-                Click the button below to sign up with your Google account
-              </p>
-              <Button
-                variant="outline"
-                className="w-full flex items-center justify-center gap-2"
-                onClick={handleGoogleSignup}
-                disabled={googleRegisterMutation.isLoading}
-              >
-                <svg className="h-5 w-5" viewBox="0 0 24 24">
-                  <path
-                    fill="#4285F4"
-                    d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
-                  />
-                  <path
-                    fill="#34A853"
-                    d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"
-                  />
-                  <path
-                    fill="#FBBC05"
-                    d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"
-                  />
-                  <path
-                    fill="#EA4335"
-                    d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
-                  />
-                </svg>
-                <span>
-                  {googleRegisterMutation.isLoading
-                    ? "Creating account with Google..."
-                    : "Continue with Google"}
-                </span>
-              </Button>
-
-              {/* Role selection for Google signup */}
-              <div className="mt-6">
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Select your role to continue
-                </label>
-                <div className="flex gap-4">
-                  <label className="flex items-center gap-2 text-sm text-gray-700 cursor-pointer">
-                    <input
-                      type="radio"
-                      className="radio radio-sm radio-primary"
-                      value="student"
-                      checked={googleUser?.role === "student"}
-                      onChange={() => handleRoleSelection("student")}
-                    />
-                    <span>Student</span>
-                  </label>
-                  <label className="flex items-center gap-2 text-sm text-gray-700 cursor-pointer">
-                    <input
-                      type="radio"
-                      className="radio radio-sm radio-primary"
-                      value="tutor"
-                      checked={googleUser?.role === "tutor"}
-                      onChange={() => handleRoleSelection("tutor")}
-                    />
-                    <span>Tutor</span>
-                  </label>
-                </div>
-              </div>
-            </div>
-
-            <div className="text-center">
-              <button
-                type="button"
-                className="text-sm text-gray-500 hover:text-gray-700"
-                onClick={() => setSignupMethod("email")}
-              >
-                ← Back to email signup
-              </button>
-            </div>
+          <div className="text-center py-8">
+            <p>
+              Google signup is currently unavailable. Please use Email signup.
+            </p>
+            <button
+              type="button"
+              className="text-sm text-brand hover:text-brand-dark mt-4"
+              onClick={() => setSignupMethod("email")}
+            >
+              ← Back to email signup
+            </button>
           </div>
         )}
 
