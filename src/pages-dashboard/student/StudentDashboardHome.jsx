@@ -65,7 +65,7 @@ const StudentDashboardHome = () => {
   return (
     <div>
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-gray-900">
+        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
           Welcome back, {user?.name}!
         </h1>
         <p className="text-gray-600 mt-1">
@@ -141,18 +141,18 @@ const StudentDashboardHome = () => {
                     className="flex items-center justify-between"
                   >
                     <div>
-                      <p className="font-medium text-gray-900">
+                      <p className="font-medium text-gray-900 dark:text-white">
                         {tuition.subject}
                       </p>
-                      <p className="text-sm text-gray-500">
+                      <p className="text-sm text-gray-500 dark:text-gray-400">
                         {tuition.classLevel} • {tuition.location}
                       </p>
                     </div>
                     <div className="text-right">
-                      <p className="text-sm font-medium text-gray-900">
+                      <p className="text-sm font-medium text-gray-900 dark:text-white">
                         ৳ {tuition.budget}
                       </p>
-                      <p className="text-xs text-gray-500">{tuition.status}</p>
+                      <p className="text-xs text-gray-500 dark:text-gray-400">{tuition.status}</p>
                     </div>
                   </div>
                 ))}
@@ -189,16 +189,16 @@ const StudentDashboardHome = () => {
                         className="w-8 h-8 rounded-full mr-3"
                       />
                       <div>
-                        <p className="font-medium text-gray-900">
+                        <p className="font-medium text-gray-900 dark:text-white">
                           {application.tutorId?.name}
                         </p>
-                        <p className="text-sm text-gray-500">
+                        <p className="text-sm text-gray-500 dark:text-gray-400">
                           {application.expectedSalary} ৳/month
                         </p>
                       </div>
                     </div>
                     <div className="text-right">
-                      <p className="text-xs text-gray-500">
+                      <p className="text-xs text-gray-500 dark:text-gray-400">
                         {application.status}
                       </p>
                     </div>

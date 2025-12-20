@@ -65,10 +65,10 @@ const StudentBookmarks = () => {
                           className="w-12 h-12 rounded-full mr-3"
                         />
                         <div>
-                          <h3 className="text-base font-semibold text-gray-900">
+                          <h3 className="text-base font-semibold text-gray-900 dark:text-white">
                             {bookmark.targetId?.name}
                           </h3>
-                          <p className="text-xs text-gray-500">
+                          <p className="text-xs text-gray-500 dark:text-gray-400 dark:text-gray-500">
                             {bookmark.targetId?.city} •{" "}
                             {bookmark.targetId?.experienceYears}+ years
                           </p>
@@ -76,7 +76,7 @@ const StudentBookmarks = () => {
                       </div>
                       <button
                         type="button"
-                        className="text-gray-400 hover:text-gray-500"
+                        className="text-gray-400 hover:text-gray-500 dark:text-gray-400 dark:text-gray-500"
                         onClick={() => handleRemoveBookmark(bookmark._id)}
                         disabled={removeBookmarkMutation.isLoading}
                       >
@@ -90,13 +90,13 @@ const StudentBookmarks = () => {
                         .map((subject, index) => (
                           <span
                             key={index}
-                            className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-100 text-gray-800"
+                            className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-100 text-gray-800 dark:text-gray-200"
                           >
                             {subject}
                           </span>
                         ))}
                       {bookmark.targetId?.subjects?.length > 2 && (
-                        <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-100 text-gray-800">
+                        <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-100 text-gray-800 dark:text-gray-200">
                           +{bookmark.targetId.subjects.length - 2} more
                         </span>
                       )}
@@ -106,7 +106,7 @@ const StudentBookmarks = () => {
                       <span className="flex items-center gap-1 text-amber-500">
                         <BookmarkIcon className="h-4 w-4" />
                         {bookmark.targetId?.averageRating || "4.8"}{" "}
-                        <span className="text-xs text-gray-500">
+                        <span className="text-xs text-gray-500 dark:text-gray-400 dark:text-gray-500">
                           ({bookmark.targetId?.reviewCount || 32} reviews)
                         </span>
                       </span>
@@ -135,18 +135,18 @@ const StudentBookmarks = () => {
                   <CardContent className="p-4">
                     <div className="flex justify-between items-start mb-3">
                       <div>
-                        <h3 className="text-base font-semibold text-gray-900">
+                        <h3 className="text-base font-semibold text-gray-900 dark:text-white">
                           {bookmark.targetId?.subject} for{" "}
                           {bookmark.targetId?.classLevel}
                         </h3>
-                        <p className="text-xs text-gray-500">
+                        <p className="text-xs text-gray-500 dark:text-gray-400 dark:text-gray-500">
                           {bookmark.targetId?.location} •{" "}
                           {bookmark.targetId?.mode}
                         </p>
                       </div>
                       <button
                         type="button"
-                        className="text-gray-400 hover:text-gray-500"
+                        className="text-gray-400 hover:text-gray-500 dark:text-gray-400 dark:text-gray-500"
                         onClick={() => handleRemoveBookmark(bookmark._id)}
                         disabled={removeBookmarkMutation.isLoading}
                       >

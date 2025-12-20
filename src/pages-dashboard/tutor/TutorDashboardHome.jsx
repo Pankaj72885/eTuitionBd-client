@@ -65,7 +65,7 @@ const TutorDashboardHome = () => {
   return (
     <div>
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-gray-900">
+        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
           Welcome back, {user?.name}!
         </h1>
         <p className="text-gray-600 mt-1">
@@ -142,19 +142,19 @@ const TutorDashboardHome = () => {
                     className="flex items-center justify-between"
                   >
                     <div>
-                      <p className="font-medium text-gray-900">
+                      <p className="font-medium text-gray-900 dark:text-white">
                         {application.tuitionId?.subject}
                       </p>
-                      <p className="text-sm text-gray-500">
+                      <p className="text-sm text-gray-500 dark:text-gray-400">
                         {application.tuitionId?.classLevel} •{" "}
                         {application.tuitionId?.location}
                       </p>
                     </div>
                     <div className="text-right">
-                      <p className="text-sm font-medium text-gray-900">
+                      <p className="text-sm font-medium text-gray-900 dark:text-white">
                         ৳ {application.expectedSalary}
                       </p>
-                      <p className="text-xs text-gray-500">
+                      <p className="text-xs text-gray-500 dark:text-gray-400">
                         {application.status}
                       </p>
                     </div>
@@ -187,18 +187,18 @@ const TutorDashboardHome = () => {
                     className="flex items-center justify-between"
                   >
                     <div>
-                      <p className="font-medium text-gray-900">
+                      <p className="font-medium text-gray-900 dark:text-white">
                         {payment.tuitionId?.subject}
                       </p>
-                      <p className="text-sm text-gray-500">
+                      <p className="text-sm text-gray-500 dark:text-gray-400">
                         {payment.studentId?.name}
                       </p>
                     </div>
                     <div className="text-right">
-                      <p className="text-sm font-medium text-gray-900">
+                      <p className="text-sm font-medium text-gray-900 dark:text-white">
                         ৳ {payment.amount}
                       </p>
-                      <p className="text-xs text-gray-500">
+                      <p className="text-xs text-gray-500 dark:text-gray-400">
                         {new Date(payment.createdAt).toLocaleDateString()}
                       </p>
                     </div>

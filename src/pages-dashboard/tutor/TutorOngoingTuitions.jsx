@@ -41,20 +41,20 @@ const TutorOngoingTuitions = () => {
             <Card key={application._id}>
               <CardContent className="p-4 md:p-5 flex flex-col gap-3">
                 <div className="flex items-center justify-between">
-                  <h3 className="text-sm font-semibold text-gray-900">
+                  <h3 className="text-sm font-semibold text-gray-900 dark:text-white">
                     {application.tuitionId?.subject} for{" "}
                     {application.tuitionId?.classLevel}
                   </h3>
                   <StatusBadge status="Ongoing" />
                 </div>
-                <p className="text-xs text-gray-500">
+                <p className="text-xs text-gray-500 dark:text-gray-400">
                   Student: {application.tuitionId?.studentId?.name} •{" "}
                   {application.tuitionId?.location}
                 </p>
-                <p className="text-xs text-gray-500">
+                <p className="text-xs text-gray-500 dark:text-gray-400">
                   Schedule: {application.tuitionId?.schedule}
                 </p>
-                <p className="text-xs text-gray-500">
+                <p className="text-xs text-gray-500 dark:text-gray-400">
                   Started:{" "}
                   {new Date(application.updatedAt).toLocaleDateString()}
                 </p>

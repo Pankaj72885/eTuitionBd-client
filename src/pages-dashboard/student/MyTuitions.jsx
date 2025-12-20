@@ -65,7 +65,7 @@ const MyTuitions = () => {
   return (
     <div>
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold text-gray-900">My Tuitions</h1>
+        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">My Tuitions</h1>
         <Button onClick={() => navigate("/dashboard/student/post-tuition")}>
           Post New Tuition
         </Button>
@@ -79,8 +79,8 @@ const MyTuitions = () => {
         <Card>
           <CardContent className="p-0">
             <div className="overflow-x-auto">
-              <table className="min-w-full divide-y divide-gray-200">
-                <thead className="bg-gray-50">
+              <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                <thead className="bg-gray-50 dark:bg-gray-700">
                   <tr>
                     <th
                       scope="col"
@@ -114,21 +114,21 @@ const MyTuitions = () => {
                     </th>
                   </tr>
                 </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
+                <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
                   {tuitions.data.map((tuition) => (
                     <tr key={tuition._id}>
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm font-medium text-gray-900">
+                        <div className="text-sm font-medium text-gray-900 dark:text-white">
                           {tuition.subject} for {tuition.classLevel}
                         </div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm text-gray-500">
+                        <div className="text-sm text-gray-500 dark:text-gray-400">
                           {tuition.location}
                         </div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm text-gray-500">
+                        <div className="text-sm text-gray-500 dark:text-gray-400">
                           ৳ {tuition.budget}
                         </div>
                       </td>
@@ -191,7 +191,7 @@ const MyTuitions = () => {
         size="sm"
       >
         <div className="space-y-4">
-          <p className="text-sm text-gray-500">
+          <p className="text-sm text-gray-500 dark:text-gray-400">
             Are you sure you want to delete this tuition? This action cannot be
             undone.
           </p>

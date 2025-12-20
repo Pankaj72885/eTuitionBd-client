@@ -85,10 +85,10 @@ const TutorProfileSettings = () => {
                 alt={user?.name}
                 className="w-24 h-24 rounded-full mx-auto mb-4"
               />
-              <h2 className="text-lg font-medium text-gray-900">
+              <h2 className="text-lg font-medium text-gray-900 dark:text-white">
                 {user?.name}
               </h2>
-              <p className="text-sm text-gray-500">{user?.email}</p>
+              <p className="text-sm text-gray-500 dark:text-gray-400">{user?.email}</p>
               <p className="text-sm text-gray-500 capitalize">{user?.role}</p>
 
               <div className="mt-6">

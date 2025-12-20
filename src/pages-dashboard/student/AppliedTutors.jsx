@@ -89,8 +89,8 @@ const AppliedTutors = () => {
         <Card>
           <CardContent className="p-0">
             <div className="overflow-x-auto">
-              <table className="min-w-full divide-y divide-gray-200">
-                <thead className="bg-gray-50">
+              <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                <thead className="bg-gray-50 dark:bg-gray-800">
                   <tr>
                     <th
                       scope="col"
@@ -130,7 +130,7 @@ const AppliedTutors = () => {
                     </th>
                   </tr>
                 </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
+                <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
                   {applications.data.map((application) => (
                     <tr key={application._id}>
                       <td className="px-6 py-4 whitespace-nowrap">
@@ -141,10 +141,10 @@ const AppliedTutors = () => {
                             className="w-10 h-10 rounded-full mr-3"
                           />
                           <div>
-                            <div className="text-sm font-medium text-gray-900">
+                            <div className="text-sm font-medium text-gray-900 dark:text-white">
                               {application.tutorId?.name}
                             </div>
-                            <div className="text-sm text-gray-500">
+                            <div className="text-sm text-gray-500 dark:text-gray-400">
                               {application.tutorId?.city}
                             </div>
                           </div>
@@ -161,7 +161,7 @@ const AppliedTutors = () => {
                         </div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm text-gray-900">
+                        <div className="text-sm text-gray-900 dark:text-white">
                           ৳ {application.expectedSalary}/month
                         </div>
                       </td>
@@ -232,7 +232,7 @@ const AppliedTutors = () => {
         size="sm"
       >
         <div className="space-y-4">
-          <p className="text-sm text-gray-500">
+          <p className="text-sm text-gray-500 dark:text-gray-400">
             Are you sure you want to reject this application? This action cannot
             be undone.
           </p>

@@ -140,7 +140,7 @@ const TutorRevenueHistory = () => {
             <h2 className="text-lg font-semibold text-gray-900 mb-4">
               Total Earnings
             </h2>
-            <p className="text-3xl font-bold text-gray-900">
+            <p className="text-3xl font-bold text-gray-900 dark:text-white">
               ৳ {totalEarnings}
             </p>
           </CardContent>
@@ -151,7 +151,7 @@ const TutorRevenueHistory = () => {
             <h2 className="text-lg font-semibold text-gray-900 mb-4">
               This Month
             </h2>
-            <p className="text-3xl font-bold text-gray-900">
+            <p className="text-3xl font-bold text-gray-900 dark:text-white">
               ৳ {currentMonthEarnings}
             </p>
           </CardContent>
@@ -192,8 +192,8 @@ const TutorRevenueHistory = () => {
         <Card>
           <CardContent className="p-0">
             <div className="overflow-x-auto">
-              <table className="min-w-full divide-y divide-gray-200">
-                <thead className="bg-gray-50">
+              <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                <thead className="bg-gray-50 dark:bg-gray-800">
                   <tr>
                     <th
                       scope="col"
@@ -233,11 +233,11 @@ const TutorRevenueHistory = () => {
                     </th>
                   </tr>
                 </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
+                <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
                   {payments.data.map((payment) => (
                     <tr key={payment._id}>
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm text-gray-900">
+                        <div className="text-sm text-gray-900 dark:text-white">
                           {payment.transactionId ||
                             `TXN${Math.random()
                               .toString(36)
@@ -246,7 +246,7 @@ const TutorRevenueHistory = () => {
                         </div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm text-gray-900">
+                        <div className="text-sm text-gray-900 dark:text-white">
                           {payment.tuitionId?.subject} for{" "}
                           {payment.tuitionId?.classLevel}
                         </div>
@@ -258,23 +258,23 @@ const TutorRevenueHistory = () => {
                             alt={payment.studentId?.name}
                             className="w-8 h-8 rounded-full mr-3"
                           />
-                          <div className="text-sm text-gray-900">
+                          <div className="text-sm text-gray-900 dark:text-white">
                             {payment.studentId?.name}
                           </div>
                         </div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm text-gray-900">
+                        <div className="text-sm text-gray-900 dark:text-white">
                           ৳ {payment.amount}
                         </div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm text-gray-900">
+                        <div className="text-sm text-gray-900 dark:text-white">
                           {format(new Date(payment.createdAt), "MMM dd, yyyy")}
                         </div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm text-green-600">Paid</div>
+                        <div className="text-sm text-green-600 dark:text-green-400">Paid</div>
                       </td>
                     </tr>
                   ))}

@@ -90,8 +90,8 @@ const StudentPayments = () => {
           </h2>
           <div className="grid md:grid-cols-2 gap-6">
             <div>
-              <p className="text-sm text-gray-500">Total Spent</p>
-              <p className="text-2xl font-bold text-gray-900">
+              <p className="text-sm text-gray-500 dark:text-gray-400">Total Spent</p>
+              <p className="text-2xl font-bold text-gray-900 dark:text-white">
                 ৳{" "}
                 {payments?.data?.reduce(
                   (sum, payment) => sum + payment.amount,
@@ -100,8 +100,8 @@ const StudentPayments = () => {
               </p>
             </div>
             <div>
-              <p className="text-sm text-gray-500">Total Transactions</p>
-              <p className="text-2xl font-bold text-gray-900">
+              <p className="text-sm text-gray-500 dark:text-gray-400">Total Transactions</p>
+              <p className="text-2xl font-bold text-gray-900 dark:text-white">
                 {payments?.data?.length || 0}
               </p>
             </div>
@@ -118,8 +118,8 @@ const StudentPayments = () => {
         <Card>
           <CardContent className="p-0">
             <div className="overflow-x-auto">
-              <table className="min-w-full divide-y divide-gray-200">
-                <thead className="bg-gray-50">
+              <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                <thead className="bg-gray-50 dark:bg-gray-800">
                   <tr>
                     <th
                       scope="col"
@@ -159,11 +159,11 @@ const StudentPayments = () => {
                     </th>
                   </tr>
                 </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
+                <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
                   {payments.data.map((payment) => (
                     <tr key={payment._id}>
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm text-gray-900">
+                        <div className="text-sm text-gray-900 dark:text-white">
                           {payment.transactionId ||
                             `TXN${Math.random()
                               .toString(36)
@@ -172,7 +172,7 @@ const StudentPayments = () => {
                         </div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm text-gray-900">
+                        <div className="text-sm text-gray-900 dark:text-white">
                           {payment.tuitionId?.subject} for{" "}
                           {payment.tuitionId?.classLevel}
                         </div>
@@ -184,23 +184,23 @@ const StudentPayments = () => {
                             alt={payment.tutorId?.name}
                             className="w-8 h-8 rounded-full mr-3"
                           />
-                          <div className="text-sm text-gray-900">
+                          <div className="text-sm text-gray-900 dark:text-white">
                             {payment.tutorId?.name}
                           </div>
                         </div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm text-gray-900">
+                        <div className="text-sm text-gray-900 dark:text-white">
                           ৳ {payment.amount}
                         </div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm text-gray-900">
+                        <div className="text-sm text-gray-900 dark:text-white">
                           {format(new Date(payment.createdAt), "MMM dd, yyyy")}
                         </div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm text-gray-900">
+                        <div className="text-sm text-gray-900 dark:text-white">
                           {payment.paymentMethod || "Card"}
                         </div>
                       </td>
