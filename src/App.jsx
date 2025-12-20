@@ -1,12 +1,14 @@
 import { Outlet } from "react-router";
+import Footer from "./components/common/Footer";
+import Navbar from "./components/common/Navbar";
 function App() {
   return (
     <div className="font-sans flex flex-col h-screen">
-      <header className="bg-black text-white p-4 text-center">Header</header>
+      <Navbar />
       <div className="flex-1">
         <Outlet />
       </div>
-      <footer className="bg-black text-white p-4 text-center">Footer</footer>
+      <Footer />
     </div>
   );
 }
