@@ -18,6 +18,14 @@ export const tuitionsAPI = {
     return response.data;
   },
 
+  // Get student's own tuitions
+  getMyTuitions: async (params = {}) => {
+    const response = await axiosInstance.get(API_ENDPOINTS.TUITIONS.MY, {
+      params,
+    });
+    return response.data;
+  },
+
   // Get tuition by ID
   getTuitionById: async (id) => {
     const response = await axiosInstance.get(API_ENDPOINTS.TUITIONS.BY_ID(id));

@@ -20,6 +20,7 @@ export const API_ENDPOINTS = {
     DELETE: (id) => `/tuitions/${id}`,
     APPROVE: (id) => `/tuitions/${id}/approve`,
     REJECT: (id) => `/tuitions/${id}/reject`,
+    MY: "/tuitions/student/my-tuitions",
   },
   APPLICATIONS: {
     APPLY: "/applications",

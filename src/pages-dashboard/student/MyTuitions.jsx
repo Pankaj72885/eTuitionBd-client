@@ -1,12 +1,12 @@
-import React, { useState } from "react";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { PencilIcon, TrashIcon, EyeIcon } from "@heroicons/react/24/outline";
 import { tuitionsAPI } from "@/api/tuitions.api";
-import {Button} from "@/components/ui/Button";
-import {Card, CardContent} from "@/components/ui/Card";
-import StatusBadge from "@/components/ui/StatusBadge";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
-import {Dialog} from "@/components/ui/Dialog";
+import { Button } from "@/components/ui/Button";
+import { Card, CardContent } from "@/components/ui/Card";
+import { Dialog } from "@/components/ui/Dialog";
+import StatusBadge from "@/components/ui/StatusBadge";
+import { EyeIcon, PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useState } from "react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router";
 
@@ -19,14 +19,7 @@ const MyTuitions = () => {
   // Fetch student's tuitions
   const { data: tuitions, isLoading } = useQuery({
     queryKey: ["studentTuitions"],
-    queryFn: async () => {
-      // In a real app, this would be a specific API endpoint
-      // For now, we'll use a placeholder
-      return {
-        data: [],
-        pagination: { totalCount: 0 },
-      };
-    },
+    queryFn: tuitionsAPI.getMyTuitions,
   });
 
   // Delete tuition mutation
@@ -65,7 +58,9 @@ const MyTuitions = () => {
   return (
     <div>
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">My Tuitions</h1>
+        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+          My Tuitions
+        </h1>
         <Button onClick={() => navigate("/dashboard/student/post-tuition")}>
           Post New Tuition
         </Button>

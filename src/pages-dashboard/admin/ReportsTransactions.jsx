@@ -4,9 +4,11 @@ import ProtectedImage from "@/components/common/ProtectedImage";
 import { Button } from "@/components/ui/Button";
 import { Card, CardContent } from "@/components/ui/Card";
 import { Input } from "@/components/ui/Input";
-import { useQuery } from "@tanstack/react-query";
+import StatusBadge from "@/components/ui/StatusBadge";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { endOfMonth, format, startOfMonth, subMonths } from "date-fns";
 import { useState } from "react";
+import toast from "react-hot-toast";
 import {
   CartesianGrid,
   Line,
@@ -21,6 +23,19 @@ const ReportsTransactions = () => {
   const [dateRange, setDateRange] = useState({
     from: format(startOfMonth(subMonths(new Date(), 5)), "yyyy-MM-dd"),
     to: format(endOfMonth(new Date()), "yyyy-MM-dd"),
+  });
+
+  const queryClient = useQueryClient();
+
+  const approveMutation = useMutation({
+    mutationFn: (id) => paymentsAPI.approvePayment(id),
+    onSuccess: () => {
+      toast.success("Payment approved successfully");
+      queryClient.invalidateQueries(["allPayments"]);
+    },
+    onError: (error) => {
+      toast.error(error.response?.data?.message || "Failed to approve payment");
+    },
   });
 
   // Fetch all payments
@@ -234,6 +249,18 @@ const ReportsTransactions = () => {
                     >
                       Date
                     </th>
+                    <th
+                      scope="col"
+                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    >
+                      Status
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    >
+                      Actions
+                    </th>
                   </tr>
                 </thead>
                 <tbody className="bg-white dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-700">
@@ -284,6 +311,20 @@ const ReportsTransactions = () => {
                         <div className="text-sm text-gray-900 dark:text-white">
                           {format(new Date(payment.createdAt), "MMM dd, yyyy")}
                         </div>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <StatusBadge status={payment.status} />
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                        {payment.status === "PendingApproval" && (
+                          <Button
+                            size="sm"
+                            onClick={() => approveMutation.mutate(payment._id)}
+                            disabled={approveMutation.isLoading}
+                          >
+                            Approve
+                          </Button>
+                        )}
                       </td>
                     </tr>
                   ))}

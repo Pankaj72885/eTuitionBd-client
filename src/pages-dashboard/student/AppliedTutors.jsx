@@ -1,14 +1,13 @@
-import React, { useState } from "react";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { EyeIcon, CheckIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { applicationsAPI } from "@/api/applications.api";
-import { paymentsAPI } from "@/api/payments.api";
-import {Button} from "@/components/ui/Button";
-import {Card, CardContent} from "@/components/ui/Card";
-import StatusBadge from "@/components/ui/StatusBadge";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
-import {Dialog} from "@/components/ui/Dialog";
 import ProtectedImage from "@/components/common/ProtectedImage";
+import { Button } from "@/components/ui/Button";
+import { Card, CardContent } from "@/components/ui/Card";
+import { Dialog } from "@/components/ui/Dialog";
+import StatusBadge from "@/components/ui/StatusBadge";
+import { CheckIcon, EyeIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useState } from "react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router";
 
@@ -57,10 +56,7 @@ const AppliedTutors = () => {
   });
 
   const handleAccept = (applicationId) => {
-    acceptMutation.mutate({
-      id: applicationId,
-      status: "Approved",
-    });
+    navigate(`/payment/checkout?applicationId=${applicationId}`);
   };
 
   const handleReject = (application) => {

@@ -13,6 +13,7 @@ import ContactPage from "@/pages/Contact/ContactPage";
 import HomePage from "@/pages/home/HomePage";
 import TuitionDetailsPage from "@/pages/Tuitions/TuitionDetailsPage";
 import TuitionsListPage from "@/pages/Tuitions/TuitionsListPage";
+import PaymentCheckoutPage from "../pages/payment/PaymentCheckoutPage";
 import TutorProfilePage from "../pages/Tutors/TutorProfilePage";
 import TutorsListPage from "../pages/Tutors/TutorsListPage";
 
@@ -54,6 +55,16 @@ const router = createBrowserRouter([
       { path: "tutors/:id", element: <TutorProfilePage /> },
       { path: "about", element: <AboutPage /> },
       { path: "contact", element: <ContactPage /> },
+      {
+        path: "payment/checkout",
+        element: (
+          <PrivateRoute>
+            <RoleRoute role="student">
+              <PaymentCheckoutPage />
+            </RoleRoute>
+          </PrivateRoute>
+        ),
+      },
     ],
   },
   {
