@@ -7,7 +7,8 @@
     "dev": "bun run --bun vite",
     "build": "bun run --bun vite build",
     "lint": "eslint .",
-    "preview": "bun run --bun vite preview"
+    "preview": "bun run --bun vite preview",
+    "start": "bunx serve dist -s -p $PORT"
   },
   "dependencies": {
     "@headlessui/react": "^2.2.9",
