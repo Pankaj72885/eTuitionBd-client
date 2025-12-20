@@ -134,10 +134,10 @@ const TuitionDetailsPage = () => {
     return (
       <div className="max-w-3xl mx-auto px-4 py-10">
         <div className="text-center">
-          <h1 className="text-2xl font-bold text-gray-900 mb-4">
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
             Tuition not found
           </h1>
-          <p className="text-gray-600 mb-6">
+          <p className="text-gray-600 dark:text-gray-300 mb-6">
             The tuition you're looking for doesn't exist or has been removed.
           </p>
           <Button onClick={() => navigate("/tuitions")}>Browse Tuitions</Button>
@@ -147,15 +147,15 @@ const TuitionDetailsPage = () => {
   }
 
   return (
-    <section className="py-10 md:py-14">
+    <section className="py-10 md:py-14 bg-white dark:bg-gray-900 transition-colors duration-200 min-h-screen">
       <div className="max-w-3xl mx-auto px-4 md:px-0 space-y-6">
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
           <div>
-            <h1 className="text-2xl md:text-3xl font-semibold text-gray-900">
+            <h1 className="text-2xl md:text-3xl font-semibold text-gray-900 dark:text-white">
               {tuition.subject} tuition for {tuition.classLevel}
             </h1>
-            <p className="mt-1 text-sm text-gray-500">
+            <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
               {tuition.location} • {tuition.mode} • {tuition.schedule}
             </p>
           </div>
@@ -165,38 +165,40 @@ const TuitionDetailsPage = () => {
         {/* Main info card */}
         <Card>
           <CardContent className="p-4 md:p-6 space-y-4">
-            <div className="grid sm:grid-cols-2 gap-4 text-sm text-gray-700">
+            <div className="grid sm:grid-cols-2 gap-4 text-sm text-gray-700 dark:text-gray-300">
               <div className="flex items-center">
-                <MapPinIcon className="h-5 w-5 mr-2 text-gray-400" />
+                <MapPinIcon className="h-5 w-5 mr-2 text-gray-400 dark:text-gray-500" />
                 <span>{tuition.location}</span>
               </div>
               <div className="flex items-center">
-                <CurrencyDollarIcon className="h-5 w-5 mr-2 text-gray-400" />
+                <CurrencyDollarIcon className="h-5 w-5 mr-2 text-gray-400 dark:text-gray-500" />
                 <span>৳ {tuition.budget} / month</span>
               </div>
               <div className="flex items-center">
-                <CalendarIcon className="h-5 w-5 mr-2 text-gray-400" />
+                <CalendarIcon className="h-5 w-5 mr-2 text-gray-400 dark:text-gray-500" />
                 <span>{tuition.schedule}</span>
               </div>
               <div className="flex items-center">
-                <AcademicCapIcon className="h-5 w-5 mr-2 text-gray-400" />
+                <AcademicCapIcon className="h-5 w-5 mr-2 text-gray-400 dark:text-gray-500" />
                 <span>{tuition.mode}</span>
               </div>
             </div>
 
             {tuition.description && (
               <div>
-                <h3 className="text-sm font-semibold text-gray-900">
+                <h3 className="text-sm font-semibold text-gray-900 dark:text-white">
                   Additional requirements
                 </h3>
-                <p className="mt-1 text-sm text-gray-600">
+                <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
                   {tuition.description}
                 </p>
               </div>
             )}
 
-            <div className="flex items-center gap-3 text-sm text-gray-500">
-              <span className="font-medium text-gray-700">Posted by:</span>
+            <div className="flex items-center gap-3 text-sm text-gray-500 dark:text-gray-400">
+              <span className="font-medium text-gray-700 dark:text-gray-300">
+                Posted by:
+              </span>
               <span>Student in {tuition.location}</span>
             </div>
           </CardContent>
@@ -205,12 +207,12 @@ const TuitionDetailsPage = () => {
         {/* Apply section */}
         {user?.role === "tutor" &&
           (tuition.status === "Open" || tuition.status === "Approved") && (
-            <Card className="border-brand-light">
+            <Card className="border-indigo-200 dark:border-indigo-800">
               <CardContent className="p-4 md:p-5 flex flex-col gap-3">
-                <h3 className="text-sm font-semibold text-gray-900">
+                <h3 className="text-sm font-semibold text-gray-900 dark:text-white">
                   Interested in this tuition?
                 </h3>
-                <p className="text-sm text-gray-600">
+                <p className="text-sm text-gray-600 dark:text-gray-400">
                   Share your qualifications, experience, and expected salary to
                   apply.
                 </p>
@@ -231,7 +233,7 @@ const TuitionDetailsPage = () => {
         {tuition.applicationCount > 0 && (
           <Card>
             <CardContent className="p-4 md:p-5">
-              <p className="text-sm text-gray-600">
+              <p className="text-sm text-gray-600 dark:text-gray-400">
                 {tuition.applicationCount} application
                 {tuition.applicationCount > 1 ? "s" : ""} received.
               </p>
@@ -243,7 +245,7 @@ const TuitionDetailsPage = () => {
         {user && user.role !== "tutor" && (
           <Card>
             <CardContent className="p-4 md:p-5">
-              <p className="text-sm text-gray-600">
+              <p className="text-sm text-gray-600 dark:text-gray-400">
                 Only tutors can apply to this tuition.
               </p>
             </CardContent>
@@ -259,7 +261,7 @@ const TuitionDetailsPage = () => {
         >
           <div className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                 Your Name
               </label>
               <Input

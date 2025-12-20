@@ -195,26 +195,26 @@ const RegisterPage = () => {
   }, [errors, watch]);
 
   return (
-    <div className="min-h-full py-10 flex items-center justify-center bg-linear-to-b from-brand-light/40 to-gray-50 px-4">
-      <div className="w-full max-w-md bg-white border border-gray-100 rounded-xl shadow-lg p-6 md:p-8 space-y-6">
+    <div className="min-h-full py-10 flex items-center justify-center bg-linear-to-b from-indigo-50/50 dark:from-indigo-950/30 to-gray-50 dark:to-gray-900 px-4 transition-colors duration-200">
+      <div className="w-full max-w-md bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-xl shadow-lg dark:shadow-indigo-900/20 p-6 md:p-8 space-y-6">
         <div className="text-center">
-          <h1 className="text-xl font-semibold text-gray-900">
+          <h1 className="text-xl font-semibold text-gray-900 dark:text-white">
             Create an account
           </h1>
-          <p className="mt-1 text-sm text-gray-500">
+          <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
             Join eTuitionBd to find or offer tuitions.
           </p>
         </div>
 
         {/* Signup Method Tabs */}
         <div className="flex justify-center mb-6">
-          <div className="inline-flex rounded-lg border border-gray-200 bg-gray-50 p-1">
+          <div className="inline-flex rounded-lg border border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 p-1">
             <button
               type="button"
               className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
                 signupMethod === "email"
-                  ? "bg-white text-brand shadow-sm"
-                  : "text-gray-500 hover:text-gray-700"
+                  ? "bg-white dark:bg-gray-600 text-brand dark:text-indigo-400 shadow-sm"
+                  : "text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
               }`}
               onClick={() => setSignupMethod("email")}
             >
@@ -224,8 +224,8 @@ const RegisterPage = () => {
               type="button"
               className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
                 signupMethod === "google"
-                  ? "bg-white text-brand shadow-sm"
-                  : "text-gray-500 hover:text-gray-700"
+                  ? "bg-white dark:bg-gray-600 text-brand dark:text-indigo-400 shadow-sm"
+                  : "text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
               }`}
               onClick={() => setSignupMethod("google")}
             >
@@ -240,7 +240,7 @@ const RegisterPage = () => {
             <div>
               <label
                 htmlFor="name"
-                className="block text-sm font-medium text-gray-700 mb-1"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
               >
                 Full Name
               </label>
@@ -326,7 +326,7 @@ const RegisterPage = () => {
                 />
                 <button
                   type="button"
-                  className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-500"
+                  className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 dark:text-gray-500 hover:text-gray-500 dark:hover:text-gray-400 transition-colors"
                   onClick={() => setShowPassword(!showPassword)}
                 >
                   {showPassword ? (
@@ -418,11 +418,11 @@ const RegisterPage = () => {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                 I am a
               </label>
               <div className="flex gap-4">
-                <label className="flex items-center gap-2 text-sm text-gray-700">
+                <label className="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300">
                   <input
                     type="radio"
                     className="radio radio-sm radio-primary"
@@ -431,7 +431,7 @@ const RegisterPage = () => {
                   />
                   <span>Student</span>
                 </label>
-                <label className="flex items-center gap-2 text-sm text-gray-700">
+                <label className="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300">
                   <input
                     type="radio"
                     className="radio radio-sm radio-primary"
@@ -463,11 +463,11 @@ const RegisterPage = () => {
           <div className="space-y-4">
             {/* Role selection for Google signup - FIRST */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                 Select your role to continue
               </label>
               <div className="flex gap-4">
-                <label className="flex items-center gap-2 text-sm text-gray-700 cursor-pointer">
+                <label className="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300 cursor-pointer">
                   <input
                     type="radio"
                     className="radio radio-sm radio-primary"
@@ -477,7 +477,7 @@ const RegisterPage = () => {
                   />
                   <span>Student</span>
                 </label>
-                <label className="flex items-center gap-2 text-sm text-gray-700 cursor-pointer">
+                <label className="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300 cursor-pointer">
                   <input
                     type="radio"
                     className="radio radio-sm radio-primary"
@@ -492,7 +492,7 @@ const RegisterPage = () => {
 
             {/* Google button - SECOND */}
             <div className="text-center py-4">
-              <p className="text-sm text-gray-600 mb-4">
+              <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
                 Click the button below to sign up with your Google account
               </p>
               <Button
@@ -529,11 +529,11 @@ const RegisterPage = () => {
           </div>
         )}
 
-        <p className="text-center text-sm text-gray-600">
+        <p className="text-center text-sm text-gray-600 dark:text-gray-400">
           Already have an account?{" "}
           <Link
             to="/login"
-            className="font-medium text-brand hover:text-brand-dark"
+            className="font-medium text-brand dark:text-indigo-400 hover:text-brand-dark dark:hover:text-indigo-300 transition-colors"
           >
             Sign in
           </Link>

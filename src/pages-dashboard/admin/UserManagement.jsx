@@ -261,10 +261,10 @@ const UserManagement = () => {
                             className="w-10 h-10 rounded-full mr-3"
                           />
                           <div>
-                            <div className="text-sm font-medium text-gray-900">
+                            <div className="text-sm font-medium text-gray-900 dark:text-white">
                               {user.name}
                             </div>
-                            <div className="text-sm text-gray-500">
+                            <div className="text-sm text-gray-500 dark:text-gray-400">
                               {user.email}
                             </div>
                           </div>
@@ -286,7 +286,7 @@ const UserManagement = () => {
                           {user.isVerified ? "Verified" : "Not Verified"}
                         </span>
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
                         {new Date(user.createdAt).toLocaleDateString()}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
@@ -411,7 +411,7 @@ const UserManagement = () => {
             />
             <label
               htmlFor="isVerified"
-              className="ml-2 block text-sm text-gray-900"
+              className="ml-2 block text-sm text-gray-900 dark:text-white"
             >
               Verified User
             </label>
@@ -488,7 +488,7 @@ const UserManagement = () => {
         size="sm"
       >
         <div className="space-y-4">
-          <p className="text-sm text-gray-500">
+          <p className="text-sm text-gray-500 dark:text-gray-400">
             Are you sure you want to delete this user? This action cannot be
             undone.
           </p>
@@ -528,10 +528,10 @@ const UserManagement = () => {
                 className="w-20 h-20 rounded-full"
               />
               <div>
-                <h3 className="text-xl font-semibold text-gray-900">
+                <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
                   {userToView.name}
                 </h3>
-                <p className="text-sm text-gray-500">{userToView.email}</p>
+                <p className="text-sm text-gray-500 dark:text-gray-400">{userToView.email}</p>
               </div>
             </div>
 
@@ -541,7 +541,7 @@ const UserManagement = () => {
                 <label className="block text-sm font-medium text-gray-500 mb-1">
                   Phone Number
                 </label>
-                <p className="text-sm text-gray-900">
+                <p className="text-sm text-gray-900 dark:text-white">
                   {userToView.phone || "Not provided"}
                 </p>
               </div>
@@ -550,7 +550,7 @@ const UserManagement = () => {
                 <label className="block text-sm font-medium text-gray-500 mb-1">
                   City
                 </label>
-                <p className="text-sm text-gray-900">
+                <p className="text-sm text-gray-900 dark:text-white">
                   {userToView.city || "Not provided"}
                 </p>
               </div>
@@ -583,7 +583,7 @@ const UserManagement = () => {
                 <label className="block text-sm font-medium text-gray-500 mb-1">
                   Account Created
                 </label>
-                <p className="text-sm text-gray-900">
+                <p className="text-sm text-gray-900 dark:text-white">
                   {new Date(userToView.createdAt).toLocaleDateString("en-US", {
                     year: "numeric",
                     month: "long",
@@ -596,7 +596,7 @@ const UserManagement = () => {
                 <label className="block text-sm font-medium text-gray-500 mb-1">
                   Last Updated
                 </label>
-                <p className="text-sm text-gray-900">
+                <p className="text-sm text-gray-900 dark:text-white">
                   {new Date(userToView.updatedAt).toLocaleDateString("en-US", {
                     year: "numeric",
                     month: "long",
@@ -618,7 +618,7 @@ const UserManagement = () => {
                       <label className="block text-sm font-medium text-gray-500 mb-1">
                         Education
                       </label>
-                      <p className="text-sm text-gray-900">
+                      <p className="text-sm text-gray-900 dark:text-white">
                         {userToView.tutorProfile.education}
                       </p>
                     </div>
@@ -628,7 +628,7 @@ const UserManagement = () => {
                       <label className="block text-sm font-medium text-gray-500 mb-1">
                         Experience
                       </label>
-                      <p className="text-sm text-gray-900">
+                      <p className="text-sm text-gray-900 dark:text-white">
                         {userToView.tutorProfile.experience} years
                       </p>
                     </div>

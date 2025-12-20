@@ -1,20 +1,21 @@
-import * as React from "react"
+import { cn } from "@/lib/utils";
 
-import { cn } from "@/lib/utils"
-
-function Textarea({
-  className,
-  ...props
-}) {
+function Textarea({ className, ...props }) {
   return (
     <textarea
       data-slot="textarea"
       className={cn(
-        "border-input placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-ring/50 aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:bg-input/30 flex field-sizing-content min-h-16 w-full rounded-md border bg-transparent px-3 py-2 text-base shadow-xs transition-[color,box-shadow] outline-none focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 md:text-sm",
+        "flex field-sizing-content min-h-16 w-full rounded-md border px-3 py-2 text-base shadow-xs transition-colors outline-none md:text-sm",
+        "bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100",
+        "border-gray-300 dark:border-gray-600",
+        "placeholder:text-gray-400 dark:placeholder:text-gray-500",
+        "focus:border-brand dark:focus:border-indigo-400 focus:ring-2 focus:ring-brand/20 dark:focus:ring-indigo-400/20",
+        "disabled:cursor-not-allowed disabled:opacity-50",
         className
       )}
-      {...props} />
+      {...props}
+    />
   );
 }
 
-export { Textarea }
+export { Textarea };

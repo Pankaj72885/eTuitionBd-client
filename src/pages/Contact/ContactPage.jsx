@@ -1,15 +1,15 @@
-import React, { useState } from "react";
-import { useForm } from "react-hook-form";
-import { motion } from "framer-motion";
+import { Button } from "@/components/ui/Button";
+import { Card, CardContent } from "@/components/ui/Card";
+import { Input } from "@/components/ui/Input";
+import { Textarea } from "@/components/ui/Textarea";
 import {
   EnvelopeIcon,
-  PhoneIcon,
   MapPinIcon,
+  PhoneIcon,
 } from "@heroicons/react/24/outline";
-import {Button} from "@/components/ui/Button";
-import {Input} from "@/components/ui/Input";
-import {Textarea} from "@/components/ui/Textarea";
-import {Card, CardContent} from "@/components/ui/Card";
+import { motion } from "framer-motion";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
 const ContactPage = () => {
@@ -42,14 +42,14 @@ const ContactPage = () => {
   };
 
   return (
-    <div className="py-12 md:py-16">
+    <div className="py-12 md:py-16 bg-white dark:bg-gray-900 transition-colors duration-200">
       <div className="max-w-6xl mx-auto px-4 md:px-6">
         {/* Header */}
         <div className="text-center mb-12">
-          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
             Contact Us
           </h1>
-          <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+          <p className="text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
             Have questions or feedback? We'd love to hear from you. Reach out to
             us using the form below or contact information.
           </p>
@@ -72,21 +72,21 @@ const ContactPage = () => {
 
                   <div className="space-y-4">
                     <div className="flex items-start">
-                      <div className="flex-shrink-0">
-                        <EnvelopeIcon className="h-6 w-6 text-brand" />
+                      <div className="shrink-0">
+                        <EnvelopeIcon className="h-6 w-6 text-brand dark:text-indigo-400" />
                       </div>
                       <div className="ml-3">
-                        <p className="text-sm font-medium text-gray-900">
+                        <p className="text-sm font-medium text-gray-900 dark:text-white">
                           Email
                         </p>
-                        <p className="text-sm text-gray-600">
+                        <p className="text-sm text-gray-600 dark:text-gray-300">
                           info@etuitionbd.com
                         </p>
                       </div>
                     </div>
 
                     <div className="flex items-start">
-                      <div className="flex-shrink-0">
+                      <div className="shrink-0">
                         <PhoneIcon className="h-6 w-6 text-brand" />
                       </div>
                       <div className="ml-3">
@@ -100,7 +100,7 @@ const ContactPage = () => {
                     </div>
 
                     <div className="flex items-start">
-                      <div className="flex-shrink-0">
+                      <div className="shrink-0">
                         <MapPinIcon className="h-6 w-6 text-brand" />
                       </div>
                       <div className="ml-3">
@@ -115,10 +115,10 @@ const ContactPage = () => {
                   </div>
 
                   <div className="mt-8">
-                    <h3 className="text-sm font-medium text-gray-900 mb-4">
+                    <h3 className="text-sm font-medium text-gray-900 dark:text-white mb-4">
                       Office Hours
                     </h3>
-                    <div className="space-y-2 text-sm text-gray-600">
+                    <div className="space-y-2 text-sm text-gray-600 dark:text-gray-300">
                       <p>Monday - Friday: 9:00 AM - 6:00 PM</p>
                       <p>Saturday: 10:00 AM - 4:00 PM</p>
                       <p>Sunday: Closed</p>
@@ -139,7 +139,7 @@ const ContactPage = () => {
             >
               <Card>
                 <CardContent className="p-6">
-                  <h2 className="text-xl font-semibold text-gray-900 mb-6">
+                  <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-6">
                     Send us a Message
                   </h2>
 
@@ -148,7 +148,7 @@ const ContactPage = () => {
                       <div>
                         <label
                           htmlFor="name"
-                          className="block text-sm font-medium text-gray-700 mb-1"
+                          className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
                         >
                           Name
                         </label>
@@ -248,17 +248,17 @@ const ContactPage = () => {
             transition={{ duration: 0.5 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-2xl md:text-3xl font-semibold text-gray-900 text-center mb-8">
+            <h2 className="text-2xl md:text-3xl font-semibold text-gray-900 dark:text-white text-center mb-8">
               Frequently Asked Questions
             </h2>
 
             <div className="grid md:grid-cols-2 gap-6">
               <Card>
                 <CardContent className="p-6">
-                  <h3 className="text-lg font-medium text-gray-900 mb-2">
+                  <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
                     How do I become a tutor on eTuitionBd?
                   </h3>
-                  <p className="text-gray-600">
+                  <p className="text-gray-600 dark:text-gray-300">
                     Simply register as a tutor, fill out your profile with
                     qualifications and experience, and start applying to tuition
                     opportunities that match your expertise.

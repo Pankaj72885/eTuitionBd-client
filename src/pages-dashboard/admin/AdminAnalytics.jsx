@@ -160,8 +160,8 @@ const AdminAnalytics = () => {
             <h2 className="text-lg font-semibold text-gray-900 mb-2">
               Total Users
             </h2>
-            <p className="text-3xl font-bold text-gray-900">{totalUsers}</p>
-            <div className="mt-2 text-sm text-gray-500">
+            <p className="text-3xl font-bold text-gray-900 dark:text-white">{totalUsers}</p>
+            <div className="mt-2 text-sm text-gray-500 dark:text-gray-400">
               {totalStudents} students, {totalTutors} tutors, {totalAdmins}{" "}
               admins
             </div>
@@ -173,8 +173,8 @@ const AdminAnalytics = () => {
             <h2 className="text-lg font-semibold text-gray-900 mb-2">
               Total Tuitions
             </h2>
-            <p className="text-3xl font-bold text-gray-900">{totalTuitions}</p>
-            <div className="mt-2 text-sm text-gray-500">
+            <p className="text-3xl font-bold text-gray-900 dark:text-white">{totalTuitions}</p>
+            <div className="mt-2 text-sm text-gray-500 dark:text-gray-400">
               {pendingTuitions} pending, {approvedTuitions} approved,{" "}
               {ongoingTuitions} ongoing
             </div>
@@ -186,10 +186,10 @@ const AdminAnalytics = () => {
             <h2 className="text-lg font-semibold text-gray-900 mb-2">
               Total Earnings
             </h2>
-            <p className="text-3xl font-bold text-gray-900">
+            <p className="text-3xl font-bold text-gray-900 dark:text-white">
               ৳ {totalEarnings}
             </p>
-            <div className="mt-2 text-sm text-gray-500">
+            <div className="mt-2 text-sm text-gray-500 dark:text-gray-400">
               Platform revenue: ৳ {platformEarnings}
             </div>
           </CardContent>
@@ -200,13 +200,13 @@ const AdminAnalytics = () => {
             <h2 className="text-lg font-semibold text-gray-900 mb-2">
               Avg. Tuition Value
             </h2>
-            <p className="text-3xl font-bold text-gray-900">
+            <p className="text-3xl font-bold text-gray-900 dark:text-white">
               ৳{" "}
               {totalTuitions > 0
                 ? Math.round(totalEarnings / totalTuitions)
                 : 0}
             </p>
-            <div className="mt-2 text-sm text-gray-500">Per tuition</div>
+            <div className="mt-2 text-sm text-gray-500 dark:text-gray-400">Per tuition</div>
           </CardContent>
         </Card>
       </div>

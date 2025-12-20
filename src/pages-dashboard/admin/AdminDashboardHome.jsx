@@ -96,8 +96,10 @@ const AdminDashboardHome = () => {
   return (
     <div>
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-gray-900">Admin Dashboard</h1>
-        <p className="text-gray-600 mt-1">
+        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+          Admin Dashboard
+        </h1>
+        <p className="text-gray-600 dark:text-gray-300 mt-1">
           Welcome to the admin dashboard. Here's an overview of the platform.
         </p>
       </div>
@@ -146,7 +148,7 @@ const AdminDashboardHome = () => {
       <div className="grid gap-6 md:grid-cols-2 mb-8">
         <Card>
           <CardContent className="p-6">
-            <h2 className="text-lg font-semibold text-gray-900 mb-4">
+            <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
               User Distribution
             </h2>
             {usersLoading ? (
@@ -179,7 +181,7 @@ const AdminDashboardHome = () => {
 
         <Card>
           <CardContent className="p-6">
-            <h2 className="text-lg font-semibold text-gray-900 mb-4">
+            <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
               Tuition Status
             </h2>
             {tuitionsLoading ? (
@@ -215,7 +217,7 @@ const AdminDashboardHome = () => {
       <div className="grid gap-6 md:grid-cols-2">
         <Card>
           <CardContent className="p-6">
-            <h2 className="text-lg font-semibold text-gray-900 mb-4">
+            <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
               Recent Users
             </h2>
             {usersLoading ? (
@@ -230,13 +232,15 @@ const AdminDashboardHome = () => {
                     className="flex items-center justify-between"
                   >
                     <div>
-                      <p className="font-medium text-gray-900">{user.name}</p>
-                      <p className="text-sm text-gray-500 capitalize">
+                      <p className="font-medium text-gray-900 dark:text-white">
+                        {user.name}
+                      </p>
+                      <p className="text-sm text-gray-500 dark:text-gray-400 capitalize">
                         {user.role} • {user.city}
                       </p>
                     </div>
                     <div className="text-right">
-                      <p className="text-xs text-gray-500">
+                      <p className="text-xs text-gray-500 dark:text-gray-400">
                         {new Date(user.createdAt).toLocaleDateString()}
                       </p>
                     </div>
@@ -244,14 +248,16 @@ const AdminDashboardHome = () => {
                 ))}
               </div>
             ) : (
-              <p className="text-gray-500 text-center py-4">No users yet.</p>
+              <p className="text-gray-500 dark:text-gray-400 text-center py-4">
+                No users yet.
+              </p>
             )}
           </CardContent>
         </Card>
 
         <Card>
           <CardContent className="p-6">
-            <h2 className="text-lg font-semibold text-gray-900 mb-4">
+            <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
               Recent Tuitions
             </h2>
             {tuitionsLoading ? (
@@ -266,24 +272,28 @@ const AdminDashboardHome = () => {
                     className="flex items-center justify-between"
                   >
                     <div>
-                      <p className="font-medium text-gray-900">
+                      <p className="font-medium text-gray-900 dark:text-white">
                         {tuition.subject}
                       </p>
-                      <p className="text-sm text-gray-500">
+                      <p className="text-sm text-gray-500 dark:text-gray-400">
                         {tuition.classLevel} • {tuition.location}
                       </p>
                     </div>
                     <div className="text-right">
-                      <p className="text-sm font-medium text-gray-900">
+                      <p className="text-sm font-medium text-gray-900 dark:text-white">
                         ৳ {tuition.budget}
                       </p>
-                      <p className="text-xs text-gray-500">{tuition.status}</p>
+                      <p className="text-xs text-gray-500 dark:text-gray-400">
+                        {tuition.status}
+                      </p>
                     </div>
                   </div>
                 ))}
               </div>
             ) : (
-              <p className="text-gray-500 text-center py-4">No tuitions yet.</p>
+              <p className="text-gray-500 dark:text-gray-400 text-center py-4">
+                No tuitions yet.
+              </p>
             )}
           </CardContent>
         </Card>

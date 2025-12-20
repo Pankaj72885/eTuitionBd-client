@@ -307,22 +307,22 @@ const TuitionManagement = () => {
                   {tuitions.data.map((tuition) => (
                     <tr key={tuition._id}>
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm font-medium text-gray-900">
+                        <div className="text-sm font-medium text-gray-900 dark:text-white">
                           {tuition.subject} for {tuition.classLevel}
                         </div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm text-gray-900">
+                        <div className="text-sm text-gray-900 dark:text-white">
                           {tuition.studentId?.name || "N/A"}
                         </div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm text-gray-900">
+                        <div className="text-sm text-gray-900 dark:text-white">
                           {tuition.location}
                         </div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm text-gray-900">
+                        <div className="text-sm text-gray-900 dark:text-white">
                           ৳ {tuition.budget}
                         </div>
                       </td>
@@ -389,7 +389,7 @@ const TuitionManagement = () => {
           <div className="space-y-6">
             {/* Tuition Header */}
             <div className="pb-4 border-b border-gray-200">
-              <h3 className="text-xl font-semibold text-gray-900">
+              <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
                 {tuitionToView.subject} for {tuitionToView.classLevel}
               </h3>
               <div className="mt-2">
@@ -403,7 +403,7 @@ const TuitionManagement = () => {
                 <label className="block text-sm font-medium text-gray-500 mb-1">
                   Student
                 </label>
-                <p className="text-sm text-gray-900">
+                <p className="text-sm text-gray-900 dark:text-white">
                   {tuitionToView.studentId?.name || "N/A"}
                 </p>
               </div>
@@ -412,7 +412,7 @@ const TuitionManagement = () => {
                 <label className="block text-sm font-medium text-gray-500 mb-1">
                   Student Email
                 </label>
-                <p className="text-sm text-gray-900">
+                <p className="text-sm text-gray-900 dark:text-white">
                   {tuitionToView.studentId?.email || "N/A"}
                 </p>
               </div>
@@ -421,7 +421,7 @@ const TuitionManagement = () => {
                 <label className="block text-sm font-medium text-gray-500 mb-1">
                   Location
                 </label>
-                <p className="text-sm text-gray-900">
+                <p className="text-sm text-gray-900 dark:text-white">
                   {tuitionToView.location}
                 </p>
               </div>
@@ -439,7 +439,7 @@ const TuitionManagement = () => {
                 <label className="block text-sm font-medium text-gray-500 mb-1">
                   Days Per Week
                 </label>
-                <p className="text-sm text-gray-900">
+                <p className="text-sm text-gray-900 dark:text-white">
                   {tuitionToView.daysPerWeek} days
                 </p>
               </div>
@@ -448,7 +448,7 @@ const TuitionManagement = () => {
                 <label className="block text-sm font-medium text-gray-500 mb-1">
                   Preferred Time
                 </label>
-                <p className="text-sm text-gray-900">
+                <p className="text-sm text-gray-900 dark:text-white">
                   {tuitionToView.preferredTime || "Not specified"}
                 </p>
               </div>
@@ -457,7 +457,7 @@ const TuitionManagement = () => {
                 <label className="block text-sm font-medium text-gray-500 mb-1">
                   Posted On
                 </label>
-                <p className="text-sm text-gray-900">
+                <p className="text-sm text-gray-900 dark:text-white">
                   {new Date(tuitionToView.createdAt).toLocaleDateString(
                     "en-US",
                     {
@@ -473,7 +473,7 @@ const TuitionManagement = () => {
                 <label className="block text-sm font-medium text-gray-500 mb-1">
                   Last Updated
                 </label>
-                <p className="text-sm text-gray-900">
+                <p className="text-sm text-gray-900 dark:text-white">
                   {new Date(tuitionToView.updatedAt).toLocaleDateString(
                     "en-US",
                     {
@@ -492,7 +492,7 @@ const TuitionManagement = () => {
                 <label className="block text-sm font-medium text-gray-500 mb-1">
                   Additional Details
                 </label>
-                <p className="text-sm text-gray-900">
+                <p className="text-sm text-gray-900 dark:text-white">
                   {tuitionToView.additionalDetails}
                 </p>
               </div>
@@ -572,7 +572,7 @@ const TuitionManagement = () => {
         size="sm"
       >
         <div className="space-y-4">
-          <p className="text-sm text-gray-500">
+          <p className="text-sm text-gray-500 dark:text-gray-400">
             Select the new status for this tuition.
           </p>
           <div>
@@ -622,7 +622,7 @@ const TuitionManagement = () => {
         size="sm"
       >
         <div className="space-y-4">
-          <p className="text-sm text-gray-500">
+          <p className="text-sm text-gray-500 dark:text-gray-400">
             Are you sure you want to delete this tuition? This action cannot be
             undone.
           </p>

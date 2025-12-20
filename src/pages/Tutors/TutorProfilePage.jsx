@@ -1,21 +1,16 @@
-import React, { useState } from "react";
-import { useParams, useNavigate } from "react-router";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import {
-  MapPinIcon,
-  AcademicCapIcon,
-  StarIcon,
-  CalendarIcon,
-} from "@heroicons/react/24/outline";
-import { usersAPI } from "@/api/users.api";
-import { reviewsAPI } from "@/api/reviews.api";
 import { bookmarksAPI } from "@/api/bookmarks.api";
-import { useAuth } from "@/hooks/useAuth";
-import {Button} from "@/components/ui/Button";
-import {Card, CardContent} from "@/components/ui/Card";
-import ProtectedImage from "@/components/common/ProtectedImage";
+import { reviewsAPI } from "@/api/reviews.api";
+import { usersAPI } from "@/api/users.api";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
+import ProtectedImage from "@/components/common/ProtectedImage";
+import { Button } from "@/components/ui/Button";
+import { Card, CardContent } from "@/components/ui/Card";
+import { useAuth } from "@/hooks/useAuth";
+import { StarIcon } from "@heroicons/react/24/outline";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useState } from "react";
 import toast from "react-hot-toast";
+import { useNavigate, useParams } from "react-router";
 
 const TutorProfilePage = () => {
   const { id } = useParams();
@@ -129,10 +124,10 @@ const TutorProfilePage = () => {
     return (
       <div className="max-w-3xl mx-auto px-4 py-10">
         <div className="text-center">
-          <h1 className="text-2xl font-bold text-gray-900 mb-4">
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
             Tutor not found
           </h1>
-          <p className="text-gray-600 mb-6">
+          <p className="text-gray-600 dark:text-gray-300 mb-6">
             The tutor you're looking for doesn't exist or has been removed.
           </p>
           <Button onClick={() => navigate("/tutors")}>Browse Tutors</Button>
@@ -142,10 +137,10 @@ const TutorProfilePage = () => {
   }
 
   return (
-    <div>
+    <div className="bg-white dark:bg-gray-900 transition-colors duration-200 min-h-screen">
       {/* Hero header */}
       <div className="relative mb-10">
-        <div className="h-32 bg-linear-to-r from-brand to-indigo-400" />
+        <div className="h-32 bg-linear-to-r from-indigo-600 dark:from-indigo-700 to-indigo-400 dark:to-indigo-500" />
         <div className="max-w-3xl mx-auto px-4 -mt-10">
           <Card>
             <CardContent className="p-6 flex flex-col sm:flex-row gap-4">
@@ -156,21 +151,21 @@ const TutorProfilePage = () => {
               />
               <div className="flex-1">
                 <div className="flex flex-wrap items-center gap-2">
-                  <h1 className="text-xl font-semibold text-gray-900">
+                  <h1 className="text-xl font-semibold text-gray-900 dark:text-white">
                     {tutor.name}
                   </h1>
-                  <span className="px-2 py-0.5 rounded-full bg-brand-light text-brand-dark text-xs font-medium">
+                  <span className="px-2 py-0.5 rounded-full bg-indigo-50 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-400 text-xs font-medium">
                     Tutor
                   </span>
                 </div>
-                <p className="mt-1 text-sm text-gray-500">
+                <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
                   {tutor.city} • {tutor.experienceYears}+ years experience
                 </p>
                 <div className="mt-2 flex flex-wrap items-center gap-3 text-sm">
                   <div className="flex items-center gap-1 text-amber-500">
                     <StarIcon className="h-4 w-4" />
                     {tutor.averageRating || "4.8"}{" "}
-                    <span className="text-xs text-gray-500">
+                    <span className="text-xs text-gray-500 dark:text-gray-400">
                       ({tutor.reviewCount || 32} reviews)
                     </span>
                   </div>
@@ -202,21 +197,23 @@ const TutorProfilePage = () => {
         {/* About section */}
         <Card>
           <CardContent className="p-4 md:p-6">
-            <h2 className="text-lg font-semibold text-gray-900 mb-4">About</h2>
+            <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+              About
+            </h2>
             <div className="space-y-3">
               <div>
-                <h3 className="text-sm font-medium text-gray-700">
+                <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300">
                   Qualifications
                 </h3>
-                <p className="text-sm text-gray-600 mt-1">
+                <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
                   {tutor.qualifications || "No qualifications provided"}
                 </p>
               </div>
               <div>
-                <h3 className="text-sm font-medium text-gray-700">
+                <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300">
                   Experience
                 </h3>
-                <p className="text-sm text-gray-600 mt-1">
+                <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
                   {tutor.experienceYears}+ years of teaching experience
                 </p>
               </div>
@@ -227,12 +224,12 @@ const TutorProfilePage = () => {
         {/* Subjects section */}
         <Card>
           <CardContent className="p-4 md:p-6">
-            <h2 className="text-lg font-semibold text-gray-900 mb-4">
+            <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
               Subjects & Classes
             </h2>
             <div className="space-y-3">
               <div>
-                <h3 className="text-sm font-medium text-gray-700 mb-2">
+                <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                   Subjects
                 </h3>
                 <div className="flex flex-wrap gap-2">
@@ -240,20 +237,20 @@ const TutorProfilePage = () => {
                     tutor.subjects.map((subject, index) => (
                       <span
                         key={index}
-                        className="inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium bg-brand-light text-brand-dark"
+                        className="inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium bg-indigo-50 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-400"
                       >
                         {subject}
                       </span>
                     ))
                   ) : (
-                    <p className="text-sm text-gray-500">
+                    <p className="text-sm text-gray-500 dark:text-gray-400">
                       No subjects specified
                     </p>
                   )}
                 </div>
               </div>
               <div>
-                <h3 className="text-sm font-medium text-gray-700 mb-2">
+                <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                   Class Levels
                 </h3>
                 <div className="flex flex-wrap gap-2">
@@ -261,13 +258,13 @@ const TutorProfilePage = () => {
                     tutor.classLevels.map((level, index) => (
                       <span
                         key={index}
-                        className="inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium bg-gray-100 text-gray-800"
+                        className="inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200"
                       >
                         {level}
                       </span>
                     ))
                   ) : (
-                    <p className="text-sm text-gray-500">
+                    <p className="text-sm text-gray-500 dark:text-gray-400">
                       No class levels specified
                     </p>
                   )}
@@ -280,7 +277,7 @@ const TutorProfilePage = () => {
         {/* Reviews section */}
         <Card>
           <CardContent className="p-4 md:p-6">
-            <h2 className="text-lg font-semibold text-gray-900 mb-4">
+            <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
               Reviews
             </h2>
             {reviewsLoading ? (
@@ -292,7 +289,7 @@ const TutorProfilePage = () => {
                 {reviews.data.map((review) => (
                   <div
                     key={review._id}
-                    className="border-b border-gray-100 pb-4 last:border-0"
+                    className="border-b border-gray-100 dark:border-gray-700 pb-4 last:border-0"
                   >
                     <div className="flex items-center justify-between">
                       <div className="flex items-center">
@@ -303,25 +300,27 @@ const TutorProfilePage = () => {
                               className={`h-4 w-4 ${
                                 i < review.rating
                                   ? "text-amber-400"
-                                  : "text-gray-300"
+                                  : "text-gray-300 dark:text-gray-600"
                               }`}
                               fill="currentColor"
                             />
                           ))}
                         </div>
-                        <span className="ml-2 text-sm text-gray-500">
+                        <span className="ml-2 text-sm text-gray-500 dark:text-gray-400">
                           {new Date(review.createdAt).toLocaleDateString()}
                         </span>
                       </div>
                     </div>
-                    <p className="mt-2 text-sm text-gray-700">
+                    <p className="mt-2 text-sm text-gray-700 dark:text-gray-300">
                       {review.comment}
                     </p>
                   </div>
                 ))}
               </div>
             ) : (
-              <p className="text-sm text-gray-500">No reviews yet.</p>
+              <p className="text-sm text-gray-500 dark:text-gray-400">
+                No reviews yet.
+              </p>
             )}
           </CardContent>
         </Card>

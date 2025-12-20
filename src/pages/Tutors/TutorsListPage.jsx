@@ -123,13 +123,13 @@ const TutorsListPage = () => {
   });
 
   return (
-    <section className="py-12 md:py-16">
+    <section className="py-12 md:py-16 bg-white dark:bg-gray-900 transition-colors duration-200">
       <div className="max-w-6xl mx-auto px-4 md:px-6 space-y-6">
         <div>
-          <h1 className="text-2xl md:text-3xl font-semibold text-gray-900">
+          <h1 className="text-2xl md:text-3xl font-semibold text-gray-900 dark:text-white">
             Find Tutors
           </h1>
-          <p className="mt-2 text-sm text-gray-500">
+          <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
             Discover qualified tutors for your learning needs.
           </p>
         </div>
@@ -140,7 +140,7 @@ const TutorsListPage = () => {
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                 <MagnifyingGlassIcon
-                  className="h-5 w-5 text-gray-400"
+                  className="h-5 w-5 text-gray-400 dark:text-gray-500"
                   aria-hidden="true"
                 />
               </div>
@@ -237,7 +237,7 @@ const TutorsListPage = () => {
         {/* Error state */}
         {error && (
           <div className="text-center py-12">
-            <p className="text-red-500 mb-4">
+            <p className="text-red-500 dark:text-red-400 mb-4">
               Failed to load tutors. Please try again.
             </p>
             <Button onClick={() => window.location.reload()}>Retry</Button>
@@ -261,13 +261,13 @@ const TutorsListPage = () => {
                         className="w-16 h-16 rounded-full object-cover shrink-0"
                       />
                       <div className="flex-1 min-w-0">
-                        <h3 className="text-base font-semibold text-gray-900 truncate">
+                        <h3 className="text-base font-semibold text-gray-900 dark:text-white truncate">
                           {tutor.name}
                         </h3>
-                        <p className="text-xs text-gray-500 mt-1">
+                        <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
                           {tutor.city || "Dhaka"}
                         </p>
-                        <p className="text-xs text-gray-500">
+                        <p className="text-xs text-gray-500 dark:text-gray-400">
                           {tutor.experienceYears || 0}+ years exp.
                         </p>
                       </div>
@@ -278,26 +278,26 @@ const TutorsListPage = () => {
                       {tutor.subjects?.slice(0, 3).map((subject, index) => (
                         <span
                           key={index}
-                          className="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-brand/10 text-brand"
+                          className="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-indigo-50 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-400"
                         >
                           {subject}
                         </span>
                       ))}
                       {tutor.subjects?.length > 3 && (
-                        <span className="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-gray-100 text-gray-600">
+                        <span className="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300">
                           +{tutor.subjects.length - 3}
                         </span>
                       )}
                     </div>
 
                     {/* Rating and actions */}
-                    <div className="flex items-center justify-between pt-2 border-t">
+                    <div className="flex items-center justify-between pt-2 border-t border-gray-200 dark:border-gray-700">
                       <div className="flex items-center gap-1">
                         <StarIcon className="h-4 w-4 fill-amber-400 text-amber-400" />
-                        <span className="text-sm font-medium text-gray-900">
+                        <span className="text-sm font-medium text-gray-900 dark:text-white">
                           {tutor.averageRating?.toFixed(1) || "5.0"}
                         </span>
-                        <span className="text-xs text-gray-500">
+                        <span className="text-xs text-gray-500 dark:text-gray-400">
                           ({tutor.reviewCount || 0})
                         </span>
                       </div>
@@ -372,7 +372,7 @@ const TutorsListPage = () => {
             </DialogHeader>
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                   Subject
                 </label>
                 <Select

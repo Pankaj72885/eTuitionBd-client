@@ -82,24 +82,26 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="min-h-full py-10 flex items-center justify-center bg-linear-to-b from-brand-light/40 to-gray-50 px-4">
-      <div className="w-full max-w-md bg-white border border-gray-100 rounded-xl shadow-lg p-6 md:p-8 space-y-6">
+    <div className="min-h-full py-10 flex items-center justify-center bg-gradient-to-b from-indigo-50/50 dark:from-indigo-950/30 to-gray-50 dark:to-gray-900 px-4 transition-colors duration-200">
+      <div className="w-full max-w-md bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-xl shadow-lg dark:shadow-indigo-900/20 p-6 md:p-8 space-y-6">
         <div className="text-center">
-          <h1 className="text-xl font-semibold text-gray-900">Welcome back</h1>
-          <p className="mt-1 text-sm text-gray-500">
+          <h1 className="text-xl font-semibold text-gray-900 dark:text-white">
+            Welcome back
+          </h1>
+          <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
             Login to continue to eTuitionBd.
           </p>
         </div>
 
         {/* Login Method Tabs */}
         <div className="flex justify-center mb-6">
-          <div className="inline-flex rounded-lg border border-gray-200 bg-gray-50 p-1">
+          <div className="inline-flex rounded-lg border border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 p-1">
             <button
               type="button"
               className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
                 loginMethod === "email"
-                  ? "bg-white text-brand shadow-sm"
-                  : "text-gray-500 hover:text-gray-700"
+                  ? "bg-white dark:bg-gray-600 text-brand dark:text-indigo-400 shadow-sm"
+                  : "text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
               }`}
               onClick={() => setLoginMethod("email")}
             >
@@ -109,8 +111,8 @@ const LoginPage = () => {
               type="button"
               className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
                 loginMethod === "google"
-                  ? "bg-white text-brand shadow-sm"
-                  : "text-gray-500 hover:text-gray-700"
+                  ? "bg-white dark:bg-gray-600 text-brand dark:text-indigo-400 shadow-sm"
+                  : "text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
               }`}
               onClick={() => setLoginMethod("google")}
             >
@@ -125,7 +127,7 @@ const LoginPage = () => {
             <div>
               <label
                 htmlFor="email"
-                className="block text-sm font-medium text-gray-700 mb-1"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
               >
                 Email
               </label>
@@ -147,7 +149,7 @@ const LoginPage = () => {
             <div>
               <label
                 htmlFor="password"
-                className="block text-sm font-medium text-gray-700 mb-1"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
               >
                 Password
               </label>
@@ -167,7 +169,7 @@ const LoginPage = () => {
                 />
                 <button
                   type="button"
-                  className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-500"
+                  className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 dark:text-gray-500 hover:text-gray-500 dark:hover:text-gray-400 transition-colors"
                   onClick={() => setShowPassword(!showPassword)}
                 >
                   {showPassword ? (
@@ -208,11 +210,11 @@ const LoginPage = () => {
                   id="remember-me"
                   name="remember-me"
                   type="checkbox"
-                  className="h-4 w-4 text-brand focus:ring-brand border-gray-300 rounded"
+                  className="h-4 w-4 text-brand dark:text-indigo-500 focus:ring-brand dark:focus:ring-indigo-400 border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700"
                 />
                 <label
                   htmlFor="remember-me"
-                  className="ml-2 block text-sm text-gray-700"
+                  className="ml-2 block text-sm text-gray-700 dark:text-gray-300"
                 >
                   Remember me
                 </label>
@@ -220,7 +222,7 @@ const LoginPage = () => {
               <div className="text-sm">
                 <Link
                   to="/forgot-password"
-                  className="font-medium text-brand hover:text-brand-dark"
+                  className="font-medium text-brand dark:text-indigo-400 hover:text-brand-dark dark:hover:text-indigo-300 transition-colors"
                 >
                   Forgot password?
                 </Link>
@@ -241,7 +243,7 @@ const LoginPage = () => {
         {loginMethod === "google" && (
           <div className="space-y-4">
             <div className="text-center py-4">
-              <p className="text-sm text-gray-600 mb-4">
+              <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
                 Click the button below to sign in with your Google account
               </p>
               <Button
@@ -279,7 +281,7 @@ const LoginPage = () => {
             <div className="text-center">
               <button
                 type="button"
-                className="text-sm text-gray-500 hover:text-gray-700"
+                className="text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition-colors"
                 onClick={() => setLoginMethod("email")}
               >
                 ← Back to email login
@@ -288,11 +290,11 @@ const LoginPage = () => {
           </div>
         )}
 
-        <p className="text-center text-sm text-gray-600">
+        <p className="text-center text-sm text-gray-600 dark:text-gray-400">
           Don't have an account?{" "}
           <Link
             to="/register"
-            className="font-medium text-brand hover:text-brand-dark"
+            className="font-medium text-brand dark:text-indigo-400 hover:text-brand-dark dark:hover:text-indigo-300 transition-colors"
           >
             Sign up
           </Link>
