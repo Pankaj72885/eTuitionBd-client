@@ -1,27 +1,133 @@
-import App from "@/App";
+import { createBrowserRouter, Navigate, Outlet } from "react-router";
+import DashboardLayout from "../layouts/DashboardLayout";
+import MainLayout from "../layouts/MainLayout";
+import NotFoundPage from "../pages/Error/NotFoundPage";
+import PrivateRoute from "./PrivateRoute";
+import RoleRoute from "./RoleRoute";
+
+// Public Pages
+import AboutPage from "@/pages/About/AboutPage";
 import LoginPage from "@/pages/auth/LoginPage";
 import RegisterPage from "@/pages/auth/RegisterPage";
+import ContactPage from "@/pages/Contact/ContactPage";
 import HomePage from "@/pages/home/HomePage";
-import { createBrowserRouter } from "react-router";
+import TuitionDetailsPage from "@/pages/Tuitions/TuitionDetailsPage";
+import TuitionsListPage from "@/pages/Tuitions/TuitionsListPage";
+import TutorProfilePage from "../pages/Tutors/TutorProfilePage";
+import TutorsListPage from "../pages/Tutors/TutorsListPage";
+
+// Student Dashboard Pages
+import AppliedTutors from "../pages-dashboard/student/AppliedTutors";
+import MyTuitions from "../pages-dashboard/student/MyTuitions";
+import PostNewTuition from "../pages-dashboard/student/PostNewTuition";
+import StudentBookmarks from "../pages-dashboard/student/StudentBookmarks";
+import StudentDashboardHome from "../pages-dashboard/student/StudentDashboardHome";
+import StudentPayments from "../pages-dashboard/student/StudentPayments";
+import StudentProfileSettings from "../pages-dashboard/student/StudentProfileSettings";
+
+// Tutor Dashboard Pages
+import MyApplications from "../pages-dashboard/tutor/MyApplications";
+import TutorDashboardHome from "../pages-dashboard/tutor/TutorDashboardHome";
+import TutorOngoingTuitions from "../pages-dashboard/tutor/TutorOngoingTuitions";
+import TutorProfileSettings from "../pages-dashboard/tutor/TutorProfileSettings";
+import TutorRevenueHistory from "../pages-dashboard/tutor/TutorRevenueHistory";
+
+// Admin Dashboard Pages
+import AdminAnalytics from "../pages-dashboard/admin/AdminAnalytics";
+import AdminDashboardHome from "../pages-dashboard/admin/AdminDashboardHome";
+import ReportsTransactions from "../pages-dashboard/admin/ReportsTransactions";
+import TuitionManagement from "../pages-dashboard/admin/TuitionManagement";
+import UserManagement from "../pages-dashboard/admin/UserManagement";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    Component: App,
+    element: <MainLayout />,
+    errorElement: <NotFoundPage />,
+    children: [
+      { index: true, element: <HomePage /> },
+      { path: "login", element: <LoginPage /> },
+      { path: "register", element: <RegisterPage /> },
+      { path: "tuitions", element: <TuitionsListPage /> },
+      { path: "tuitions/:id", element: <TuitionDetailsPage /> },
+      { path: "tutors", element: <TutorsListPage /> },
+      { path: "tutors/:id", element: <TutorProfilePage /> },
+      { path: "about", element: <AboutPage /> },
+      { path: "contact", element: <ContactPage /> },
+    ],
+  },
+  {
+    path: "/dashboard",
+    element: (
+      <PrivateRoute>
+        <DashboardLayout />
+      </PrivateRoute>
+    ),
     children: [
       {
-        path: "/",
-        Component: HomePage,
+        index: true,
+        element: <Navigate to="student" replace />, // Default redirect? Or maybe a generic dashboard landing?
+        // Since roles are strict, maybe we should redirect based on role?
+        // But RoleRoute handles that. If I go to /dashboard, I probably want to be redirected to my role's dashboard.
+        // I will adding a redirect component or just let 404 happen?
+        // Better: A component that checks role and redirects.
       },
+      // Student Routes
       {
-        path: "/register",
-        Component: RegisterPage,
+        path: "student",
+        element: (
+          <RoleRoute role="student">
+            <Outlet />
+          </RoleRoute>
+        ),
+        children: [
+          { index: true, element: <StudentDashboardHome /> },
+          { path: "tuitions", element: <MyTuitions /> },
+          { path: "post-tuition", element: <PostNewTuition /> },
+          { path: "post-tuition/:id", element: <PostNewTuition /> },
+          { path: "applications", element: <AppliedTutors /> },
+          { path: "payments", element: <StudentPayments /> },
+          { path: "bookmarks", element: <StudentBookmarks /> },
+          { path: "profile", element: <StudentProfileSettings /> },
+        ],
       },
+      // Tutor Routes
       {
-        path: "/login",
-        Component: LoginPage,
+        path: "tutor",
+        element: (
+          <RoleRoute role="tutor">
+            <Outlet />
+          </RoleRoute>
+        ),
+        children: [
+          { index: true, element: <TutorDashboardHome /> },
+          { path: "applications", element: <MyApplications /> },
+          { path: "ongoing", element: <TutorOngoingTuitions /> },
+          { path: "revenue", element: <TutorRevenueHistory /> },
+          { path: "profile", element: <TutorProfileSettings /> },
+        ],
+      },
+      // Admin Routes
+      {
+        path: "admin",
+        element: (
+          <RoleRoute role="admin">
+            <Outlet />
+          </RoleRoute>
+        ),
+        children: [
+          { index: true, element: <AdminDashboardHome /> },
+          { path: "users", element: <UserManagement /> },
+          { path: "tuitions", element: <TuitionManagement /> },
+          { path: "reports", element: <ReportsTransactions /> },
+          { path: "analytics", element: <AdminAnalytics /> },
+        ],
       },
     ],
+  },
+  {
+    path: "*",
+    element: <NotFoundPage />,
   },
 ]);
 

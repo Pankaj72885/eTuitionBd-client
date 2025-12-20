@@ -1,22 +1,25 @@
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { auth } from "@/config/firebase";
-import { useAuth } from "@/context/AuthContext";
-import { useMutation } from "@tanstack/react-query";
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-import { useState } from "react";
+import { authAPI } from "@/api/auth.api";
+import { Button } from "@/components/ui/Button";
+import { Input } from "@/components/ui/Input";
+import { useAuth } from "@/hooks/useAuth";
+import { useFirebaseAuth } from "@/hooks/useFirebaseAuth";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router";
-import { authAPI } from "../../api/auth.api";
 
 const RegisterPage = () => {
+  console.log("RegisterPage component rendered");
+
   const navigate = useNavigate();
   const { login: setAuthLogin } = useAuth();
+  const { signup: firebaseSignup, loginWithGoogle } = useFirebaseAuth();
+  const queryClient = useQueryClient();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [signupMethod, setSignupMethod] = useState("email"); // 'email' or 'google'
-  const [googleUser, setGoogleUser] = useState(null);
+  const [signupMethod, setSignupMethod] = useState("email");
+  // const [googleUser, setGoogleUser] = useState(null); // Removed: Not needed with new flow
 
   const {
     register,
@@ -28,60 +31,168 @@ const RegisterPage = () => {
 
   const password = watch("password");
 
-  // Register mutation
+  console.log("RegisterPage state:", { signupMethod });
+
+  // Email/Password register mutation
   const registerMutation = useMutation({
-    mutationFn: authAPI.register,
+    mutationFn: async (userData) => {
+      console.log("Register mutation called with:", userData);
+
+      try {
+        // Create user in Firebase
+        const firebaseResult = await firebaseSignup(
+          userData.email,
+          userData.password,
+          userData.name
+        );
+        console.log("Firebase signup result:", firebaseResult);
+
+        if (!firebaseResult.success) {
+          throw new Error(firebaseResult.error);
+        }
+
+        // Get ID token
+        const idToken = await firebaseResult.user.getIdToken();
+        console.log("ID token:", idToken);
+
+        // Send to backend
+        const response = await authAPI.register({
+          idToken,
+          name: userData.name,
+          email: userData.email,
+          phone: userData.phone,
+          role: userData.role,
+          city: userData.city,
+        });
+
+        console.log("Backend register response:", response);
+        return response;
+      } catch (error) {
+        console.error("Register error:", error);
+        throw error;
+      }
+    },
     onSuccess: (data) => {
+      console.log("Register success:", data);
       setAuthLogin(data.token, data.user);
       toast.success("Registration successful!");
+      queryClient.invalidateQueries();
 
       // Redirect based on role
       const dashboardPath =
         data.user.role === "tutor" ? "/dashboard/tutor" : "/dashboard/student";
+      console.log("Redirecting to:", dashboardPath);
       navigate(dashboardPath, { replace: true });
     },
     onError: (error) => {
-      toast.error(error.response?.data?.message || "Registration failed");
+      console.error("Register mutation error:", error);
+      const errorMessage =
+        error.response?.data?.message || error.message || "Registration failed";
+      toast.error(errorMessage);
     },
   });
 
-  const onSubmit = async (data) => {
-    if (signupMethod === "email") {
+  // Google register mutation
+  const googleRegisterMutation = useMutation({
+    mutationFn: async (userData) => {
+      console.log("Google register mutation called with:", userData);
+
       try {
-        const userCredential = await createUserWithEmailAndPassword(
-          auth,
-          data.email,
-          data.password
-        );
-
-        // Update profile in Firebase
-        await updateProfile(userCredential.user, {
-          displayName: data.name,
+        // Send to backend
+        const response = await authAPI.googleRegister({
+          idToken: userData.idToken,
+          name: userData.name,
+          email: userData.email,
+          phone: userData.phone,
+          role: userData.role,
+          city: userData.city,
         });
 
-        const idToken = await userCredential.user.getIdToken();
-
-        registerMutation.mutate({
-          idToken,
-          name: data.name,
-          email: data.email,
-          phone: data.phone,
-          city: data.city,
-          role: data.role,
-        });
+        console.log("Backend google register response:", response);
+        return response;
       } catch (error) {
-        console.error("Firebase Register Error:", error);
-        toast.error(error.message || "Registration failed");
+        console.error("Google register error:", error);
+        throw error;
       }
+    },
+    onSuccess: (data) => {
+      console.log("Google register success:", data);
+      setAuthLogin(data.token, data.user);
+      toast.success("Registration successful!");
+      queryClient.invalidateQueries();
+
+      const dashboardPath =
+        data.user.role === "tutor"
+          ? "/dashboard/tutor/profile"
+          : "/dashboard/student";
+      console.log("Redirecting to:", dashboardPath);
+      navigate(dashboardPath, { replace: true });
+    },
+    onError: (error) => {
+      console.error("Google register mutation error:", error);
+      const errorMessage =
+        error.response?.data?.message ||
+        error.message ||
+        "Google registration failed";
+      toast.error(errorMessage);
+    },
+  });
+
+  const onSubmit = (data) => {
+    console.log("Form submitted with:", data);
+    if (signupMethod === "email") {
+      registerMutation.mutate(data);
     }
   };
 
-  const handleRoleSelection = (role) => {
-    setValue("role", role);
-    if (signupMethod === "google") {
-      setGoogleUser({ ...googleUser, role });
+  const handleGoogleSignup = async () => {
+    console.log("Google signup button clicked");
+
+    // Validate role selection
+    const role = watch("role");
+    if (!role) {
+      toast.error("Please select a role (Student or Tutor) first");
+      return;
+    }
+
+    try {
+      console.log("Calling loginWithGoogle...");
+      const result = await loginWithGoogle();
+      console.log("loginWithGoogle result:", result);
+
+      if (result.success) {
+        console.log("Google login success:", result.user);
+        const idToken = await result.user.getIdToken();
+        console.log("Got ID token");
+
+        const userData = {
+          idToken,
+          name: result.user.displayName || "Google User",
+          email: result.user.email,
+          phone: result.user.phoneNumber || "01700000000", // Default phone if not provided
+          role: role,
+          city: "Dhaka", // Default city
+        };
+
+        console.log("Calling googleRegisterMutation with:", userData);
+        googleRegisterMutation.mutate(userData);
+      } else {
+        console.error("Google login failed:", result.error);
+        toast.error(result.error || "Google login failed");
+      }
+    } catch (error) {
+      console.error("Google signup handle error:", error);
+      toast.error("An error occurred during Google signup");
     }
   };
+
+  // Removed problematic useEffect and handleRoleSelection in favor of direct form state usage
+
+  // Debug form state
+  useEffect(() => {
+    console.log("Form errors:", errors);
+    console.log("Form values:", watch());
+  }, [errors, watch]);
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-linear-to-b from-brand-light/40 to-gray-50 px-4">
@@ -116,7 +227,7 @@ const RegisterPage = () => {
                   ? "bg-white text-brand shadow-sm"
                   : "text-gray-500 hover:text-gray-700"
               }`}
-              onClick={() => toast("Google signup not available right now")}
+              onClick={() => setSignupMethod("google")}
             >
               Google
             </button>
@@ -194,24 +305,6 @@ const RegisterPage = () => {
 
             <div>
               <label
-                htmlFor="city"
-                className="block text-sm font-medium text-gray-700 mb-1"
-              >
-                City
-              </label>
-              <Input
-                id="city"
-                type="text"
-                placeholder="Dhaka"
-                {...register("city", {
-                  required: "City is required",
-                })}
-                error={errors.city?.message}
-              />
-            </div>
-
-            <div>
-              <label
                 htmlFor="password"
                 className="block text-sm font-medium text-gray-700 mb-1"
               >
@@ -221,7 +314,7 @@ const RegisterPage = () => {
                 <Input
                   id="password"
                   type={showPassword ? "text" : "password"}
-                  placeholder="•••••••••"
+                  placeholder="•••••••"
                   {...register("password", {
                     required: "Password is required",
                     minLength: {
@@ -279,7 +372,7 @@ const RegisterPage = () => {
                 <Input
                   id="confirmPassword"
                   type={showConfirmPassword ? "text" : "password"}
-                  placeholder="•••••••••"
+                  placeholder="•••••••"
                   {...register("confirmPassword", {
                     required: "Please confirm your password",
                     validate: (value) =>
@@ -329,23 +422,21 @@ const RegisterPage = () => {
                 I am a
               </label>
               <div className="flex gap-4">
-                <label className="flex items-center gap-2 text-sm text-gray-700 cursor-pointer">
+                <label className="flex items-center gap-2 text-sm text-gray-700">
                   <input
                     type="radio"
                     className="radio radio-sm radio-primary"
                     value="student"
                     {...register("role", { required: "Please select a role" })}
-                    onChange={() => handleRoleSelection("student")}
                   />
                   <span>Student</span>
                 </label>
-                <label className="flex items-center gap-2 text-sm text-gray-700 cursor-pointer">
+                <label className="flex items-center gap-2 text-sm text-gray-700">
                   <input
                     type="radio"
                     className="radio radio-sm radio-primary"
                     value="tutor"
                     {...register("role", { required: "Please select a role" })}
-                    onChange={() => handleRoleSelection("tutor")}
                   />
                   <span>Tutor</span>
                 </label>
@@ -367,19 +458,74 @@ const RegisterPage = () => {
           </form>
         )}
 
-        {/* Google Signup - Temporarily Disabled */}
+        {/* Google Signup */}
         {signupMethod === "google" && (
-          <div className="text-center py-8">
-            <p>
-              Google signup is currently unavailable. Please use Email signup.
-            </p>
-            <button
-              type="button"
-              className="text-sm text-brand hover:text-brand-dark mt-4"
-              onClick={() => setSignupMethod("email")}
-            >
-              ← Back to email signup
-            </button>
+          <div className="space-y-4">
+            {/* Role selection for Google signup - FIRST */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Select your role to continue
+              </label>
+              <div className="flex gap-4">
+                <label className="flex items-center gap-2 text-sm text-gray-700 cursor-pointer">
+                  <input
+                    type="radio"
+                    className="radio radio-sm radio-primary"
+                    value="student"
+                    checked={watch("role") === "student"}
+                    onChange={() => setValue("role", "student")}
+                  />
+                  <span>Student</span>
+                </label>
+                <label className="flex items-center gap-2 text-sm text-gray-700 cursor-pointer">
+                  <input
+                    type="radio"
+                    className="radio radio-sm radio-primary"
+                    value="tutor"
+                    checked={watch("role") === "tutor"}
+                    onChange={() => setValue("role", "tutor")}
+                  />
+                  <span>Tutor</span>
+                </label>
+              </div>
+            </div>
+
+            {/* Google button - SECOND */}
+            <div className="text-center py-4">
+              <p className="text-sm text-gray-600 mb-4">
+                Click the button below to sign up with your Google account
+              </p>
+              <Button
+                variant="outline"
+                className="w-full flex items-center justify-center gap-2"
+                onClick={handleGoogleSignup}
+                disabled={googleRegisterMutation.isLoading}
+              >
+                <svg className="h-5 w-5" viewBox="0 0 24 24">
+                  <path
+                    fill="#4285F4"
+                    d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
+                  />
+                  <path
+                    fill="#34A853"
+                    d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"
+                  />
+                  <path
+                    fill="#FBBC05"
+                    d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"
+                  />
+                  <path
+                    fill="#EA4335"
+                    d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
+                  />
+                </svg>
+                <span>
+                  {googleRegisterMutation.isLoading
+                    ? "Creating account with Google..."
+                    : "Continue with Google"}
+                </span>
+              </Button>
+            </div>
           </div>
         )}
 

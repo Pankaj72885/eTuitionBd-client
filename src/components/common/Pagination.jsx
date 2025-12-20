@@ -1,6 +1,6 @@
 import React from "react";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
-import Button from "../ui/Button";
+import {Button} from "@/components/ui/Button";
 
 const Pagination = ({ currentPage, totalPages, onPageChange }) => {
   const pages = [];

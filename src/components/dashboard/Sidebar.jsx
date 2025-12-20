@@ -1,0 +1,181 @@
+import {
+  BookmarkIcon,
+  BookOpenIcon,
+  ChartBarIcon,
+  ClipboardDocumentListIcon,
+  Cog6ToothIcon,
+  CreditCardIcon,
+  CurrencyDollarIcon,
+  DocumentTextIcon,
+  HomeIcon,
+  UserGroupIcon,
+} from "@heroicons/react/24/outline";
+import { NavLink, useLocation } from "react-router";
+import { useAuth } from "../../hooks/useAuth";
+
+const Sidebar = () => {
+  const { user } = useAuth();
+  const location = useLocation();
+
+  const isActive = (path) => {
+    return location.pathname === path;
+  };
+
+  const studentLinks = [
+    {
+      name: "Dashboard",
+      path: `/dashboard/student`,
+      icon: HomeIcon,
+    },
+    {
+      name: "My Tuitions",
+      path: `/dashboard/student/tuitions`,
+      icon: BookOpenIcon,
+    },
+    {
+      name: "Post New Tuition",
+      path: `/dashboard/student/post-tuition`,
+      icon: DocumentTextIcon,
+    },
+    {
+      name: "Applied Tutors",
+      path: `/dashboard/student/applications`,
+      icon: UserGroupIcon,
+    },
+    {
+      name: "Payments",
+      path: `/dashboard/student/payments`,
+      icon: CreditCardIcon,
+    },
+    {
+      name: "Bookmarks",
+      path: `/dashboard/student/bookmarks`,
+      icon: BookmarkIcon,
+    },
+    {
+      name: "Profile Settings",
+      path: `/dashboard/student/profile`,
+      icon: Cog6ToothIcon,
+    },
+  ];
+
+  const tutorLinks = [
+    {
+      name: "Dashboard",
+      path: `/dashboard/tutor`,
+      icon: HomeIcon,
+    },
+    {
+      name: "My Applications",
+      path: `/dashboard/tutor/applications`,
+      icon: ClipboardDocumentListIcon,
+    },
+    {
+      name: "Ongoing Tuitions",
+      path: `/dashboard/tutor/ongoing`,
+      icon: BookOpenIcon,
+    },
+    {
+      name: "Revenue History",
+      path: `/dashboard/tutor/revenue`,
+      icon: CurrencyDollarIcon,
+    },
+    {
+      name: "Profile Settings",
+      path: `/dashboard/tutor/profile`,
+      icon: Cog6ToothIcon,
+    },
+  ];
+
+  const adminLinks = [
+    {
+      name: "Dashboard",
+      path: `/dashboard/admin`,
+      icon: HomeIcon,
+    },
+    {
+      name: "Analytics",
+      path: `/dashboard/admin/analytics`,
+      icon: ChartBarIcon,
+    },
+    {
+      name: "User Management",
+      path: `/dashboard/admin/users`,
+      icon: UserGroupIcon,
+    },
+    {
+      name: "Tuition Management",
+      path: `/dashboard/admin/tuitions`,
+      icon: BookOpenIcon,
+    },
+    {
+      name: "Reports & Transactions",
+      path: `/dashboard/admin/reports`,
+      icon: CurrencyDollarIcon,
+    },
+  ];
+
+  const getLinks = () => {
+    switch (user?.role) {
+      case "student":
+        return studentLinks;
+      case "tutor":
+        return tutorLinks;
+      case "admin":
+        return adminLinks;
+      default:
+        return [];
+    }
+  };
+
+  return (
+    <div className="flex flex-col w-64 h-screen bg-slate-900">
+      <div className="flex flex-col flex-1 pt-5 overflow-y-auto">
+        <div className="flex items-center shrink-0 px-4">
+          <div className="flex items-center">
+            <div className="shrink-0">
+              <img
+                className="h-8 w-auto"
+                src="https://picsum.photos/seed/logo/40/40.jpg"
+                alt="eTuitionBd"
+              />
+            </div>
+            <div className="ml-3">
+              <p className="text-white text-sm font-medium">eTuitionBd</p>
+              <p className="text-slate-400 text-xs capitalize">
+                {user?.role} Dashboard
+              </p>
+            </div>
+          </div>
+        </div>
+        <div className="mt-8 flex-1 flex flex-col">
+          <nav className="flex-1 px-2 pb-4 space-y-1">
+            {getLinks().map((link) => (
+              <NavLink
+                key={link.name}
+                to={link.path}
+                className={`${
+                  isActive(link.path)
+                    ? "bg-brand text-white"
+                    : "text-slate-300 hover:bg-slate-800 hover:text-white"
+                } group flex items-center px-2 py-2 text-sm font-medium rounded-md`}
+              >
+                <link.icon
+                  className={`${
+                    isActive(link.path)
+                      ? "text-brand"
+                      : "text-slate-400 group-hover:text-slate-300"
+                  } mr-3 shrink-0 h-5 w-5`}
+                  aria-hidden="true"
+                />
+                {link.name}
+              </NavLink>
+            ))}
+          </nav>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Sidebar;

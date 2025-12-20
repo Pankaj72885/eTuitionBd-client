@@ -14,6 +14,13 @@ export const authAPI = {
     return response.data;
   },
 
+  // Google register (same as register, but explicitly named for clarity)
+  googleRegister: async (userData) => {
+    // userData should contain { idToken, name, email, phone, role, city }
+    const response = await axiosInstance.post("/auth/register", userData);
+    return response.data;
+  },
+
   // Get current user info
   getCurrentUser: async () => {
     const response = await axiosInstance.get("/auth/me");

@@ -1,6 +1,6 @@
-import { Button } from "@/components/ui/button";
-import { Dropdown, DropdownItem } from "@/components/ui/dropdown";
-import { useAuth } from "@/context/AuthContext";
+import { Button } from "@/components/ui/Button";
+import { Dropdown, DropdownItem } from "@/components/ui/Dropdown";
+import { useAuth } from "@/hooks/useAuth";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router";

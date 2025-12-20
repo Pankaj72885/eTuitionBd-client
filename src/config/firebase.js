@@ -11,16 +11,18 @@ const firebaseConfig = {
   measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID,
 };
 
-// Initialize Firebase
+console.log("Firebase Config:", firebaseConfig);
+
 const app = initializeApp(firebaseConfig);
+console.log("Firebase app initialized successfully");
 
-// Initialize Firebase Authentication and get a reference to the service
-export const auth = getAuth(app);
-export const googleProvider = new GoogleAuthProvider();
+const auth = getAuth(app);
+const googleProvider = new GoogleAuthProvider();
 
-// Configure Google provider
 googleProvider.setCustomParameters({
   prompt: "select_account",
 });
 
-export default app;
+console.log("Firebase auth initialized");
+
+export { app, auth, googleProvider };

@@ -1,8 +1,8 @@
 import { authAPI } from "@/api/auth.api";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/Button";
+import { Input } from "@/components/ui/Input";
 import { auth, googleProvider } from "@/config/firebase";
-import { useAuth } from "@/context/AuthContext";
+import { useAuth } from "@/hooks/useAuth";
 import { useMutation } from "@tanstack/react-query";
 import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { useState } from "react";
@@ -36,7 +36,11 @@ const LoginPage = () => {
       navigate(from, { replace: true });
     },
     onError: (error) => {
-      toast.error(error.response?.data?.message || "Login failed");
+      if (error.response?.status === 404) {
+        toast.error("Account does not exist. Please Sign Up first.");
+      } else {
+        toast.error(error.response?.data?.message || "Login failed");
+      }
     },
   });
 

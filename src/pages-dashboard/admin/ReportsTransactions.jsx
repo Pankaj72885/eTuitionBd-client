@@ -1,0 +1,330 @@
+import React, { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { format, subMonths, startOfMonth, endOfMonth } from "date-fns";
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+  BarChart,
+  Bar,
+} from "recharts";
+import { paymentsAPI } from "@/api/payments.api";
+import {Button} from "@/components/ui/Button";
+import {Card, CardContent} from "@/components/ui/Card";
+import {Input} from "@/components/ui/Input";
+import LoadingSpinner from "@/components/common/LoadingSpinner";
+import ProtectedImage from "@/components/common/ProtectedImage";
+
+const ReportsTransactions = () => {
+  const [dateRange, setDateRange] = useState({
+    from: format(startOfMonth(subMonths(new Date(), 5)), "yyyy-MM-dd"),
+    to: format(endOfMonth(new Date()), "yyyy-MM-dd"),
+  });
+
+  // Fetch all payments
+  const { data: payments, isLoading } = useQuery({
+    queryKey: ["allPayments", dateRange],
+    queryFn: () => paymentsAPI.getAllPayments(dateRange),
+  });
+
+  const handleDateRangeChange = (field, value) => {
+    setDateRange((prev) => ({
+      ...prev,
+      [field]: value,
+    }));
+  };
+
+  const clearFilters = () => {
+    setDateRange({
+      from: format(startOfMonth(subMonths(new Date(), 5)), "yyyy-MM-dd"),
+      to: format(endOfMonth(new Date()), "yyyy-MM-dd"),
+    });
+  };
+
+  // Prepare data for charts
+  const prepareChartData = () => {
+    if (!payments?.data?.length) return [];
+
+    // Group payments by month
+    const groupedData = {};
+
+    payments.data.forEach((payment) => {
+      const date = new Date(payment.createdAt);
+      const monthYear = format(date, "MMM yyyy");
+
+      if (!groupedData[monthYear]) {
+        groupedData[monthYear] = 0;
+      }
+
+      groupedData[monthYear] += payment.amount;
+    });
+
+    // Convert to array format for charts
+    return Object.entries(groupedData).map(([month, amount]) => ({
+      month,
+      amount,
+    }));
+  };
+
+  const chartData = prepareChartData();
+
+  // Calculate totals
+  const totalEarnings =
+    payments?.data?.reduce((sum, payment) => sum + payment.amount, 0) || 0;
+  const platformEarnings = totalEarnings * 0.1; // Assuming 10% platform fee
+  const currentMonthEarnings =
+    payments?.data
+      ?.filter((payment) => {
+        const paymentDate = new Date(payment.createdAt);
+        const currentDate = new Date();
+        return (
+          paymentDate.getMonth() === currentDate.getMonth() &&
+          paymentDate.getFullYear() === currentDate.getFullYear()
+        );
+      })
+      .reduce((sum, payment) => sum + payment.amount, 0) || 0;
+
+  return (
+    <div>
+      <h1 className="text-2xl font-bold text-gray-900 mb-6">
+        Reports & Transactions
+      </h1>
+
+      {/* Filters */}
+      <Card className="mb-6">
+        <CardContent className="p-6">
+          <h2 className="text-lg font-semibold text-gray-900 mb-4">
+            Filter Transactions
+          </h2>
+          <div className="grid md:grid-cols-2 gap-4">
+            <div>
+              <label
+                htmlFor="from"
+                className="block text-sm font-medium text-gray-700 mb-1"
+              >
+                From Date
+              </label>
+              <Input
+                id="from"
+                type="date"
+                value={dateRange.from}
+                onChange={(e) => handleDateRangeChange("from", e.target.value)}
+              />
+            </div>
+            <div>
+              <label
+                htmlFor="to"
+                className="block text-sm font-medium text-gray-700 mb-1"
+              >
+                To Date
+              </label>
+              <Input
+                id="to"
+                type="date"
+                value={dateRange.to}
+                onChange={(e) => handleDateRangeChange("to", e.target.value)}
+              />
+            </div>
+          </div>
+          <div className="mt-4">
+            <Button variant="outline" onClick={clearFilters}>
+              Clear Filters
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Summary Cards */}
+      <div className="grid gap-4 md:grid-cols-3 mb-6">
+        <Card>
+          <CardContent className="p-6">
+            <h2 className="text-lg font-semibold text-gray-900 mb-4">
+              Total Transactions
+            </h2>
+            <p className="text-3xl font-bold text-gray-900">
+              {payments?.data?.length || 0}
+            </p>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardContent className="p-6">
+            <h2 className="text-lg font-semibold text-gray-900 mb-4">
+              Total Earnings
+            </h2>
+            <p className="text-3xl font-bold text-gray-900">
+              ৳ {totalEarnings}
+            </p>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardContent className="p-6">
+            <h2 className="text-lg font-semibold text-gray-900 mb-4">
+              Platform Revenue
+            </h2>
+            <p className="text-3xl font-bold text-gray-900">
+              ৳ {platformEarnings}
+            </p>
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Revenue Chart */}
+      {chartData.length > 0 && (
+        <Card className="mb-6">
+          <CardContent className="p-6">
+            <h2 className="text-lg font-semibold text-gray-900 mb-4">
+              Revenue Trend
+            </h2>
+            <ResponsiveContainer width="100%" height={300}>
+              <LineChart data={chartData}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="month" />
+                <YAxis />
+                <Tooltip formatter={(value) => [`৳ ${value}`, "Earnings"]} />
+                <Line
+                  type="monotone"
+                  dataKey="amount"
+                  stroke="#4F46E5"
+                  strokeWidth={2}
+                />
+              </LineChart>
+            </ResponsiveContainer>
+          </CardContent>
+        </Card>
+      )}
+
+      {/* Transactions Table */}
+      {isLoading ? (
+        <div className="flex justify-center py-12">
+          <LoadingSpinner size="lg" />
+        </div>
+      ) : payments?.data?.length > 0 ? (
+        <Card>
+          <CardContent className="p-0">
+            <div className="overflow-x-auto">
+              <table className="min-w-full divide-y divide-gray-200">
+                <thead className="bg-gray-50">
+                  <tr>
+                    <th
+                      scope="col"
+                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    >
+                      Transaction ID
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    >
+                      Student
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    >
+                      Tutor
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    >
+                      Tuition
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    >
+                      Amount
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    >
+                      Date
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="bg-white divide-y divide-gray-200">
+                  {payments.data.map((payment) => (
+                    <tr key={payment._id}>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <div className="text-sm text-gray-900">
+                          {payment.transactionId ||
+                            `TXN${Math.random()
+                              .toString(36)
+                              .substr(2, 9)
+                              .toUpperCase()}`}
+                        </div>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <div className="flex items-center">
+                          <ProtectedImage
+                            src={payment.studentId?.photoUrl}
+                            alt={payment.studentId?.name}
+                            className="w-8 h-8 rounded-full mr-3"
+                          />
+                          <div className="text-sm text-gray-900">
+                            {payment.studentId?.name}
+                          </div>
+                        </div>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <div className="flex items-center">
+                          <ProtectedImage
+                            src={payment.tutorId?.photoUrl}
+                            alt={payment.tutorId?.name}
+                            className="w-8 h-8 rounded-full mr-3"
+                          />
+                          <div className="text-sm text-gray-900">
+                            {payment.tutorId?.name}
+                          </div>
+                        </div>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <div className="text-sm text-gray-900">
+                          {payment.tuitionId?.subject} for{" "}
+                          {payment.tuitionId?.classLevel}
+                        </div>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <div className="text-sm text-gray-900">
+                          ৳ {payment.amount}
+                        </div>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <div className="text-sm text-gray-900">
+                          {format(new Date(payment.createdAt), "MMM dd, yyyy")}
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </CardContent>
+        </Card>
+      ) : (
+        <Card>
+          <CardContent className="p-12 text-center">
+            <h3 className="text-lg font-medium text-gray-900 mb-2">
+              No transactions found
+            </h3>
+            <p className="text-gray-500 mb-6">
+              Try adjusting your filters or check back later.
+            </p>
+            <Button variant="outline" onClick={clearFilters}>
+              Clear Filters
+            </Button>
+          </CardContent>
+        </Card>
+      )}
+    </div>
+  );
+};
+
+export default ReportsTransactions;
