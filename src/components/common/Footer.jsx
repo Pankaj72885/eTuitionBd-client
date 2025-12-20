@@ -1,4 +1,3 @@
-import React from "react";
 import { Link } from "react-router";
 import {
   FacebookIcon,
@@ -9,15 +8,15 @@ import {
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-100">
+    <footer className="bg-gray-100 dark:bg-gray-900 transition-colors duration-200">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* About column */}
           <div className="col-span-1 md:col-span-1">
-            <h3 className="text-sm font-semibold text-gray-900 tracking-wider uppercase mb-4">
+            <h3 className="text-sm font-semibold text-gray-900 dark:text-gray-100 tracking-wider uppercase mb-4">
               About eTuitionBd
             </h3>
-            <p className="text-base text-gray-600">
+            <p className="text-base text-gray-600 dark:text-gray-400">
               A trusted platform connecting students with qualified tutors
               across Bangladesh.
             </p>
@@ -25,14 +24,14 @@ const Footer = () => {
 
           {/* Quick links column */}
           <div className="col-span-1 md:col-span-1">
-            <h3 className="text-sm font-semibold text-gray-900 tracking-wider uppercase mb-4">
+            <h3 className="text-sm font-semibold text-gray-900 dark:text-gray-100 tracking-wider uppercase mb-4">
               Quick Links
             </h3>
             <ul className="space-y-2">
               <li>
                 <Link
                   to="/"
-                  className="text-base text-gray-600 hover:text-brand"
+                  className="text-base text-gray-600 dark:text-gray-400 hover:text-brand dark:hover:text-indigo-400 transition-colors"
                 >
                   Home
                 </Link>
@@ -40,7 +39,7 @@ const Footer = () => {
               <li>
                 <Link
                   to="/tuitions"
-                  className="text-base text-gray-600 hover:text-brand"
+                  className="text-base text-gray-600 dark:text-gray-400 hover:text-brand dark:hover:text-indigo-400 transition-colors"
                 >
                   Tuitions
                 </Link>
@@ -48,7 +47,7 @@ const Footer = () => {
               <li>
                 <Link
                   to="/tutors"
-                  className="text-base text-gray-600 hover:text-brand"
+                  className="text-base text-gray-600 dark:text-gray-400 hover:text-brand dark:hover:text-indigo-400 transition-colors"
                 >
                   Tutors
                 </Link>
@@ -56,7 +55,7 @@ const Footer = () => {
               <li>
                 <Link
                   to="/about"
-                  className="text-base text-gray-600 hover:text-brand"
+                  className="text-base text-gray-600 dark:text-gray-400 hover:text-brand dark:hover:text-indigo-400 transition-colors"
                 >
                   About
                 </Link>
@@ -64,7 +63,7 @@ const Footer = () => {
               <li>
                 <Link
                   to="/contact"
-                  className="text-base text-gray-600 hover:text-brand"
+                  className="text-base text-gray-600 dark:text-gray-400 hover:text-brand dark:hover:text-indigo-400 transition-colors"
                 >
                   Contact
                 </Link>
@@ -74,17 +73,17 @@ const Footer = () => {
 
           {/* Contact column */}
           <div className="col-span-1 md:col-span-1">
-            <h3 className="text-sm font-semibold text-gray-900 tracking-wider uppercase mb-4">
+            <h3 className="text-sm font-semibold text-gray-900 dark:text-gray-100 tracking-wider uppercase mb-4">
               Contact Us
             </h3>
             <ul className="space-y-2">
-              <li className="text-base text-gray-600">
+              <li className="text-base text-gray-600 dark:text-gray-400">
                 Email: info@etuitionbd.com
               </li>
-              <li className="text-base text-gray-600">
+              <li className="text-base text-gray-600 dark:text-gray-400">
                 Phone: +880 1234 567890
               </li>
-              <li className="text-base text-gray-600">
+              <li className="text-base text-gray-600 dark:text-gray-400">
                 Location: Rajshahi, Bangladesh
               </li>
             </ul>
@@ -92,20 +91,32 @@ const Footer = () => {
 
           {/* Social column */}
           <div className="col-span-1 md:col-span-1">
-            <h3 className="text-sm font-semibold text-gray-900 tracking-wider uppercase mb-4">
+            <h3 className="text-sm font-semibold text-gray-900 dark:text-gray-100 tracking-wider uppercase mb-4">
               Follow Us
             </h3>
             <div className="flex space-x-4">
-              <a href="#" className="text-gray-600 hover:text-brand">
+              <a
+                href="#"
+                className="text-gray-600 dark:text-gray-400 hover:text-brand dark:hover:text-indigo-400 transition-colors"
+              >
                 <FacebookIcon className="h-6 w-6" />
               </a>
-              <a href="#" className="text-gray-600 hover:text-brand">
+              <a
+                href="#"
+                className="text-gray-600 dark:text-gray-400 hover:text-brand dark:hover:text-indigo-400 transition-colors"
+              >
                 <InstagramIcon className="h-6 w-6" />
               </a>
-              <a href="#" className="text-gray-600 hover:text-brand">
+              <a
+                href="#"
+                className="text-gray-600 dark:text-gray-400 hover:text-brand dark:hover:text-indigo-400 transition-colors"
+              >
                 <LinkedinIcon className="h-6 w-6" />
               </a>
-              <a href="#" className="text-gray-600 hover:text-brand">
+              <a
+                href="#"
+                className="text-gray-600 dark:text-gray-400 hover:text-brand dark:hover:text-indigo-400 transition-colors"
+              >
                 <XIcon className="h-6 w-6" />
               </a>
             </div>
@@ -113,8 +124,8 @@ const Footer = () => {
         </div>
 
         {/* Bottom bar */}
-        <div className="mt-8 pt-8 border-t border-gray-200">
-          <p className="text-center text-base text-gray-500">
+        <div className="mt-8 pt-8 border-t border-gray-200 dark:border-gray-700">
+          <p className="text-center text-base text-gray-500 dark:text-gray-400">
             © {new Date().getFullYear()} eTuitionBd. All rights reserved.
           </p>
         </div>

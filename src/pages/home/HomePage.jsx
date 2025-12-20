@@ -1,13 +1,11 @@
-import React from "react";
-import { Link } from "react-router";
-import { motion } from "framer-motion";
+import { Button } from "@/components/ui/Button";
+import { Card, CardContent } from "@/components/ui/Card";
 import { useQuery } from "@tanstack/react-query";
-import {Button} from "@/components/ui/Button";
-import {Card, CardContent} from "@/components/ui/Card";
-import StatusBadge from "../../components/ui/StatusBadge";
+import { motion } from "framer-motion";
+import { Link } from "react-router";
 import { tuitionsAPI } from "../../api/tuitions.api";
-import LoadingSpinner from "../../components/common/LoadingSpinner";
 import ProtectedImage from "../../components/common/ProtectedImage";
+import StatusBadge from "../../components/ui/StatusBadge";
 
 const HomePage = () => {
   const { data: latestTuitions, isLoading: tuitionsLoading } = useQuery({
@@ -34,19 +32,19 @@ const HomePage = () => {
   };
 
   return (
-    <div>
+    <div className="bg-background dark:bg-gray-950 transition-colors duration-200">
       {/* Hero Section */}
-      <section className="bg-linear-to-b from-brand-light/40 to-gray-50">
+      <section className="bg-gradient-to-b from-indigo-50/50 dark:from-indigo-950/30 to-gray-50 dark:to-gray-900">
         <div className="max-w-6xl mx-auto px-4 md:px-6 py-12 md:py-20 grid md:grid-cols-2 gap-10 items-center">
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <h1 className="text-3xl md:text-4xl font-bold tracking-tight text-gray-900">
+            <h1 className="text-3xl md:text-4xl font-bold tracking-tight text-gray-900 dark:text-white">
               Find trusted tutors in minutes
             </h1>
-            <p className="mt-3 text-gray-600 max-w-lg">
+            <p className="mt-3 text-gray-600 dark:text-gray-300 max-w-lg">
               eTuitionBd connects students with qualified, verified tutors
               across Bangladesh. Our platform ensures transparency, security,
               and quality education for all.
@@ -65,25 +63,43 @@ const HomePage = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            <Card className="shadow-lg">
+            <Card className="shadow-lg dark:shadow-indigo-900/20 border-gray-200 dark:border-gray-700">
               <CardContent className="p-6">
-                <p className="text-sm text-gray-500">Platform snapshot</p>
+                <p className="text-sm text-gray-500 dark:text-gray-400">
+                  Platform snapshot
+                </p>
                 <div className="mt-4 grid grid-cols-2 gap-4">
                   <div className="text-center">
-                    <p className="text-2xl font-bold text-brand">500+</p>
-                    <p className="text-sm text-gray-600">Successful tuitions</p>
+                    <p className="text-2xl font-bold text-brand dark:text-indigo-400">
+                      500+
+                    </p>
+                    <p className="text-sm text-gray-600 dark:text-gray-400">
+                      Successful tuitions
+                    </p>
                   </div>
                   <div className="text-center">
-                    <p className="text-2xl font-bold text-brand">4.8★</p>
-                    <p className="text-sm text-gray-600">Average rating</p>
+                    <p className="text-2xl font-bold text-brand dark:text-indigo-400">
+                      4.8★
+                    </p>
+                    <p className="text-sm text-gray-600 dark:text-gray-400">
+                      Average rating
+                    </p>
                   </div>
                   <div className="text-center">
-                    <p className="text-2xl font-bold text-brand">200+</p>
-                    <p className="text-sm text-gray-600">Verified tutors</p>
+                    <p className="text-2xl font-bold text-brand dark:text-indigo-400">
+                      200+
+                    </p>
+                    <p className="text-sm text-gray-600 dark:text-gray-400">
+                      Verified tutors
+                    </p>
                   </div>
                   <div className="text-center">
-                    <p className="text-2xl font-bold text-brand">15+</p>
-                    <p className="text-sm text-gray-600">Cities covered</p>
+                    <p className="text-2xl font-bold text-brand dark:text-indigo-400">
+                      15+
+                    </p>
+                    <p className="text-sm text-gray-600 dark:text-gray-400">
+                      Cities covered
+                    </p>
                   </div>
                 </div>
               </CardContent>
@@ -93,12 +109,12 @@ const HomePage = () => {
       </section>
 
       {/* How it works */}
-      <section className="py-12 md:py-16 bg-white">
+      <section className="py-12 md:py-16 bg-white dark:bg-gray-900">
         <div className="max-w-6xl mx-auto px-4 md:px-6">
-          <h2 className="text-center text-2xl md:text-3xl font-semibold text-gray-900">
+          <h2 className="text-center text-2xl md:text-3xl font-semibold text-gray-900 dark:text-white">
             How eTuitionBd works
           </h2>
-          <p className="mt-2 text-center text-gray-500 max-w-2xl mx-auto">
+          <p className="mt-2 text-center text-gray-500 dark:text-gray-400 max-w-2xl mx-auto">
             Simple, transparent steps to connect students and tutors.
           </p>
 
@@ -109,15 +125,15 @@ const HomePage = () => {
             animate="visible"
           >
             <motion.div variants={itemVariants}>
-              <Card>
+              <Card className="hover:shadow-lg dark:hover:shadow-indigo-900/20 transition-shadow">
                 <CardContent className="p-6 flex flex-col gap-3">
-                  <div className="w-10 h-10 rounded-full bg-brand-light flex items-center justify-center text-brand font-semibold text-sm">
+                  <div className="w-10 h-10 rounded-full bg-brand-light dark:bg-indigo-900/50 flex items-center justify-center text-brand dark:text-indigo-400 font-semibold text-sm">
                     1
                   </div>
-                  <h3 className="text-lg font-semibold text-gray-900">
+                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
                     Post a tuition
                   </h3>
-                  <p className="text-sm text-gray-600">
+                  <p className="text-sm text-gray-600 dark:text-gray-400">
                     Students share their requirements, subject, location, and
                     budget.
                   </p>
@@ -126,15 +142,15 @@ const HomePage = () => {
             </motion.div>
 
             <motion.div variants={itemVariants}>
-              <Card>
+              <Card className="hover:shadow-lg dark:hover:shadow-indigo-900/20 transition-shadow">
                 <CardContent className="p-6 flex flex-col gap-3">
-                  <div className="w-10 h-10 rounded-full bg-brand-light flex items-center justify-center text-brand font-semibold text-sm">
+                  <div className="w-10 h-10 rounded-full bg-brand-light dark:bg-indigo-900/50 flex items-center justify-center text-brand dark:text-indigo-400 font-semibold text-sm">
                     2
                   </div>
-                  <h3 className="text-lg font-semibold text-gray-900">
+                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
                     Tutors apply
                   </h3>
-                  <p className="text-sm text-gray-600">
+                  <p className="text-sm text-gray-600 dark:text-gray-400">
                     Qualified tutors apply with their qualifications,
                     experience, and expected salary.
                   </p>
@@ -143,15 +159,15 @@ const HomePage = () => {
             </motion.div>
 
             <motion.div variants={itemVariants}>
-              <Card>
+              <Card className="hover:shadow-lg dark:hover:shadow-indigo-900/20 transition-shadow">
                 <CardContent className="p-6 flex flex-col gap-3">
-                  <div className="w-10 h-10 rounded-full bg-brand-light flex items-center justify-center text-brand font-semibold text-sm">
+                  <div className="w-10 h-10 rounded-full bg-brand-light dark:bg-indigo-900/50 flex items-center justify-center text-brand dark:text-indigo-400 font-semibold text-sm">
                     3
                   </div>
-                  <h3 className="text-lg font-semibold text-gray-900">
+                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
                     Approve & start classes
                   </h3>
-                  <p className="text-sm text-gray-600">
+                  <p className="text-sm text-gray-600 dark:text-gray-400">
                     Students review applications, select a tutor, make payment,
                     and begin learning.
                   </p>
@@ -163,12 +179,12 @@ const HomePage = () => {
       </section>
 
       {/* Why choose us */}
-      <section className="py-12 md:py-16 bg-gray-50">
+      <section className="py-12 md:py-16 bg-gray-50 dark:bg-gray-800">
         <div className="max-w-6xl mx-auto px-4 md:px-6">
-          <h2 className="text-center text-2xl md:text-3xl font-semibold text-gray-900">
+          <h2 className="text-center text-2xl md:text-3xl font-semibold text-gray-900 dark:text-white">
             Why choose eTuitionBd
           </h2>
-          <p className="mt-2 text-center text-gray-500 max-w-2xl mx-auto">
+          <p className="mt-2 text-center text-gray-500 dark:text-gray-400 max-w-2xl mx-auto">
             We're committed to providing the best tuition experience for
             students and tutors.
           </p>
@@ -198,10 +214,10 @@ const HomePage = () => {
                       />
                     </svg>
                   </div>
-                  <h3 className="text-lg font-semibold text-gray-900">
+                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
                     Verified tutors
                   </h3>
-                  <p className="text-sm text-gray-600">
+                  <p className="text-sm text-gray-600 dark:text-gray-400">
                     All tutors go through a verification process to ensure
                     quality and safety.
                   </p>
@@ -303,10 +319,10 @@ const HomePage = () => {
       </section>
 
       {/* Latest tuition posts */}
-      <section className="py-12 md:py-16 bg-white">
+      <section className="py-12 md:py-16 bg-white dark:bg-gray-900">
         <div className="max-w-6xl mx-auto px-4 md:px-6">
           <div className="flex items-center justify-between gap-2">
-            <h2 className="text-xl md:text-2xl font-semibold text-gray-900">
+            <h2 className="text-xl md:text-2xl font-semibold text-gray-900 dark:text-white">
               Latest Tuition Opportunities
             </h2>
             <Link to="/tuitions">
@@ -371,10 +387,10 @@ const HomePage = () => {
       </section>
 
       {/* Top tutors */}
-      <section className="py-12 md:py-16 bg-gray-50">
+      <section className="py-12 md:py-16 bg-gray-50 dark:bg-gray-800">
         <div className="max-w-6xl mx-auto px-4 md:px-6">
           <div className="flex items-center justify-between gap-2">
-            <h2 className="text-xl md:text-2xl font-semibold text-gray-900">
+            <h2 className="text-xl md:text-2xl font-semibold text-gray-900 dark:text-white">
               Top Tutors
             </h2>
             <Link to="/tutors">

@@ -166,14 +166,14 @@ const Navbar = () => {
 
       {/* Mobile menu */}
       {mobileMenuOpen && (
-        <div className="md:hidden">
+        <div className="md:hidden bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700">
           <div className="pt-2 pb-3 space-y-1">
             <Link
               to="/"
-              className={`block pl-3 pr-4 py-2 border-l-4 text-base font-medium ${
+              className={`block pl-3 pr-4 py-2 border-l-4 text-base font-medium transition-colors ${
                 isActive("/")
-                  ? "bg-brand border-brand text-white"
-                  : "border-transparent text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800"
+                  ? "bg-brand dark:bg-indigo-600 border-brand dark:border-indigo-400 text-white"
+                  : "border-transparent text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 hover:border-gray-300 dark:hover:border-gray-600 hover:text-gray-800 dark:hover:text-gray-200"
               }`}
               onClick={() => setMobileMenuOpen(false)}
             >
@@ -181,10 +181,10 @@ const Navbar = () => {
             </Link>
             <Link
               to="/tuitions"
-              className={`block pl-3 pr-4 py-2 border-l-4 text-base font-medium ${
+              className={`block pl-3 pr-4 py-2 border-l-4 text-base font-medium transition-colors ${
                 isActive("/tuitions")
-                  ? "bg-brand border-brand text-white"
-                  : "border-transparent text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800"
+                  ? "bg-brand dark:bg-indigo-600 border-brand dark:border-indigo-400 text-white"
+                  : "border-transparent text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 hover:border-gray-300 dark:hover:border-gray-600 hover:text-gray-800 dark:hover:text-gray-200"
               }`}
               onClick={() => setMobileMenuOpen(false)}
             >
@@ -192,10 +192,10 @@ const Navbar = () => {
             </Link>
             <Link
               to="/tutors"
-              className={`block pl-3 pr-4 py-2 border-l-4 text-base font-medium ${
+              className={`block pl-3 pr-4 py-2 border-l-4 text-base font-medium transition-colors ${
                 isActive("/tutors")
-                  ? "bg-brand border-brand text-white"
-                  : "border-transparent text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800"
+                  ? "bg-brand dark:bg-indigo-600 border-brand dark:border-indigo-400 text-white"
+                  : "border-transparent text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 hover:border-gray-300 dark:hover:border-gray-600 hover:text-gray-800 dark:hover:text-gray-200"
               }`}
               onClick={() => setMobileMenuOpen(false)}
             >
@@ -203,10 +203,10 @@ const Navbar = () => {
             </Link>
             <Link
               to="/about"
-              className={`block pl-3 pr-4 py-2 border-l-4 text-base font-medium ${
+              className={`block pl-3 pr-4 py-2 border-l-4 text-base font-medium transition-colors ${
                 isActive("/about")
-                  ? "bg-brand border-brand text-white"
-                  : "border-transparent text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800"
+                  ? "bg-brand dark:bg-indigo-600 border-brand dark:border-indigo-400 text-white"
+                  : "border-transparent text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 hover:border-gray-300 dark:hover:border-gray-600 hover:text-gray-800 dark:hover:text-gray-200"
               }`}
               onClick={() => setMobileMenuOpen(false)}
             >
@@ -214,23 +214,23 @@ const Navbar = () => {
             </Link>
             <Link
               to="/contact"
-              className={`block pl-3 pr-4 py-2 border-l-4 text-base font-medium ${
+              className={`block pl-3 pr-4 py-2 border-l-4 text-base font-medium transition-colors ${
                 isActive("/contact")
-                  ? "bg-brand border-brand text-white"
-                  : "border-transparent text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800"
+                  ? "bg-brand dark:bg-indigo-600 border-brand dark:border-indigo-400 text-white"
+                  : "border-transparent text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 hover:border-gray-300 dark:hover:border-gray-600 hover:text-gray-800 dark:hover:text-gray-200"
               }`}
               onClick={() => setMobileMenuOpen(false)}
             >
               Contact
             </Link>
           </div>
-          <div className="pt-4 pb-3 border-t border-gray-200">
+          <div className="pt-4 pb-3 border-t border-gray-200 dark:border-gray-700">
             {user ? (
               <div>
                 <div className="flex items-center px-4">
                   <div className="shrink-0">
                     <img
-                      className="h-10 w-10 rounded-full"
+                      className="h-10 w-10 rounded-full ring-2 ring-gray-200 dark:ring-gray-700"
                       src={
                         user.photoUrl ||
                         "https://picsum.photos/seed/user/40/40.jpg"
@@ -239,10 +239,10 @@ const Navbar = () => {
                     />
                   </div>
                   <div className="ml-3">
-                    <div className="text-base font-medium text-gray-800">
+                    <div className="text-base font-medium text-gray-800 dark:text-gray-200">
                       {user.name}
                     </div>
-                    <div className="text-sm font-medium text-gray-500">
+                    <div className="text-sm font-medium text-gray-500 dark:text-gray-400">
                       {user.email}
                     </div>
                   </div>
@@ -250,20 +250,20 @@ const Navbar = () => {
                 <div className="mt-3 space-y-1">
                   <Link
                     to={`/dashboard/${user.role}`}
-                    className="block px-4 py-2 text-base font-medium text-gray-500 hover:text-gray-800 hover:bg-gray-100"
+                    className="block px-4 py-2 text-base font-medium text-gray-500 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     Dashboard
                   </Link>
                   <Link
                     to={`/dashboard/${user.role}/profile`}
-                    className="block px-4 py-2 text-base font-medium text-gray-500 hover:text-gray-800 hover:bg-gray-100"
+                    className="block px-4 py-2 text-base font-medium text-gray-500 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     Profile
                   </Link>
                   <button
-                    className="block px-4 py-2 text-base font-medium text-gray-500 hover:text-gray-800 hover:bg-gray-100 w-full text-left"
+                    className="block px-4 py-2 text-base font-medium text-gray-500 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 w-full text-left transition-colors"
                     onClick={() => {
                       handleLogout();
                       setMobileMenuOpen(false);
@@ -278,8 +278,8 @@ const Navbar = () => {
                 <button
                   className={`w-full px-4 py-2 text-sm font-medium rounded-md transition-all ${
                     isActive("/login")
-                      ? "bg-brand text-white shadow-sm"
-                      : "text-brand hover:bg-brand hover:text-white border border-brand"
+                      ? "bg-brand dark:bg-indigo-600 text-white shadow-sm"
+                      : "text-brand dark:text-indigo-400 hover:bg-brand dark:hover:bg-indigo-600 hover:text-white border border-brand dark:border-indigo-400"
                   }`}
                   onClick={() => {
                     navigate("/login");
@@ -291,8 +291,8 @@ const Navbar = () => {
                 <button
                   className={`w-full px-4 py-2 text-sm font-medium rounded-md transition-all ${
                     isActive("/register")
-                      ? "bg-brand text-white shadow-sm"
-                      : "text-brand hover:bg-brand hover:text-white border border-brand"
+                      ? "bg-brand dark:bg-indigo-600 text-white shadow-sm"
+                      : "text-brand dark:text-indigo-400 hover:bg-brand dark:hover:bg-indigo-600 hover:text-white border border-brand dark:border-indigo-400"
                   }`}
                   onClick={() => {
                     navigate("/register");
