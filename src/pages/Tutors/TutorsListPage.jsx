@@ -23,10 +23,11 @@ import {
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import toast from "react-hot-toast";
-import { useSearchParams } from "react-router";
+import { useNavigate, useSearchParams } from "react-router";
 
 const TutorsListPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
+  const navigate = useNavigate();
   const [filtersOpen, setFiltersOpen] = useState(false);
   const { user } = useAuth();
   const queryClient = useQueryClient();
@@ -324,7 +325,11 @@ const TutorsListPage = () => {
                             </svg>
                           </Button>
                         )}
-                        <Button variant="outline" size="sm">
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => navigate(`/tutors/${tutor._id}`)}
+                        >
                           View Profile
                         </Button>
                       </div>

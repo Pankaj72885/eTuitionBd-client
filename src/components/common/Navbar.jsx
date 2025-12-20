@@ -1,3 +1,4 @@
+import ThemeToggle from "@/components/common/ThemeToggle";
 import { Button } from "@/components/ui/Button";
 import { Dropdown, DropdownItem } from "@/components/ui/Dropdown";
 import { useAuth } from "@/hooks/useAuth";
@@ -83,9 +84,12 @@ const Navbar = () => {
               </Link>
             </div>
           </div>
-          <div className="flex items-center">
+          <div className="flex items-center gap-2">
+            {/* Theme Toggle */}
+            <ThemeToggle />
+
             {user ? (
-              <div className="hidden md:ml-4 md:shrink-0 md:flex md:items-center">
+              <div className="hidden md:ml-2 md:shrink-0 md:flex md:items-center">
                 <Button
                   variant="primary"
                   size="sm"

@@ -1,30 +1,18 @@
-import React from "react";
+import { paymentsAPI } from "@/api/payments.api";
+import { tuitionsAPI } from "@/api/tuitions.api";
+import { usersAPI } from "@/api/users.api";
+import LoadingSpinner from "@/components/common/LoadingSpinner";
+import DashboardCard from "@/components/dashboard/DashboardCard";
+import { Card, CardContent } from "@/components/ui/Card";
+import {
+  BookOpenIcon,
+  ClockIcon,
+  CurrencyDollarIcon,
+  UserGroupIcon,
+} from "@heroicons/react/24/outline";
 import { useQuery } from "@tanstack/react-query";
 import { motion } from "framer-motion";
-import {
-  UserGroupIcon,
-  BookOpenIcon,
-  CurrencyDollarIcon,
-  ClockIcon,
-} from "@heroicons/react/24/outline";
-import { usersAPI } from "@/api/users.api";
-import { tuitionsAPI } from "@/api/tuitions.api";
-import { paymentsAPI } from "@/api/payments.api";
-import DashboardCard from "@/components/dashboard/DashboardCard";
-import {Card, CardContent} from "@/components/ui/Card";
-import LoadingSpinner from "@/components/common/LoadingSpinner";
-import {
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  ResponsiveContainer,
-  PieChart,
-  Pie,
-  Cell,
-} from "recharts";
+import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from "recharts";
 
 const AdminDashboardHome = () => {
   // Fetch admin stats
@@ -40,7 +28,7 @@ const AdminDashboardHome = () => {
 
   const { data: payments, isLoading: paymentsLoading } = useQuery({
     queryKey: ["allPayments"],
-    queryFn: () => paymentsAPI.getAllPayments({ limit: 1000 }),
+    queryFn: () => paymentsAPI.getAdminPayments({ limit: 1000 }),
   });
 
   const containerVariants = {

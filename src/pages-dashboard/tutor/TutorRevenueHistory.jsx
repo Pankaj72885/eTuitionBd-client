@@ -1,23 +1,21 @@
-import React, { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
-import { format, subMonths, startOfMonth, endOfMonth } from "date-fns";
-import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  ResponsiveContainer,
-  BarChart,
-  Bar,
-} from "recharts";
 import { paymentsAPI } from "@/api/payments.api";
-import {Button} from "@/components/ui/Button";
-import {Card, CardContent} from "@/components/ui/Card";
-import {Input} from "@/components/ui/Input";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
 import ProtectedImage from "@/components/common/ProtectedImage";
+import { Button } from "@/components/ui/Button";
+import { Card, CardContent } from "@/components/ui/Card";
+import { Input } from "@/components/ui/Input";
+import { useQuery } from "@tanstack/react-query";
+import { endOfMonth, format, startOfMonth, subMonths } from "date-fns";
+import { useState } from "react";
+import {
+  CartesianGrid,
+  Line,
+  LineChart,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from "recharts";
 
 const TutorRevenueHistory = () => {
   const [dateRange, setDateRange] = useState({
@@ -27,7 +25,7 @@ const TutorRevenueHistory = () => {
 
   // Fetch tutor's payments
   const { data: payments, isLoading } = useQuery({
-    queryKey: ["tutorPayments", dateRange],
+    queryKey: ["tutorPayments", dateRange.from, dateRange.to],
     queryFn: () => paymentsAPI.getTutorPayments(dateRange),
   });
 
@@ -296,7 +294,7 @@ const TutorRevenueHistory = () => {
             </p>
             <Button
               onClick={() =>
-                (window.location.href = "/dashboard/tutor/my-applications")
+                (window.location.href = "/dashboard/tutor/applications")
               }
             >
               View My Applications

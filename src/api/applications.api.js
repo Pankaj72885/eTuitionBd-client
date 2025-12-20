@@ -11,6 +11,15 @@ export const applicationsAPI = {
     return response.data;
   },
 
+  // Alias for applyForTuition (used in TuitionDetailsPage)
+  applyToTuition: async (applicationData) => {
+    const response = await axiosInstance.post(
+      API_ENDPOINTS.APPLICATIONS.APPLY,
+      applicationData
+    );
+    return response.data;
+  },
+
   // Get applications for student (my tuitions' applications)
   getStudentApplications: async () => {
     const response = await axiosInstance.get(

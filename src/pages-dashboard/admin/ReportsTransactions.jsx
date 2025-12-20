@@ -1,23 +1,21 @@
-import React, { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
-import { format, subMonths, startOfMonth, endOfMonth } from "date-fns";
-import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  ResponsiveContainer,
-  BarChart,
-  Bar,
-} from "recharts";
 import { paymentsAPI } from "@/api/payments.api";
-import {Button} from "@/components/ui/Button";
-import {Card, CardContent} from "@/components/ui/Card";
-import {Input} from "@/components/ui/Input";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
 import ProtectedImage from "@/components/common/ProtectedImage";
+import { Button } from "@/components/ui/Button";
+import { Card, CardContent } from "@/components/ui/Card";
+import { Input } from "@/components/ui/Input";
+import { useQuery } from "@tanstack/react-query";
+import { endOfMonth, format, startOfMonth, subMonths } from "date-fns";
+import { useState } from "react";
+import {
+  CartesianGrid,
+  Line,
+  LineChart,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from "recharts";
 
 const ReportsTransactions = () => {
   const [dateRange, setDateRange] = useState({
@@ -27,8 +25,8 @@ const ReportsTransactions = () => {
 
   // Fetch all payments
   const { data: payments, isLoading } = useQuery({
-    queryKey: ["allPayments", dateRange],
-    queryFn: () => paymentsAPI.getAllPayments(dateRange),
+    queryKey: ["allPayments", dateRange.from, dateRange.to],
+    queryFn: () => paymentsAPI.getAdminPayments(dateRange),
   });
 
   const handleDateRangeChange = (field, value) => {
@@ -76,17 +74,6 @@ const ReportsTransactions = () => {
   const totalEarnings =
     payments?.data?.reduce((sum, payment) => sum + payment.amount, 0) || 0;
   const platformEarnings = totalEarnings * 0.1; // Assuming 10% platform fee
-  const currentMonthEarnings =
-    payments?.data
-      ?.filter((payment) => {
-        const paymentDate = new Date(payment.createdAt);
-        const currentDate = new Date();
-        return (
-          paymentDate.getMonth() === currentDate.getMonth() &&
-          paymentDate.getFullYear() === currentDate.getFullYear()
-        );
-      })
-      .reduce((sum, payment) => sum + payment.amount, 0) || 0;
 
   return (
     <div>
@@ -255,10 +242,7 @@ const ReportsTransactions = () => {
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className="text-sm text-gray-900">
                           {payment.transactionId ||
-                            `TXN${Math.random()
-                              .toString(36)
-                              .substr(2, 9)
-                              .toUpperCase()}`}
+                            `TXN-${payment._id.substr(-6).toUpperCase()}`}
                         </div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">

@@ -1,25 +1,24 @@
-import React from "react";
+import { paymentsAPI } from "@/api/payments.api";
+import { tuitionsAPI } from "@/api/tuitions.api";
+import { usersAPI } from "@/api/users.api";
+import LoadingSpinner from "@/components/common/LoadingSpinner";
+import { Card, CardContent } from "@/components/ui/Card";
 import { useQuery } from "@tanstack/react-query";
-import { format, subMonths, startOfMonth, endOfMonth } from "date-fns";
+import { format, subMonths } from "date-fns";
 import {
-  LineChart,
+  Bar,
+  BarChart,
+  CartesianGrid,
+  Cell,
   Line,
+  LineChart,
+  Pie,
+  PieChart,
+  ResponsiveContainer,
+  Tooltip,
   XAxis,
   YAxis,
-  CartesianGrid,
-  Tooltip,
-  ResponsiveContainer,
-  BarChart,
-  Bar,
-  PieChart,
-  Pie,
-  Cell,
 } from "recharts";
-import { usersAPI } from "@/api/users.api";
-import { tuitionsAPI } from "@/api/tuitions.api";
-import { paymentsAPI } from "@/api/payments.api";
-import {Card, CardContent} from "@/components/ui/Card";
-import LoadingSpinner from "@/components/common/LoadingSpinner";
 
 const AdminAnalytics = () => {
   // Fetch data for analytics
@@ -35,7 +34,7 @@ const AdminAnalytics = () => {
 
   const { data: payments, isLoading: paymentsLoading } = useQuery({
     queryKey: ["allPayments"],
-    queryFn: () => paymentsAPI.getAllPayments({ limit: 1000 }),
+    queryFn: () => paymentsAPI.getAdminPayments({ limit: 1000 }),
   });
 
   // Prepare data for charts

@@ -195,7 +195,7 @@ const RegisterPage = () => {
   }, [errors, watch]);
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-linear-to-b from-brand-light/40 to-gray-50 px-4">
+    <div className="min-h-full py-10 flex items-center justify-center bg-linear-to-b from-brand-light/40 to-gray-50 px-4">
       <div className="w-full max-w-md bg-white border border-gray-100 rounded-xl shadow-lg p-6 md:p-8 space-y-6">
         <div className="text-center">
           <h1 className="text-xl font-semibold text-gray-900">

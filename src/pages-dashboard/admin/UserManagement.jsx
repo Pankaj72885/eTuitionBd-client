@@ -1,33 +1,32 @@
-import React, { useState } from "react";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { usersAPI } from "@/api/users.api";
+import LoadingSpinner from "@/components/common/LoadingSpinner";
+import ProtectedImage from "@/components/common/ProtectedImage";
+import { Button } from "@/components/ui/Button";
+import { Card, CardContent } from "@/components/ui/Card";
+import { Dialog } from "@/components/ui/DialogWrapper";
+import { Input } from "@/components/ui/Input";
+import { Select } from "@/components/ui/Select";
 import {
+  CheckCircleIcon,
+  EyeIcon,
   PencilIcon,
   TrashIcon,
-  EyeIcon,
-  CheckCircleIcon,
-  XCircleIcon,
 } from "@heroicons/react/24/outline";
-import { usersAPI } from "@/api/users.api";
-import {Button} from "@/components/ui/Button";
-import {Card, CardContent} from "@/components/ui/Card";
-import {Input} from "@/components/ui/Input";
-import {Select} from "@/components/ui/Select";
-import LoadingSpinner from "@/components/common/LoadingSpinner";
-import {Dialog} from "@/components/ui/Dialog";
-import ProtectedImage from "@/components/common/ProtectedImage";
-import toast from "react-hot-toast";
-import { useNavigate } from "react-router";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 
 const UserManagement = () => {
-  const navigate = useNavigate();
   const queryClient = useQueryClient();
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [editDialogOpen, setEditDialogOpen] = useState(false);
   const [roleChangeDialogOpen, setRoleChangeDialogOpen] = useState(false);
+  const [viewDialogOpen, setViewDialogOpen] = useState(false);
   const [userToEdit, setUserToEdit] = useState(null);
   const [userToDelete, setUserToDelete] = useState(null);
   const [userToChangeRole, setUserToChangeRole] = useState(null);
+  const [userToView, setUserToView] = useState(null);
   const [filters, setFilters] = useState({
     role: "",
     search: "",
@@ -151,8 +150,9 @@ const UserManagement = () => {
     });
   };
 
-  const handleView = (id) => {
-    navigate(`/dashboard/admin/users/${id}`);
+  const handleView = (user) => {
+    setUserToView(user);
+    setViewDialogOpen(true);
   };
 
   return (
@@ -294,7 +294,7 @@ const UserManagement = () => {
                           <button
                             type="button"
                             className="text-brand hover:text-brand-dark"
-                            onClick={() => handleView(user._id)}
+                            onClick={() => handleView(user)}
                           >
                             <EyeIcon className="h-5 w-5" />
                           </button>
@@ -509,6 +509,180 @@ const UserManagement = () => {
             </Button>
           </div>
         </div>
+      </Dialog>
+
+      {/* View User Dialog */}
+      <Dialog
+        open={viewDialogOpen}
+        onClose={() => setViewDialogOpen(false)}
+        title="User Details"
+        size="md"
+      >
+        {userToView && (
+          <div className="space-y-6">
+            {/* User Profile Section */}
+            <div className="flex items-center space-x-4 pb-4 border-b border-gray-200">
+              <ProtectedImage
+                src={userToView.photoUrl}
+                alt={userToView.name}
+                className="w-20 h-20 rounded-full"
+              />
+              <div>
+                <h3 className="text-xl font-semibold text-gray-900">
+                  {userToView.name}
+                </h3>
+                <p className="text-sm text-gray-500">{userToView.email}</p>
+              </div>
+            </div>
+
+            {/* User Information Grid */}
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-500 mb-1">
+                  Phone Number
+                </label>
+                <p className="text-sm text-gray-900">
+                  {userToView.phone || "Not provided"}
+                </p>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-500 mb-1">
+                  City
+                </label>
+                <p className="text-sm text-gray-900">
+                  {userToView.city || "Not provided"}
+                </p>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-500 mb-1">
+                  Role
+                </label>
+                <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 text-gray-800 capitalize">
+                  {userToView.role}
+                </span>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-500 mb-1">
+                  Verification Status
+                </label>
+                <span
+                  className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                    userToView.isVerified
+                      ? "bg-green-100 text-green-800"
+                      : "bg-red-100 text-red-800"
+                  }`}
+                >
+                  {userToView.isVerified ? "Verified" : "Not Verified"}
+                </span>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-500 mb-1">
+                  Account Created
+                </label>
+                <p className="text-sm text-gray-900">
+                  {new Date(userToView.createdAt).toLocaleDateString("en-US", {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                  })}
+                </p>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-500 mb-1">
+                  Last Updated
+                </label>
+                <p className="text-sm text-gray-900">
+                  {new Date(userToView.updatedAt).toLocaleDateString("en-US", {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                  })}
+                </p>
+              </div>
+            </div>
+
+            {/* Additional Info if Tutor */}
+            {userToView.role === "tutor" && userToView.tutorProfile && (
+              <div className="pt-4 border-t border-gray-200">
+                <h4 className="text-sm font-semibold text-gray-900 mb-3">
+                  Tutor Profile Information
+                </h4>
+                <div className="grid grid-cols-2 gap-4">
+                  {userToView.tutorProfile.education && (
+                    <div>
+                      <label className="block text-sm font-medium text-gray-500 mb-1">
+                        Education
+                      </label>
+                      <p className="text-sm text-gray-900">
+                        {userToView.tutorProfile.education}
+                      </p>
+                    </div>
+                  )}
+                  {userToView.tutorProfile.experience && (
+                    <div>
+                      <label className="block text-sm font-medium text-gray-500 mb-1">
+                        Experience
+                      </label>
+                      <p className="text-sm text-gray-900">
+                        {userToView.tutorProfile.experience} years
+                      </p>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+
+            {/* Action Buttons */}
+            <div className="flex justify-between pt-4 border-t border-gray-200">
+              <Button
+                variant="outline"
+                onClick={() => setViewDialogOpen(false)}
+              >
+                Close
+              </Button>
+              <div className="flex space-x-2">
+                <Button
+                  variant="primary"
+                  onClick={() => {
+                    setViewDialogOpen(false);
+                    handleEdit(userToView);
+                  }}
+                  className="flex items-center space-x-1"
+                >
+                  <PencilIcon className="h-4 w-4" />
+                  <span>Edit</span>
+                </Button>
+                <Button
+                  variant="warning"
+                  onClick={() => {
+                    setViewDialogOpen(false);
+                    handleChangeRole(userToView);
+                  }}
+                  className="flex items-center space-x-1 bg-amber-600 hover:bg-amber-700 text-white"
+                >
+                  <CheckCircleIcon className="h-4 w-4" />
+                  <span>Change Role</span>
+                </Button>
+                <Button
+                  variant="danger"
+                  onClick={() => {
+                    setViewDialogOpen(false);
+                    handleDelete(userToView);
+                  }}
+                  className="flex items-center space-x-1"
+                >
+                  <TrashIcon className="h-4 w-4" />
+                  <span>Delete</span>
+                </Button>
+              </div>
+            </div>
+          </div>
+        )}
       </Dialog>
     </div>
   );

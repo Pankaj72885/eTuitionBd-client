@@ -10,7 +10,7 @@ export const usersAPI = {
   // Get user by ID
   getUserById: async (id) => {
     const response = await axiosInstance.get(`/users/${id}`);
-    return response.data;
+    return response.data.data; // Extract the actual user from the wrapper
   },
 
   // Update user profile

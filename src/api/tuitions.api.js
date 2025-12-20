@@ -21,7 +21,7 @@ export const tuitionsAPI = {
   // Get tuition by ID
   getTuitionById: async (id) => {
     const response = await axiosInstance.get(API_ENDPOINTS.TUITIONS.BY_ID(id));
-    return response.data;
+    return response.data.data; // Extract the actual tuition from the wrapper
   },
 
   // Create new tuition
@@ -46,6 +46,22 @@ export const tuitionsAPI = {
   deleteTuition: async (id) => {
     const response = await axiosInstance.delete(
       API_ENDPOINTS.TUITIONS.DELETE(id)
+    );
+    return response.data;
+  },
+
+  // Approve tuition (admin only)
+  approveTuition: async (id) => {
+    const response = await axiosInstance.patch(
+      API_ENDPOINTS.TUITIONS.APPROVE(id)
+    );
+    return response.data;
+  },
+
+  // Reject tuition (admin only)
+  rejectTuition: async (id) => {
+    const response = await axiosInstance.patch(
+      API_ENDPOINTS.TUITIONS.REJECT(id)
     );
     return response.data;
   },

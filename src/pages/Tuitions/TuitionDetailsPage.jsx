@@ -1,23 +1,23 @@
-import React, { useState } from "react";
-import { useParams, useNavigate } from "react-router";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import {
-  MapPinIcon,
-  CurrencyDollarIcon,
-  CalendarIcon,
-  AcademicCapIcon,
-} from "@heroicons/react/24/outline";
-import { tuitionsAPI } from "@/api/tuitions.api";
 import { applicationsAPI } from "@/api/applications.api";
-import { useAuth } from "@/hooks/useAuth";
-import {Button} from "@/components/ui/Button";
-import {Card, CardContent} from "@/components/ui/Card";
-import StatusBadge from "@/components/ui/StatusBadge";
-import {Input} from "@/components/ui/Input";
-import {Textarea} from "@/components/ui/Textarea";
-import {Dialog} from "@/components/ui/Dialog";
+import { tuitionsAPI } from "@/api/tuitions.api";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
+import { Button } from "@/components/ui/Button";
+import { Card, CardContent } from "@/components/ui/Card";
+import { Dialog } from "@/components/ui/Dialog";
+import { Input } from "@/components/ui/Input";
+import StatusBadge from "@/components/ui/StatusBadge";
+import { Textarea } from "@/components/ui/Textarea";
+import { useAuth } from "@/hooks/useAuth";
+import {
+  AcademicCapIcon,
+  CalendarIcon,
+  CurrencyDollarIcon,
+  MapPinIcon,
+} from "@heroicons/react/24/outline";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useState } from "react";
 import toast from "react-hot-toast";
+import { useNavigate, useParams } from "react-router";
 
 const TuitionDetailsPage = () => {
   const { id } = useParams();
@@ -26,6 +26,8 @@ const TuitionDetailsPage = () => {
   const queryClient = useQueryClient();
   const [applyModalOpen, setApplyModalOpen] = useState(false);
   const [applicationData, setApplicationData] = useState({
+    name: "",
+    email: "",
     qualifications: "",
     experience: "",
     expectedSalary: "",
@@ -45,10 +47,12 @@ const TuitionDetailsPage = () => {
   // Apply to tuition mutation
   const applyMutation = useMutation({
     mutationFn: applicationsAPI.applyToTuition,
-    onSuccess: () => {
-      toast.success("Application submitted successfully!");
+    onSuccess: (data) => {
+      toast.success(data?.message || "Application submitted successfully!");
       setApplyModalOpen(false);
       setApplicationData({
+        name: "",
+        email: "",
         qualifications: "",
         experience: "",
         expectedSalary: "",
@@ -58,9 +62,12 @@ const TuitionDetailsPage = () => {
       queryClient.invalidateQueries(["applications", "tutor"]);
     },
     onError: (error) => {
-      toast.error(
-        error.response?.data?.message || "Failed to submit application"
-      );
+      console.error("Application submission error:", error);
+      const errorMessage =
+        error.response?.data?.message ||
+        error.message ||
+        "Failed to submit application. Please try again.";
+      toast.error(errorMessage);
     },
   });
 
@@ -75,19 +82,38 @@ const TuitionDetailsPage = () => {
       return;
     }
 
+    // Initialize form with user data
+    setApplicationData({
+      name: user?.name || "",
+      email: user?.email || "",
+      qualifications: "",
+      experience: "",
+      expectedSalary: "",
+    });
     setApplyModalOpen(true);
   };
 
   const handleSubmitApplication = () => {
-    if (
-      !applicationData.qualifications ||
-      !applicationData.experience ||
-      !applicationData.expectedSalary
-    ) {
-      toast.error("Please fill in all fields");
+    // Validate required fields
+    if (!applicationData.qualifications?.trim()) {
+      toast.error("Please enter your qualifications");
       return;
     }
 
+    if (!applicationData.experience?.trim()) {
+      toast.error("Please enter your teaching experience");
+      return;
+    }
+
+    if (
+      !applicationData.expectedSalary ||
+      applicationData.expectedSalary <= 0
+    ) {
+      toast.error("Please enter a valid expected salary");
+      return;
+    }
+
+    // Submit application (name and email are not sent - server uses authenticated user info)
     applyMutation.mutate({
       tuitionId: id,
       qualifications: applicationData.qualifications,
@@ -236,14 +262,33 @@ const TuitionDetailsPage = () => {
               <label className="block text-sm font-medium text-gray-700 mb-1">
                 Your Name
               </label>
-              <Input value={user?.name || ""} disabled />
+              <Input
+                value={applicationData.name}
+                onChange={(e) =>
+                  setApplicationData({
+                    ...applicationData,
+                    name: e.target.value,
+                  })
+                }
+                placeholder="Enter your name"
+              />
             </div>
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
                 Your Email
               </label>
-              <Input value={user?.email || ""} disabled />
+              <Input
+                type="email"
+                value={applicationData.email}
+                onChange={(e) =>
+                  setApplicationData({
+                    ...applicationData,
+                    email: e.target.value,
+                  })
+                }
+                placeholder="Enter your email"
+              />
             </div>
 
             <div>

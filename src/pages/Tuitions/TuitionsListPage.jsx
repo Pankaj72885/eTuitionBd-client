@@ -19,10 +19,11 @@ import {
 } from "@heroicons/react/24/outline";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
-import { useSearchParams } from "react-router";
+import { useNavigate, useSearchParams } from "react-router";
 
 const TuitionsListPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
+  const navigate = useNavigate();
   const [filtersOpen, setFiltersOpen] = useState(false);
 
   // Get current filter values from URL
@@ -246,7 +247,12 @@ const TuitionsListPage = () => {
                     </div>
 
                     <div className="mt-3">
-                      <Button variant="outline" size="sm" className="w-full">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="w-full"
+                        onClick={() => navigate(`/tuitions/${tuition._id}`)}
+                      >
                         View Details
                       </Button>
                     </div>

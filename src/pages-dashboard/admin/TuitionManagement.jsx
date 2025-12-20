@@ -1,27 +1,38 @@
-import React, { useState } from "react";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { EyeIcon, CheckIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { tuitionsAPI } from "@/api/tuitions.api";
-import {Button} from "@/components/ui/Button";
-import {Card, CardContent} from "@/components/ui/Card";
-import {Input} from "@/components/ui/Input";
-import {Select} from "@/components/ui/Select";
-import StatusBadge from "@/components/ui/StatusBadge";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
-import {Dialog} from "@/components/ui/Dialog";
+import { Button } from "@/components/ui/Button";
+import { Card, CardContent } from "@/components/ui/Card";
+import { Dialog } from "@/components/ui/DialogWrapper";
+import { Input } from "@/components/ui/Input";
+import { Select } from "@/components/ui/Select";
+import StatusBadge from "@/components/ui/StatusBadge";
+import { TUITION_STATUS } from "@/utils/constants";
+import {
+  CheckIcon,
+  EyeIcon,
+  PencilIcon,
+  TrashIcon,
+  XMarkIcon,
+} from "@heroicons/react/24/outline";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useState } from "react";
 import toast from "react-hot-toast";
-import { useNavigate } from "react-router";
 
 const TuitionManagement = () => {
-  const navigate = useNavigate();
   const queryClient = useQueryClient();
-  const [approveDialogOpen, setApproveDialogOpen] = useState(false);
-  const [rejectDialogOpen, setRejectDialogOpen] = useState(false);
-  const [tuitionToApprove, setTuitionToApprove] = useState(null);
-  const [tuitionToReject, setTuitionToReject] = useState(null);
+  const [viewDialogOpen, setViewDialogOpen] = useState(false);
+  const [statusDialogOpen, setStatusDialogOpen] = useState(false);
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [tuitionToView, setTuitionToView] = useState(null);
+  const [tuitionToChangeStatus, setTuitionToChangeStatus] = useState(null);
+  const [tuitionToDelete, setTuitionToDelete] = useState(null);
+  const [newStatus, setNewStatus] = useState("");
   const [filters, setFilters] = useState({
     status: "",
     search: "",
+    classLevel: "",
+    minBudget: "",
+    maxBudget: "",
   });
 
   // Fetch tuitions
@@ -30,53 +41,74 @@ const TuitionManagement = () => {
     queryFn: () => tuitionsAPI.getTuitions(filters),
   });
 
-  // Approve tuition mutation
-  const approveMutation = useMutation({
-    mutationFn: (id) => tuitionsAPI.updateTuition(id, { status: "Approved" }),
+  // Update tuition status mutation
+  const updateStatusMutation = useMutation({
+    mutationFn: ({ id, status }) => {
+      if (status === TUITION_STATUS.APPROVED) {
+        return tuitionsAPI.approveTuition(id);
+      } else if (status === TUITION_STATUS.REJECTED) {
+        return tuitionsAPI.rejectTuition(id);
+      } else {
+        // For other status changes, use the update endpoint
+        return tuitionsAPI.updateTuition(id, { status });
+      }
+    },
     onSuccess: () => {
-      toast.success("Tuition approved successfully");
+      toast.success("Tuition status updated successfully");
       queryClient.invalidateQueries(["allTuitions"]);
-      setApproveDialogOpen(false);
-      setTuitionToApprove(null);
+      setStatusDialogOpen(false);
+      setTuitionToChangeStatus(null);
+      setNewStatus("");
     },
     onError: (error) => {
-      toast.error(error.response?.data?.message || "Failed to approve tuition");
+      toast.error(
+        error.response?.data?.message || "Failed to update tuition status"
+      );
     },
   });
 
-  // Reject tuition mutation
-  const rejectMutation = useMutation({
-    mutationFn: (id) => tuitionsAPI.updateTuition(id, { status: "Rejected" }),
+  // Delete tuition mutation
+  const deleteMutation = useMutation({
+    mutationFn: tuitionsAPI.deleteTuition,
     onSuccess: () => {
-      toast.success("Tuition rejected successfully");
+      toast.success("Tuition deleted successfully");
       queryClient.invalidateQueries(["allTuitions"]);
-      setRejectDialogOpen(false);
-      setTuitionToReject(null);
+      setDeleteDialogOpen(false);
+      setTuitionToDelete(null);
     },
     onError: (error) => {
-      toast.error(error.response?.data?.message || "Failed to reject tuition");
+      toast.error(error.response?.data?.message || "Failed to delete tuition");
     },
   });
 
-  const handleApprove = (tuition) => {
-    setTuitionToApprove(tuition);
-    setApproveDialogOpen(true);
+  const handleView = (tuition) => {
+    setTuitionToView(tuition);
+    setViewDialogOpen(true);
   };
 
-  const handleReject = (tuition) => {
-    setTuitionToReject(tuition);
-    setRejectDialogOpen(true);
+  const handleChangeStatus = (tuition) => {
+    setTuitionToChangeStatus(tuition);
+    setNewStatus(tuition.status);
+    setStatusDialogOpen(true);
   };
 
-  const confirmApprove = () => {
-    if (tuitionToApprove) {
-      approveMutation.mutate(tuitionToApprove._id);
+  const handleDelete = (tuition) => {
+    setTuitionToDelete(tuition);
+    setDeleteDialogOpen(true);
+  };
+
+  const confirmStatusChange = () => {
+    if (tuitionToChangeStatus && newStatus) {
+      updateStatusMutation.mutate({
+        id: tuitionToChangeStatus._id,
+        status: newStatus,
+      });
     }
   };
 
-  const confirmReject = () => {
-    if (tuitionToReject) {
-      rejectMutation.mutate(tuitionToReject._id);
+  const confirmDelete = () => {
+    if (tuitionToDelete) {
+      deleteMutation.mutate(tuitionToDelete._id);
     }
   };
 
@@ -91,11 +123,10 @@ const TuitionManagement = () => {
     setFilters({
       status: "",
       search: "",
+      classLevel: "",
+      minBudget: "",
+      maxBudget: "",
     });
-  };
-
-  const handleView = (id) => {
-    navigate(`/tuitions/${id}`);
   };
 
   return (
@@ -104,13 +135,13 @@ const TuitionManagement = () => {
         Tuition Management
       </h1>
 
-      {/* Filters */}
+      {/* Enhanced Filters */}
       <Card className="mb-6">
         <CardContent className="p-6">
           <h2 className="text-lg font-semibold text-gray-900 mb-4">
             Filter Tuitions
           </h2>
-          <div className="grid md:grid-cols-2 gap-4">
+          <div className="grid md:grid-cols-3 gap-4">
             <div>
               <label
                 htmlFor="search"
@@ -147,11 +178,78 @@ const TuitionManagement = () => {
                 <option value="Closed">Closed</option>
               </Select>
             </div>
+            <div>
+              <label
+                htmlFor="classLevel"
+                className="block text-sm font-medium text-gray-700 mb-1"
+              >
+                Class Level
+              </label>
+              <Select
+                id="classLevel"
+                value={filters.classLevel}
+                onChange={(e) =>
+                  handleFilterChange("classLevel", e.target.value)
+                }
+              >
+                <option value="">All Classes</option>
+                <option value="Class 1">Class 1</option>
+                <option value="Class 2">Class 2</option>
+                <option value="Class 3">Class 3</option>
+                <option value="Class 4">Class 4</option>
+                <option value="Class 5">Class 5</option>
+                <option value="Class 6">Class 6</option>
+                <option value="Class 7">Class 7</option>
+                <option value="Class 8">Class 8</option>
+                <option value="Class 9">Class 9</option>
+                <option value="Class 10">Class 10</option>
+                <option value="SSC">SSC</option>
+                <option value="HSC">HSC</option>
+                <option value="University">University</option>
+              </Select>
+            </div>
+            <div>
+              <label
+                htmlFor="minBudget"
+                className="block text-sm font-medium text-gray-700 mb-1"
+              >
+                Min Budget (৳)
+              </label>
+              <Input
+                id="minBudget"
+                type="number"
+                placeholder="Min budget"
+                value={filters.minBudget}
+                onChange={(e) =>
+                  handleFilterChange("minBudget", e.target.value)
+                }
+              />
+            </div>
+            <div>
+              <label
+                htmlFor="maxBudget"
+                className="block text-sm font-medium text-gray-700 mb-1"
+              >
+                Max Budget (৳)
+              </label>
+              <Input
+                id="maxBudget"
+                type="number"
+                placeholder="Max budget"
+                value={filters.maxBudget}
+                onChange={(e) =>
+                  handleFilterChange("maxBudget", e.target.value)
+                }
+              />
+            </div>
           </div>
-          <div className="mt-4">
+          <div className="mt-4 flex gap-2">
             <Button variant="outline" onClick={clearFilters}>
               Clear Filters
             </Button>
+            <div className="text-sm text-gray-500 flex items-center ml-auto">
+              {tuitions?.data?.length || 0} tuition(s) found
+            </div>
           </div>
         </CardContent>
       </Card>
@@ -215,7 +313,7 @@ const TuitionManagement = () => {
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className="text-sm text-gray-900">
-                          {tuition.studentId?.name}
+                          {tuition.studentId?.name || "N/A"}
                         </div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
@@ -236,30 +334,25 @@ const TuitionManagement = () => {
                           <button
                             type="button"
                             className="text-brand hover:text-brand-dark"
-                            onClick={() => handleView(tuition._id)}
+                            onClick={() => handleView(tuition)}
                           >
                             <EyeIcon className="h-5 w-5" />
                           </button>
-                          {tuition.status === "Pending" && (
-                            <>
-                              <button
-                                type="button"
-                                className="text-green-600 hover:text-green-900"
-                                onClick={() => handleApprove(tuition)}
-                                disabled={approveMutation.isLoading}
-                              >
-                                <CheckIcon className="h-5 w-5" />
-                              </button>
-                              <button
-                                type="button"
-                                className="text-red-600 hover:text-red-900"
-                                onClick={() => handleReject(tuition)}
-                                disabled={rejectMutation.isLoading}
-                              >
-                                <XMarkIcon className="h-5 w-5" />
-                              </button>
-                            </>
-                          )}
+                          <button
+                            type="button"
+                            className="text-indigo-600 hover:text-indigo-900"
+                            onClick={() => handleChangeStatus(tuition)}
+                          >
+                            <PencilIcon className="h-5 w-5" />
+                          </button>
+                          <button
+                            type="button"
+                            className="text-red-600 hover:text-red-900"
+                            onClick={() => handleDelete(tuition)}
+                            disabled={deleteMutation.isLoading}
+                          >
+                            <TrashIcon className="h-5 w-5" />
+                          </button>
                         </div>
                       </td>
                     </tr>
@@ -285,62 +378,268 @@ const TuitionManagement = () => {
         </Card>
       )}
 
-      {/* Approve confirmation dialog */}
+      {/* View Tuition Dialog */}
       <Dialog
-        open={approveDialogOpen}
-        onClose={() => setApproveDialogOpen(false)}
-        title="Approve Tuition"
+        open={viewDialogOpen}
+        onClose={() => setViewDialogOpen(false)}
+        title="Tuition Details"
+        size="lg"
+      >
+        {tuitionToView && (
+          <div className="space-y-6">
+            {/* Tuition Header */}
+            <div className="pb-4 border-b border-gray-200">
+              <h3 className="text-xl font-semibold text-gray-900">
+                {tuitionToView.subject} for {tuitionToView.classLevel}
+              </h3>
+              <div className="mt-2">
+                <StatusBadge status={tuitionToView.status} />
+              </div>
+            </div>
+
+            {/* Tuition Information Grid */}
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-500 mb-1">
+                  Student
+                </label>
+                <p className="text-sm text-gray-900">
+                  {tuitionToView.studentId?.name || "N/A"}
+                </p>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-500 mb-1">
+                  Student Email
+                </label>
+                <p className="text-sm text-gray-900">
+                  {tuitionToView.studentId?.email || "N/A"}
+                </p>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-500 mb-1">
+                  Location
+                </label>
+                <p className="text-sm text-gray-900">
+                  {tuitionToView.location}
+                </p>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-500 mb-1">
+                  Budget
+                </label>
+                <p className="text-sm text-gray-900 font-semibold">
+                  ৳ {tuitionToView.budget}
+                </p>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-500 mb-1">
+                  Days Per Week
+                </label>
+                <p className="text-sm text-gray-900">
+                  {tuitionToView.daysPerWeek} days
+                </p>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-500 mb-1">
+                  Preferred Time
+                </label>
+                <p className="text-sm text-gray-900">
+                  {tuitionToView.preferredTime || "Not specified"}
+                </p>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-500 mb-1">
+                  Posted On
+                </label>
+                <p className="text-sm text-gray-900">
+                  {new Date(tuitionToView.createdAt).toLocaleDateString(
+                    "en-US",
+                    {
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
+                    }
+                  )}
+                </p>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-500 mb-1">
+                  Last Updated
+                </label>
+                <p className="text-sm text-gray-900">
+                  {new Date(tuitionToView.updatedAt).toLocaleDateString(
+                    "en-US",
+                    {
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
+                    }
+                  )}
+                </p>
+              </div>
+            </div>
+
+            {/* Additional Details */}
+            {tuitionToView.additionalDetails && (
+              <div className="pt-4 border-t border-gray-200">
+                <label className="block text-sm font-medium text-gray-500 mb-1">
+                  Additional Details
+                </label>
+                <p className="text-sm text-gray-900">
+                  {tuitionToView.additionalDetails}
+                </p>
+              </div>
+            )}
+
+            {/* Action Buttons */}
+            <div className="flex justify-between pt-4 border-t border-gray-200">
+              <Button
+                variant="outline"
+                onClick={() => setViewDialogOpen(false)}
+              >
+                Close
+              </Button>
+              <div className="flex space-x-2">
+                {tuitionToView.status === TUITION_STATUS.PENDING && (
+                  <>
+                    <Button
+                      onClick={() => {
+                        setViewDialogOpen(false);
+                        setTuitionToChangeStatus(tuitionToView);
+                        setNewStatus(TUITION_STATUS.APPROVED);
+                        setStatusDialogOpen(true);
+                      }}
+                      className="flex items-center space-x-1 bg-green-600 hover:bg-green-700 text-white"
+                    >
+                      <CheckIcon className="h-4 w-4" />
+                      <span>Approve</span>
+                    </Button>
+                    <Button
+                      variant="danger"
+                      onClick={() => {
+                        setViewDialogOpen(false);
+                        setTuitionToChangeStatus(tuitionToView);
+                        setNewStatus(TUITION_STATUS.REJECTED);
+                        setStatusDialogOpen(true);
+                      }}
+                      className="flex items-center space-x-1"
+                    >
+                      <XMarkIcon className="h-4 w-4" />
+                      <span>Reject</span>
+                    </Button>
+                  </>
+                )}
+                <Button
+                  variant="primary"
+                  onClick={() => {
+                    setViewDialogOpen(false);
+                    handleChangeStatus(tuitionToView);
+                  }}
+                  className="flex items-center space-x-1"
+                >
+                  <PencilIcon className="h-4 w-4" />
+                  <span>Change Status</span>
+                </Button>
+                <Button
+                  variant="danger"
+                  onClick={() => {
+                    setViewDialogOpen(false);
+                    handleDelete(tuitionToView);
+                  }}
+                  className="flex items-center space-x-1"
+                >
+                  <TrashIcon className="h-4 w-4" />
+                  <span>Delete</span>
+                </Button>
+              </div>
+            </div>
+          </div>
+        )}
+      </Dialog>
+
+      {/* Change Status Dialog */}
+      <Dialog
+        open={statusDialogOpen}
+        onClose={() => setStatusDialogOpen(false)}
+        title="Change Tuition Status"
         size="sm"
       >
         <div className="space-y-4">
           <p className="text-sm text-gray-500">
-            Are you sure you want to approve this tuition? It will be visible to
-            all tutors.
+            Select the new status for this tuition.
           </p>
+          <div>
+            <label
+              htmlFor="newStatus"
+              className="block text-sm font-medium text-gray-700 mb-1"
+            >
+              Status
+            </label>
+            <Select
+              id="newStatus"
+              value={newStatus}
+              onChange={(e) => setNewStatus(e.target.value)}
+            >
+              <option value={TUITION_STATUS.PENDING}>Pending</option>
+              <option value={TUITION_STATUS.APPROVED}>Approved</option>
+              <option value={TUITION_STATUS.REJECTED}>Rejected</option>
+              <option value={TUITION_STATUS.OPEN}>Open</option>
+              <option value={TUITION_STATUS.ONGOING}>Ongoing</option>
+              <option value={TUITION_STATUS.COMPLETED}>Completed</option>
+              <option value={TUITION_STATUS.CLOSED}>Closed</option>
+            </Select>
+          </div>
           <div className="flex justify-end pt-4">
             <Button
               variant="outline"
-              onClick={() => setApproveDialogOpen(false)}
+              onClick={() => setStatusDialogOpen(false)}
               className="mr-2"
             >
               Cancel
             </Button>
             <Button
-              onClick={confirmApprove}
-              disabled={approveMutation.isLoading}
+              onClick={confirmStatusChange}
+              disabled={updateStatusMutation.isLoading || !newStatus}
             >
-              {approveMutation.isLoading ? "Approving..." : "Approve"}
+              {updateStatusMutation.isLoading ? "Updating..." : "Update Status"}
             </Button>
           </div>
         </div>
       </Dialog>
 
-      {/* Reject confirmation dialog */}
+      {/* Delete confirmation dialog */}
       <Dialog
-        open={rejectDialogOpen}
-        onClose={() => setRejectDialogOpen(false)}
-        title="Reject Tuition"
+        open={deleteDialogOpen}
+        onClose={() => setDeleteDialogOpen(false)}
+        title="Delete Tuition"
         size="sm"
       >
         <div className="space-y-4">
           <p className="text-sm text-gray-500">
-            Are you sure you want to reject this tuition? This action cannot be
+            Are you sure you want to delete this tuition? This action cannot be
             undone.
           </p>
           <div className="flex justify-end pt-4">
             <Button
               variant="outline"
-              onClick={() => setRejectDialogOpen(false)}
+              onClick={() => setDeleteDialogOpen(false)}
               className="mr-2"
             >
               Cancel
             </Button>
             <Button
               variant="danger"
-              onClick={confirmReject}
-              disabled={rejectMutation.isLoading}
+              onClick={confirmDelete}
+              disabled={deleteMutation.isLoading}
             >
-              {rejectMutation.isLoading ? "Rejecting..." : "Reject"}
+              {deleteMutation.isLoading ? "Deleting..." : "Delete"}
             </Button>
           </div>
         </div>
@@ -350,4 +649,3 @@ const TuitionManagement = () => {
 };
 
 export default TuitionManagement;
-

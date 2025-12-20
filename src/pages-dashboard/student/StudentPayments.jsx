@@ -1,12 +1,12 @@
-import React, { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
-import { format } from "date-fns";
 import { paymentsAPI } from "@/api/payments.api";
-import {Button} from "@/components/ui/Button";
-import {Card, CardContent} from "@/components/ui/Card";
-import {Input} from "@/components/ui/Input";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
 import ProtectedImage from "@/components/common/ProtectedImage";
+import { Button } from "@/components/ui/Button";
+import { Card, CardContent } from "@/components/ui/Card";
+import { Input } from "@/components/ui/Input";
+import { useQuery } from "@tanstack/react-query";
+import { format } from "date-fns";
+import { useState } from "react";
 
 const StudentPayments = () => {
   const [dateRange, setDateRange] = useState({
@@ -222,7 +222,7 @@ const StudentPayments = () => {
             </p>
             <Button
               onClick={() =>
-                (window.location.href = "/dashboard/student/my-tuitions")
+                (window.location.href = "/dashboard/student/tuitions")
               }
             >
               View My Tuitions
