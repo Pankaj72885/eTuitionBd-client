@@ -1,5 +1,3 @@
-import React from "react";
-
 const LoadingSpinner = ({ size = "md" }) => {
   const sizeClasses = {
     sm: "h-4 w-4",
@@ -11,7 +9,7 @@ const LoadingSpinner = ({ size = "md" }) => {
   return (
     <div className="flex justify-center items-center">
       <svg
-        className={`animate-spin ${sizeClasses[size]} text-brand`}
+        className={`animate-spin ${sizeClasses[size]} text-brand dark:text-indigo-400`}
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
         viewBox="0 0 24 24"

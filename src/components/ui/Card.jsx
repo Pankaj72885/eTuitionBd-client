@@ -1,13 +1,25 @@
 import { cn } from "@/lib/utils";
+import { motion } from "framer-motion";
 
-function Card({ className, ...props }) {
+function Card({ className, animate = true, delay = 0, ...props }) {
+  const Comp = animate ? motion.div : "div";
+  const motionProps = animate
+    ? {
+        initial: { opacity: 0, y: 20 },
+        whileInView: { opacity: 1, y: 0 },
+        viewport: { once: true, margin: "-50px" },
+        transition: { duration: 0.4, delay: delay, ease: "easeOut" },
+      }
+    : {};
+
   return (
-    <div
+    <Comp
       data-slot="card"
       className={cn(
         "bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 flex flex-col gap-6 rounded-xl border border-gray-200 dark:border-gray-700 py-6 shadow-sm dark:shadow-gray-900/50 transition-colors duration-200",
         className
       )}
+      {...motionProps}
       {...props}
     />
   );

@@ -1,6 +1,5 @@
-import React from "react";
+import { Button } from "@/components/ui/Button";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
-import {Button} from "@/components/ui/Button";
 
 const Pagination = ({ currentPage, totalPages, onPageChange }) => {
   const pages = [];
@@ -42,7 +41,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
       </div>
       <div className="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
         <div>
-          <p className="text-sm text-gray-700">
+          <p className="text-sm text-gray-700 dark:text-gray-300">
             Showing page <span className="font-medium">{currentPage}</span> of{" "}
             <span className="font-medium">{totalPages}</span>
           </p>
@@ -73,7 +72,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
                   1
                 </Button>
                 {startPage > 2 && (
-                  <span className="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700">
+                  <span className="relative inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-sm font-medium text-gray-700 dark:text-gray-300">
                     ...
                   </span>
                 )}
@@ -94,7 +93,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
             {endPage < totalPages && (
               <>
                 {endPage < totalPages - 1 && (
-                  <span className="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700">
+                  <span className="relative inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-sm font-medium text-gray-700 dark:text-gray-300">
                     ...
                   </span>
                 )}
