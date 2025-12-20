@@ -1,21 +1,25 @@
-import React, { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
-import { useSearchParams } from "react-router";
-import {
-  MagnifyingGlassIcon,
-  AdjustmentsHorizontalIcon,
-} from "@heroicons/react/24/outline";
 import { tuitionsAPI } from "@/api/tuitions.api";
-import {Button} from "@/components/ui/Button";
-import {Card, CardContent} from "@/components/ui/Card";
-import {Input} from "@/components/ui/Input";
-import {Select} from "@/components/ui/Select";
-import StatusBadge from "@/components/ui/StatusBadge";
 import Pagination from "@/components/common/Pagination";
-import LoadingSpinner from "@/components/common/LoadingSpinner";
 import SkeletonCard from "@/components/common/SkeletonCard";
-import {Dialog} from "@/components/ui/Dialog";
+import { Button } from "@/components/ui/Button";
+import { Card, CardContent } from "@/components/ui/Card";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/Dialog";
+import { Input } from "@/components/ui/Input";
+import { Select } from "@/components/ui/Select";
+import StatusBadge from "@/components/ui/StatusBadge";
 import { useDebounce } from "@/hooks/useDebounce";
+import {
+  AdjustmentsHorizontalIcon,
+  MagnifyingGlassIcon,
+} from "@heroicons/react/24/outline";
+import { useQuery } from "@tanstack/react-query";
+import { useState } from "react";
+import { useSearchParams } from "react-router";
 
 const TuitionsListPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -277,84 +281,84 @@ const TuitionsListPage = () => {
         )}
 
         {/* Mobile filters dialog */}
-        <Dialog
-          open={filtersOpen}
-          onClose={() => setFiltersOpen(false)}
-          title="Filters"
-          size="sm"
-        >
-          <div className="space-y-4">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Class/Grade
-              </label>
-              <Select
-                value={classLevel}
-                onChange={(e) => handleFilterChange("class", e.target.value)}
-              >
-                <option value="">All Classes</option>
-                <option value="Class 1-5">Class 1-5</option>
-                <option value="Class 6-8">Class 6-8</option>
-                <option value="Class 9-10">Class 9-10</option>
-                <option value="SSC">SSC</option>
-                <option value="HSC">HSC</option>
-                <option value="University">University</option>
-              </Select>
-            </div>
+        <Dialog open={filtersOpen} onOpenChange={setFiltersOpen}>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Filters</DialogTitle>
+            </DialogHeader>
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Class/Grade
+                </label>
+                <Select
+                  value={classLevel}
+                  onChange={(e) => handleFilterChange("class", e.target.value)}
+                >
+                  <option value="">All Classes</option>
+                  <option value="Class 1-5">Class 1-5</option>
+                  <option value="Class 6-8">Class 6-8</option>
+                  <option value="Class 9-10">Class 9-10</option>
+                  <option value="SSC">SSC</option>
+                  <option value="HSC">HSC</option>
+                  <option value="University">University</option>
+                </Select>
+              </div>
 
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Subject
-              </label>
-              <Select
-                value={subject}
-                onChange={(e) => handleFilterChange("subject", e.target.value)}
-              >
-                <option value="">All Subjects</option>
-                <option value="Math">Math</option>
-                <option value="English">English</option>
-                <option value="Bangla">Bangla</option>
-                <option value="Physics">Physics</option>
-                <option value="Chemistry">Chemistry</option>
-                <option value="Biology">Biology</option>
-                <option value="ICT">ICT</option>
-                <option value="Accounting">Accounting</option>
-              </Select>
-            </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Subject
+                </label>
+                <Select
+                  value={subject}
+                  onChange={(e) =>
+                    handleFilterChange("subject", e.target.value)
+                  }
+                >
+                  <option value="">All Subjects</option>
+                  <option value="Math">Math</option>
+                  <option value="English">English</option>
+                  <option value="Bangla">Bangla</option>
+                  <option value="Physics">Physics</option>
+                  <option value="Chemistry">Chemistry</option>
+                  <option value="Biology">Biology</option>
+                  <option value="ICT">ICT</option>
+                  <option value="Accounting">Accounting</option>
+                </Select>
+              </div>
 
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Location
-              </label>
-              <Select
-                value={location}
-                onChange={(e) => handleFilterChange("location", e.target.value)}
-              >
-                <option value="">All Locations</option>
-                <option value="Dhaka">Dhaka</option>
-                <option value="Chittagong">Chittagong</option>
-                <option value="Rajshahi">Rajshahi</option>
-                <option value="Khulna">Khulna</option>
-                <option value="Sylhet">Sylhet</option>
-                <option value="Barisal">Barisal</option>
-                <option value="Rangpur">Rangpur</option>
-                <option value="Mymensingh">Mymensingh</option>
-              </Select>
-            </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Location
+                </label>
+                <Select
+                  value={location}
+                  onChange={(e) =>
+                    handleFilterChange("location", e.target.value)
+                  }
+                >
+                  <option value="">All Locations</option>
+                  <option value="Dhaka">Dhaka</option>
+                  <option value="Chittagong">Chittagong</option>
+                  <option value="Rajshahi">Rajshahi</option>
+                  <option value="Khulna">Khulna</option>
+                  <option value="Sylhet">Sylhet</option>
+                  <option value="Barisal">Barisal</option>
+                  <option value="Rangpur">Rangpur</option>
+                  <option value="Mymensingh">Mymensingh</option>
+                </Select>
+              </div>
 
-            <div className="flex justify-end pt-4">
-              <Button
-                variant="outline"
-                onClick={() => setFiltersOpen(false)}
-                className="mr-2"
-              >
-                Cancel
-              </Button>
-              <Button onClick={() => setFiltersOpen(false)}>
-                Apply Filters
-              </Button>
+              <div className="flex justify-end pt-4 gap-2">
+                <Button variant="outline" onClick={() => setFiltersOpen(false)}>
+                  Cancel
+                </Button>
+                <Button onClick={() => setFiltersOpen(false)}>
+                  Apply Filters
+                </Button>
+              </div>
             </div>
-          </div>
+          </DialogContent>
         </Dialog>
       </div>
     </section>

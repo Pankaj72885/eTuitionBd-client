@@ -1,26 +1,29 @@
-import React, { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
-import { useSearchParams } from "react-router";
+import { bookmarksAPI } from "@/api/bookmarks.api";
+import { usersAPI } from "@/api/users.api";
+import Pagination from "@/components/common/Pagination";
+import ProtectedImage from "@/components/common/ProtectedImage";
+import SkeletonCard from "@/components/common/SkeletonCard";
+import { Button } from "@/components/ui/Button";
+import { Card, CardContent } from "@/components/ui/Card";
 import {
-  MagnifyingGlassIcon,
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/Dialog";
+import { Input } from "@/components/ui/Input";
+import { Select } from "@/components/ui/Select";
+import { useAuth } from "@/hooks/useAuth";
+import { useDebounce } from "@/hooks/useDebounce";
+import {
   AdjustmentsHorizontalIcon,
+  MagnifyingGlassIcon,
   StarIcon,
 } from "@heroicons/react/24/outline";
-import { usersAPI } from "@/api/users.api";
-import {Button} from "@/components/ui/Button";
-import {Card, CardContent} from "@/components/ui/Card";
-import {Input} from "@/components/ui/Input";
-import {Select} from "@/components/ui/Select";
-import Pagination from "@/components/common/Pagination";
-import LoadingSpinner from "@/components/common/LoadingSpinner";
-import SkeletonCard from "@/components/common/SkeletonCard";
-import {Dialog} from "@/components/ui/Dialog";
-import ProtectedImage from "@/components/common/ProtectedImage";
-import { useDebounce } from "@/hooks/useDebounce";
-import { useAuth } from "@/hooks/useAuth";
-import { bookmarksAPI } from "../../api/bookmarks.api";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useState } from "react";
 import toast from "react-hot-toast";
-import { useQueryClient } from "@tanstack/react-query";
+import { useSearchParams } from "react-router";
 
 const TutorsListPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -34,6 +37,7 @@ const TutorsListPage = () => {
   const subject = searchParams.get("subject") || "";
   const location = searchParams.get("location") || "";
   const rating = searchParams.get("rating") || "";
+  const sort = searchParams.get("sort") || "ratingDesc";
 
   // Debounce search input
   const debouncedSearch = useDebounce(search, 500);
@@ -51,8 +55,10 @@ const TutorsListPage = () => {
       }
     });
 
-    // Reset to page 1 when filters change
-    params.set("page", "1");
+    // Reset to page 1 when filters change (except for page itself)
+    if (!newFilters.page) {
+      params.set("page", "1");
+    }
 
     setSearchParams(params);
   };
@@ -100,6 +106,7 @@ const TutorsListPage = () => {
       subject,
       location,
       rating,
+      sort,
     ],
     queryFn: () =>
       usersAPI.getAllUsers({
@@ -110,6 +117,7 @@ const TutorsListPage = () => {
         subject,
         location,
         rating,
+        sort,
       }),
   });
 
@@ -125,7 +133,7 @@ const TutorsListPage = () => {
           </p>
         </div>
 
-        {/* Search and filters */}
+        {/* Search and sort */}
         <div className="flex flex-col md:flex-row md:items-center gap-4">
           <div className="flex-1">
             <div className="relative">
@@ -145,6 +153,19 @@ const TutorsListPage = () => {
           </div>
 
           <div className="flex flex-wrap gap-3">
+            <Select
+              value={sort}
+              onChange={(e) => handleFilterChange("sort", e.target.value)}
+              className="w-auto"
+            >
+              <option value="ratingDesc">Highest Rated</option>
+              <option value="ratingAsc">Lowest Rated</option>
+              <option value="experienceDesc">Most Experienced</option>
+              <option value="experienceAsc">Least Experienced</option>
+              <option value="nameAsc">Name: A-Z</option>
+              <option value="nameDesc">Name: Z-A</option>
+            </Select>
+
             <Button
               variant="outline"
               onClick={() => setFiltersOpen(true)}
@@ -161,7 +182,7 @@ const TutorsListPage = () => {
           <Select
             value={subject}
             onChange={(e) => handleFilterChange("subject", e.target.value)}
-            placeholder="Subject"
+            className="w-auto"
           >
             <option value="">All Subjects</option>
             <option value="Math">Math</option>
@@ -177,7 +198,7 @@ const TutorsListPage = () => {
           <Select
             value={location}
             onChange={(e) => handleFilterChange("location", e.target.value)}
-            placeholder="Location"
+            className="w-auto"
           >
             <option value="">All Locations</option>
             <option value="Dhaka">Dhaka</option>
@@ -193,7 +214,7 @@ const TutorsListPage = () => {
           <Select
             value={rating}
             onChange={(e) => handleFilterChange("rating", e.target.value)}
-            placeholder="Rating"
+            className="w-auto"
           >
             <option value="">All Ratings</option>
             <option value="4.5">4.5+ Stars</option>
@@ -227,55 +248,65 @@ const TutorsListPage = () => {
           <>
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
               {data.data.map((tutor) => (
-                <Card key={tutor._id}>
-                  <CardContent className="p-4 flex flex-col gap-3">
-                    <div className="flex items-center gap-3">
+                <Card
+                  key={tutor._id}
+                  className="hover:shadow-md transition-shadow"
+                >
+                  <CardContent className="p-5 flex flex-col gap-4">
+                    <div className="flex items-start gap-3">
                       <ProtectedImage
                         src={tutor.photoUrl}
                         alt={tutor.name}
-                        className="w-12 h-12 rounded-full object-cover"
+                        className="w-16 h-16 rounded-full object-cover shrink-0"
                       />
-                      <div>
-                        <h3 className="text-base font-semibold text-gray-900">
+                      <div className="flex-1 min-w-0">
+                        <h3 className="text-base font-semibold text-gray-900 truncate">
                           {tutor.name}
                         </h3>
+                        <p className="text-xs text-gray-500 mt-1">
+                          {tutor.city || "Dhaka"}
+                        </p>
                         <p className="text-xs text-gray-500">
-                          {tutor.city} • {tutor.experienceYears}+ years
-                          experience
+                          {tutor.experienceYears || 0}+ years exp.
                         </p>
                       </div>
                     </div>
 
-                    <div className="flex flex-wrap gap-1 mt-1">
-                      {tutor.subjects?.slice(0, 2).map((subject, index) => (
+                    {/* Subjects */}
+                    <div className="flex flex-wrap gap-1">
+                      {tutor.subjects?.slice(0, 3).map((subject, index) => (
                         <span
                           key={index}
-                          className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-100 text-gray-800"
+                          className="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-brand/10 text-brand"
                         >
                           {subject}
                         </span>
                       ))}
-                      {tutor.subjects?.length > 2 && (
-                        <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-100 text-gray-800">
-                          +{tutor.subjects.length - 2} more
+                      {tutor.subjects?.length > 3 && (
+                        <span className="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-gray-100 text-gray-600">
+                          +{tutor.subjects.length - 3}
                         </span>
                       )}
                     </div>
 
-                    <div className="flex items-center justify-between text-sm mt-2">
-                      <span className="flex items-center gap-1 text-amber-500">
-                        <StarIcon className="h-4 w-4" />
-                        {tutor.averageRating || "4.8"}{" "}
-                        <span className="text-xs text-gray-500">
-                          ({tutor.reviewCount || 32} reviews)
+                    {/* Rating and actions */}
+                    <div className="flex items-center justify-between pt-2 border-t">
+                      <div className="flex items-center gap-1">
+                        <StarIcon className="h-4 w-4 fill-amber-400 text-amber-400" />
+                        <span className="text-sm font-medium text-gray-900">
+                          {tutor.averageRating?.toFixed(1) || "5.0"}
                         </span>
-                      </span>
+                        <span className="text-xs text-gray-500">
+                          ({tutor.reviewCount || 0})
+                        </span>
+                      </div>
                       <div className="flex gap-2">
                         {user?.role === "student" && (
                           <Button
                             variant="ghost"
                             size="sm"
                             onClick={() => handleBookmark(tutor._id)}
+                            className="p-2"
                           >
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
@@ -305,7 +336,7 @@ const TutorsListPage = () => {
 
             {/* Pagination */}
             {data.pagination && (
-              <div className="flex justify-center mt-6">
+              <div className="flex justify-center mt-8">
                 <Pagination
                   currentPage={currentPage}
                   totalPages={data.pagination.totalPages}
@@ -329,82 +360,82 @@ const TutorsListPage = () => {
         )}
 
         {/* Mobile filters dialog */}
-        <Dialog
-          open={filtersOpen}
-          onClose={() => setFiltersOpen(false)}
-          title="Filters"
-          size="sm"
-        >
-          <div className="space-y-4">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Subject
-              </label>
-              <Select
-                value={subject}
-                onChange={(e) => handleFilterChange("subject", e.target.value)}
-              >
-                <option value="">All Subjects</option>
-                <option value="Math">Math</option>
-                <option value="English">English</option>
-                <option value="Bangla">Bangla</option>
-                <option value="Physics">Physics</option>
-                <option value="Chemistry">Chemistry</option>
-                <option value="Biology">Biology</option>
-                <option value="ICT">ICT</option>
-                <option value="Accounting">Accounting</option>
-              </Select>
-            </div>
+        <Dialog open={filtersOpen} onOpenChange={setFiltersOpen}>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Filters</DialogTitle>
+            </DialogHeader>
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Subject
+                </label>
+                <Select
+                  value={subject}
+                  onChange={(e) =>
+                    handleFilterChange("subject", e.target.value)
+                  }
+                >
+                  <option value="">All Subjects</option>
+                  <option value="Math">Math</option>
+                  <option value="English">English</option>
+                  <option value="Bangla">Bangla</option>
+                  <option value="Physics">Physics</option>
+                  <option value="Chemistry">Chemistry</option>
+                  <option value="Biology">Biology</option>
+                  <option value="ICT">ICT</option>
+                  <option value="Accounting">Accounting</option>
+                </Select>
+              </div>
 
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Location
-              </label>
-              <Select
-                value={location}
-                onChange={(e) => handleFilterChange("location", e.target.value)}
-              >
-                <option value="">All Locations</option>
-                <option value="Dhaka">Dhaka</option>
-                <option value="Chittagong">Chittagong</option>
-                <option value="Rajshahi">Rajshahi</option>
-                <option value="Khulna">Khulna</option>
-                <option value="Sylhet">Sylhet</option>
-                <option value="Barisal">Barisal</option>
-                <option value="Rangpur">Rangpur</option>
-                <option value="Mymensingh">Mymensingh</option>
-              </Select>
-            </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Location
+                </label>
+                <Select
+                  value={location}
+                  onChange={(e) =>
+                    handleFilterChange("location", e.target.value)
+                  }
+                >
+                  <option value="">All Locations</option>
+                  <option value="Dhaka">Dhaka</option>
+                  <option value="Chittagong">Chittagong</option>
+                  <option value="Rajshahi">Rajshahi</option>
+                  <option value="Khulna">Khulna</option>
+                  <option value="Sylhet">Sylhet</option>
+                  <option value="Barisal">Barisal</option>
+                  <option value="Rangpur">Rangpur</option>
+                  <option value="Mymensingh">Mymensingh</option>
+                </Select>
+              </div>
 
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Rating
-              </label>
-              <Select
-                value={rating}
-                onChange={(e) => handleFilterChange("rating", e.target.value)}
-              >
-                <option value="">All Ratings</option>
-                <option value="4.5">4.5+ Stars</option>
-                <option value="4">4+ Stars</option>
-                <option value="3.5">3.5+ Stars</option>
-                <option value="3">3+ Stars</option>
-              </Select>
-            </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Rating
+                </label>
+                <Select
+                  value={rating}
+                  onChange={(e) => handleFilterChange("rating", e.target.value)}
+                >
+                  <option value="">All Ratings</option>
+                  <option value="4.5">4.5+ Stars</option>
+                  <option value="4">4+ Stars</option>
+                  <option value="3.5">3.5+ Stars</option>
+                  <option value="3">3+ Stars</option>
+                </Select>
+              </div>
 
-            <div className="flex justify-end pt-4">
-              <Button
-                variant="outline"
-                onClick={() => setFiltersOpen(false)}
-                className="mr-2"
-              >
-                Cancel
-              </Button>
-              <Button onClick={() => setFiltersOpen(false)}>
-                Apply Filters
-              </Button>
+              <div className="flex justify-end pt-4 gap-2">
+                <Button variant="outline" onClick={() => setFiltersOpen(false)}>
+                  Cancel
+                </Button>
+                <Button onClick={() => setFiltersOpen(false)}>
+                  Apply Filters
+                </Button>
+              </div>
             </div>
-          </div>
+          </DialogContent>
         </Dialog>
       </div>
     </section>

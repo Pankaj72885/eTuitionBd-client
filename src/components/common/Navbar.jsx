@@ -120,22 +120,27 @@ const Navbar = () => {
                 </Dropdown>
               </div>
             ) : (
-              <div className="hidden md:ml-4 md:shrink-0 md:flex md:items-center">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="mr-3"
+              <div className="hidden md:ml-4 md:shrink-0 md:flex md:items-center gap-3">
+                <button
+                  className={`px-4 py-2 text-sm font-medium rounded-md transition-all ${
+                    isActive("/login")
+                      ? "bg-brand text-white shadow-sm"
+                      : "text-brand hover:bg-brand hover:text-white border border-brand"
+                  }`}
                   onClick={() => navigate("/login")}
                 >
                   Login
-                </Button>
-                <Button
-                  variant="primary"
-                  size="sm"
+                </button>
+                <button
+                  className={`px-4 py-2 text-sm font-medium rounded-md transition-all ${
+                    isActive("/register")
+                      ? "bg-brand text-white shadow-sm"
+                      : "text-brand hover:bg-brand hover:text-white border border-brand"
+                  }`}
                   onClick={() => navigate("/register")}
                 >
                   Register
-                </Button>
+                </button>
               </div>
             )}
             <div className="flex md:hidden ml-2">
@@ -265,29 +270,33 @@ const Navbar = () => {
                 </div>
               </div>
             ) : (
-              <div className="space-y-1 px-4">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="w-full mb-2"
+              <div className="space-y-2 px-4">
+                <button
+                  className={`w-full px-4 py-2 text-sm font-medium rounded-md transition-all ${
+                    isActive("/login")
+                      ? "bg-brand text-white shadow-sm"
+                      : "text-brand hover:bg-brand hover:text-white border border-brand"
+                  }`}
                   onClick={() => {
                     navigate("/login");
                     setMobileMenuOpen(false);
                   }}
                 >
                   Login
-                </Button>
-                <Button
-                  variant="primary"
-                  size="sm"
-                  className="w-full"
+                </button>
+                <button
+                  className={`w-full px-4 py-2 text-sm font-medium rounded-md transition-all ${
+                    isActive("/register")
+                      ? "bg-brand text-white shadow-sm"
+                      : "text-brand hover:bg-brand hover:text-white border border-brand"
+                  }`}
                   onClick={() => {
                     navigate("/register");
                     setMobileMenuOpen(false);
                   }}
                 >
                   Register
-                </Button>
+                </button>
               </div>
             )}
           </div>
