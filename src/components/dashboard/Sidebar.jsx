@@ -10,16 +10,11 @@ import {
   HomeIcon,
   UserGroupIcon,
 } from "@heroicons/react/24/outline";
-import { NavLink, useLocation } from "react-router";
+import { NavLink } from "react-router";
 import { useAuth } from "../../hooks/useAuth";
 
 const Sidebar = () => {
   const { user } = useAuth();
-  const location = useLocation();
-
-  const isActive = (path) => {
-    return location.pathname === path;
-  };
 
   const studentLinks = [
     {
@@ -129,7 +124,7 @@ const Sidebar = () => {
   };
 
   return (
-    <div className="flex flex-col w-64 h-screen bg-slate-900">
+    <div className="flex flex-col w-64 h-screen bg-white dark:bg-slate-900 border-r border-gray-200 dark:border-none transition-colors duration-200">
       <div className="flex flex-col flex-1 pt-5 overflow-y-auto">
         <div className="flex items-center shrink-0 px-4">
           <div className="flex items-center">
@@ -141,8 +136,10 @@ const Sidebar = () => {
               />
             </div>
             <div className="ml-3">
-              <p className="text-white text-sm font-medium">eTuitionBd</p>
-              <p className="text-slate-400 text-xs capitalize">
+              <p className="text-gray-900 dark:text-white text-sm font-medium">
+                eTuitionBd
+              </p>
+              <p className="text-gray-500 dark:text-slate-400 text-xs capitalize">
                 {user?.role} Dashboard
               </p>
             </div>
@@ -154,57 +151,63 @@ const Sidebar = () => {
               <NavLink
                 key={link.name}
                 to={link.path}
-                className={`${
-                  isActive(link.path)
-                    ? "bg-brand text-white"
-                    : "text-slate-300 hover:bg-slate-800 hover:text-white"
-                } group flex items-center px-2 py-2 text-sm font-medium rounded-md`}
+                className={({ isActive }) =>
+                  `${
+                    isActive
+                      ? "bg-brand text-white"
+                      : "text-gray-600 dark:text-slate-300 hover:bg-gray-100 dark:hover:bg-slate-800 hover:text-gray-900 dark:hover:text-white"
+                  } group flex items-center px-2 py-2 text-sm font-medium rounded-md transition-colors duration-150`
+                }
               >
-                <link.icon
-                  className={`${
-                    isActive(link.path)
-                      ? "text-white"
-                      : "text-slate-400 group-hover:text-slate-300"
-                  } mr-3 shrink-0 h-5 w-5`}
-                  aria-hidden="true"
-                />
-                {link.name}
+                {({ isActive }) => (
+                  <>
+                    <link.icon
+                      className={`${
+                        isActive
+                          ? "text-white"
+                          : "text-gray-400 dark:text-slate-400 group-hover:text-gray-500 dark:group-hover:text-slate-300"
+                      } mr-3 shrink-0 h-5 w-5 transition-colors duration-150`}
+                      aria-hidden="true"
+                    />
+                    {link.name}
+                  </>
+                )}
               </NavLink>
             ))}
           </nav>
 
           {/* Main Site Links */}
-          <div className="px-2 pb-4 border-t border-slate-700 pt-4 mt-4">
-            <p className="px-2 text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">
+          <div className="px-2 pb-4 border-t border-gray-200 dark:border-slate-700 pt-4 mt-4">
+            <p className="px-2 text-xs font-semibold text-gray-400 dark:text-slate-400 uppercase tracking-wider mb-2">
               Main Site
             </p>
             <div className="space-y-1">
               <NavLink
                 to="/"
-                className="text-slate-300 hover:bg-slate-800 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md"
+                className="text-gray-600 dark:text-slate-300 hover:bg-gray-100 dark:hover:bg-slate-800 hover:text-gray-900 dark:hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md transition-colors duration-150"
               >
                 <HomeIcon
-                  className="text-slate-400 group-hover:text-slate-300 mr-3 shrink-0 h-5 w-5"
+                  className="text-gray-400 dark:text-slate-400 group-hover:text-gray-500 dark:group-hover:text-slate-300 mr-3 shrink-0 h-5 w-5 transition-colors duration-150"
                   aria-hidden="true"
                 />
                 Home
               </NavLink>
               <NavLink
                 to="/tuitions"
-                className="text-slate-300 hover:bg-slate-800 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md"
+                className="text-gray-600 dark:text-slate-300 hover:bg-gray-100 dark:hover:bg-slate-800 hover:text-gray-900 dark:hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md transition-colors duration-150"
               >
                 <BookOpenIcon
-                  className="text-slate-400 group-hover:text-slate-300 mr-3 shrink-0 h-5 w-5"
+                  className="text-gray-400 dark:text-slate-400 group-hover:text-gray-500 dark:group-hover:text-slate-300 mr-3 shrink-0 h-5 w-5 transition-colors duration-150"
                   aria-hidden="true"
                 />
                 Tuitions
               </NavLink>
               <NavLink
                 to="/tutors"
-                className="text-slate-300 hover:bg-slate-800 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md"
+                className="text-gray-600 dark:text-slate-300 hover:bg-gray-100 dark:hover:bg-slate-800 hover:text-gray-900 dark:hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md transition-colors duration-150"
               >
                 <UserGroupIcon
-                  className="text-slate-400 group-hover:text-slate-300 mr-3 shrink-0 h-5 w-5"
+                  className="text-gray-400 dark:text-slate-400 group-hover:text-gray-500 dark:group-hover:text-slate-300 mr-3 shrink-0 h-5 w-5 transition-colors duration-150"
                   aria-hidden="true"
                 />
                 Tutors

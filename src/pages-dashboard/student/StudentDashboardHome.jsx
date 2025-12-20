@@ -1,20 +1,18 @@
-import React from "react";
-import { useQuery } from "@tanstack/react-query";
-import { motion } from "framer-motion";
-import {
-  BookOpenIcon,
-  CurrencyDollarIcon,
-  UserGroupIcon,
-  ClockIcon,
-} from "@heroicons/react/24/outline";
-import { tuitionsAPI } from "@/api/tuitions.api";
 import { applicationsAPI } from "@/api/applications.api";
 import { paymentsAPI } from "@/api/payments.api";
-import DashboardCard from "@/components/dashboard/DashboardCard";
-import {Card, CardContent} from "@/components/ui/Card";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
 import ProtectedImage from "@/components/common/ProtectedImage";
+import DashboardCard from "@/components/dashboard/DashboardCard";
+import { Card, CardContent } from "@/components/ui/Card";
 import { useAuth } from "@/hooks/useAuth";
+import {
+  BookOpenIcon,
+  ClockIcon,
+  CurrencyDollarIcon,
+  UserGroupIcon,
+} from "@heroicons/react/24/outline";
+import { useQuery } from "@tanstack/react-query";
+import { motion } from "framer-motion";
 
 const StudentDashboardHome = () => {
   const { user } = useAuth();
@@ -39,7 +37,7 @@ const StudentDashboardHome = () => {
   });
 
   // Fetch student's payments
-  const { data: payments, isLoading: paymentsLoading } = useQuery({
+  const { data: payments } = useQuery({
     queryKey: ["studentPayments"],
     queryFn: paymentsAPI.getStudentPayments,
   });
@@ -68,7 +66,7 @@ const StudentDashboardHome = () => {
         <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
           Welcome back, {user?.name}!
         </h1>
-        <p className="text-gray-600 mt-1">
+        <p className="text-gray-600 dark:text-gray-300 mt-1">
           Here's what's happening with your tuitions today.
         </p>
       </div>
@@ -126,7 +124,7 @@ const StudentDashboardHome = () => {
         {/* Recent Tuitions */}
         <Card>
           <CardContent className="p-6">
-            <h2 className="text-lg font-semibold text-gray-900 mb-4">
+            <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
               Recent Tuitions
             </h2>
             {tuitionsLoading ? (
@@ -152,13 +150,15 @@ const StudentDashboardHome = () => {
                       <p className="text-sm font-medium text-gray-900 dark:text-white">
                         ৳ {tuition.budget}
                       </p>
-                      <p className="text-xs text-gray-500 dark:text-gray-400">{tuition.status}</p>
+                      <p className="text-xs text-gray-500 dark:text-gray-400">
+                        {tuition.status}
+                      </p>
                     </div>
                   </div>
                 ))}
               </div>
             ) : (
-              <p className="text-gray-500 text-center py-4">
+              <p className="text-gray-500 dark:text-gray-400 text-center py-4">
                 No tuitions posted yet.
               </p>
             )}
@@ -168,7 +168,7 @@ const StudentDashboardHome = () => {
         {/* Recent Applications */}
         <Card>
           <CardContent className="p-6">
-            <h2 className="text-lg font-semibold text-gray-900 mb-4">
+            <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
               Recent Applications
             </h2>
             {applicationsLoading ? (
@@ -206,7 +206,7 @@ const StudentDashboardHome = () => {
                 ))}
               </div>
             ) : (
-              <p className="text-gray-500 text-center py-4">
+              <p className="text-gray-500 dark:text-gray-400 text-center py-4">
                 No applications yet.
               </p>
             )}

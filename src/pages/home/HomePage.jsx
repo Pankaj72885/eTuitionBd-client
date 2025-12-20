@@ -34,7 +34,7 @@ const HomePage = () => {
   return (
     <div className="bg-background dark:bg-gray-950 transition-colors duration-200">
       {/* Hero Section */}
-      <section className="bg-gradient-to-b from-indigo-50/50 dark:from-indigo-950/30 to-gray-50 dark:to-gray-900">
+      <section className="bg-linear-to-b from-indigo-50/50 dark:from-indigo-950/30 to-gray-50 dark:to-gray-900">
         <div className="max-w-6xl mx-auto px-4 md:px-6 py-12 md:py-20 grid md:grid-cols-2 gap-10 items-center">
           <motion.div
             initial={{ opacity: 0, x: -30 }}

@@ -20,11 +20,14 @@ const DashboardLayout = ({ title, breadcrumbs }) => {
   }, []);
 
   return (
-    <div className="flex h-screen overflow-hidden bg-gray-50">
+    <div className="flex h-screen overflow-hidden bg-gray-50 dark:bg-gray-900 transition-colors duration-200">
       {/* Mobile sidebar drawer */}
       {isMobile && (
         <Sheet open={sidebarOpen} onOpenChange={setSidebarOpen}>
-          <SheetContent side="left" className="p-0 w-64 sm:w-80">
+          <SheetContent
+            side="left"
+            className="p-0 w-64 sm:w-80 border-r-gray-200 dark:border-r-gray-800 bg-white dark:bg-gray-900"
+          >
             <Sidebar />
           </SheetContent>
         </Sheet>
@@ -47,7 +50,7 @@ const DashboardLayout = ({ title, breadcrumbs }) => {
         />
 
         {/* Page content - scrollable */}
-        <main className="flex-1 relative overflow-y-auto focus:outline-none bg-gray-50">
+        <main className="flex-1 relative overflow-y-auto focus:outline-none bg-gray-50 dark:bg-gray-900 transition-colors duration-200">
           <div className="py-6">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
               <Outlet />

@@ -29,19 +29,21 @@ const DashboardTopbar = ({ title, breadcrumbs, onMobileMenuClick }) => {
   };
 
   return (
-    <div className="bg-white shadow-sm border-b border-gray-200">
+    <div className="bg-white dark:bg-gray-900 shadow-sm border-b border-gray-200 dark:border-gray-800 transition-colors duration-200">
       <div className="px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center py-4">
           <div className="flex items-center gap-4">
             <button
               type="button"
-              className="text-gray-500 hover:text-gray-600 focus:outline-none focus:text-gray-600 md:hidden"
+              className="text-gray-500 hover:text-gray-600 dark:text-gray-400 dark:hover:text-gray-300 focus:outline-none md:hidden"
               onClick={onMobileMenuClick}
             >
               <Bars3Icon className="h-6 w-6" />
             </button>
             <div>
-              <h1 className="text-lg font-semibold text-gray-900">{title}</h1>
+              <h1 className="text-lg font-semibold text-gray-900 dark:text-white">
+                {title}
+              </h1>
               {breadcrumbs && (
                 <nav className="flex mt-1" aria-label="Breadcrumb">
                   <ol className="flex items-center space-x-2">
@@ -49,7 +51,7 @@ const DashboardTopbar = ({ title, breadcrumbs, onMobileMenuClick }) => {
                       <li key={index} className="flex items-center">
                         {index > 0 && (
                           <svg
-                            className="shrink-0 h-5 w-5 text-gray-300"
+                            className="shrink-0 h-5 w-5 text-gray-300 dark:text-gray-600"
                             xmlns="http://www.w3.org/2000/svg"
                             fill="currentColor"
                             viewBox="0 0 20 20"
@@ -66,8 +68,8 @@ const DashboardTopbar = ({ title, breadcrumbs, onMobileMenuClick }) => {
                           href={breadcrumb.href}
                           className={`text-sm font-medium ${
                             index === breadcrumbs.length - 1
-                              ? "text-gray-500"
-                              : "text-gray-700 hover:text-gray-900"
+                              ? "text-gray-500 dark:text-gray-400"
+                              : "text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
                           }`}
                         >
                           {breadcrumb.name}
@@ -84,39 +86,39 @@ const DashboardTopbar = ({ title, breadcrumbs, onMobileMenuClick }) => {
             <div className="relative">
               <button
                 type="button"
-                className="p-1 rounded-full text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand"
+                className="p-1 rounded-full text-gray-400 hover:text-gray-500 dark:text-gray-400 dark:hover:text-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand dark:focus:ring-offset-gray-900"
                 onClick={() => setShowNotifications(!showNotifications)}
               >
                 <span className="sr-only">View notifications</span>
                 <BellIcon className="h-6 w-6" aria-hidden="true" />
                 {notifications.length > 0 && (
-                  <span className="absolute top-0 right-0 block h-2 w-2 rounded-full bg-red-400 ring-2 ring-white" />
+                  <span className="absolute top-0 right-0 block h-2 w-2 rounded-full bg-red-400 ring-2 ring-white dark:ring-gray-900" />
                 )}
               </button>
 
               {/* Notifications dropdown */}
               {showNotifications && (
-                <div className="origin-top-right absolute right-0 mt-2 w-80 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-10">
+                <div className="origin-top-right absolute right-0 mt-2 w-80 rounded-md shadow-lg bg-white dark:bg-gray-800 ring-1 ring-black ring-opacity-5 focus:outline-none z-10 border border-gray-200 dark:border-gray-700">
                   <div className="py-1">
-                    <div className="px-4 py-2 text-sm text-gray-700 border-b border-gray-200">
+                    <div className="px-4 py-2 text-sm text-gray-700 dark:text-gray-200 border-b border-gray-200 dark:border-gray-700">
                       <h3 className="font-medium">Notifications</h3>
                     </div>
                     {notifications.length > 0 ? (
                       notifications.map((notification) => (
                         <div
                           key={notification.id}
-                          className="px-4 py-3 hover:bg-gray-50"
+                          className="px-4 py-3 hover:bg-gray-50 dark:hover:bg-gray-700"
                         >
-                          <p className="text-sm text-gray-700">
+                          <p className="text-sm text-gray-700 dark:text-gray-200">
                             {notification.message}
                           </p>
-                          <p className="text-xs text-gray-500 mt-1">
+                          <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
                             {new Date(notification.createdAt).toLocaleString()}
                           </p>
                         </div>
                       ))
                     ) : (
-                      <div className="px-4 py-3 text-sm text-gray-500">
+                      <div className="px-4 py-3 text-sm text-gray-500 dark:text-gray-400">
                         No new notifications
                       </div>
                     )}
@@ -129,7 +131,7 @@ const DashboardTopbar = ({ title, breadcrumbs, onMobileMenuClick }) => {
             <Dropdown
               trigger={
                 <div className="flex items-center">
-                  <span className="mr-2 text-sm font-medium text-gray-700 hidden sm:block">
+                  <span className="mr-2 text-sm font-medium text-gray-700 dark:text-gray-200 hidden sm:block">
                     {user?.name}
                   </span>
                   <ProtectedImage

@@ -208,7 +208,7 @@ className = "backdrop-blur-sm bg-opacity-95 dark:bg-opacity-95";
 
 ```jsx
 className =
-  "bg-gradient-to-b from-indigo-50/50 dark:from-indigo-950/30 to-gray-50 dark:to-gray-900";
+  "bg-linear-to-b from-indigo-50/50 dark:from-indigo-950/30 to-gray-50 dark:to-gray-900";
 ```
 
 ### Shadows

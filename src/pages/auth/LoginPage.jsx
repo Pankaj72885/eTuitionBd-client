@@ -82,7 +82,7 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="min-h-full py-10 flex items-center justify-center bg-gradient-to-b from-indigo-50/50 dark:from-indigo-950/30 to-gray-50 dark:to-gray-900 px-4 transition-colors duration-200">
+    <div className="min-h-full py-10 flex items-center justify-center bg-linear-to-b from-indigo-50/50 dark:from-indigo-950/30 to-gray-50 dark:to-gray-900 px-4 transition-colors duration-200">
       <div className="w-full max-w-md bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-xl shadow-lg dark:shadow-indigo-900/20 p-6 md:p-8 space-y-6">
         <div className="text-center">
           <h1 className="text-xl font-semibold text-gray-900 dark:text-white">
