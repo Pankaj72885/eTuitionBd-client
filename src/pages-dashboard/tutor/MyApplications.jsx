@@ -157,7 +157,7 @@ const MyApplications = () => {
                         </div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm text-gray-500 dark:text-gray-400">
+                        <div className="text-sm text-gray-500 dark:text-gray-300">
                           {application.tuitionId?.location}
                         </div>
                       </td>
@@ -313,7 +313,7 @@ const MyApplications = () => {
         size="sm"
       >
         <div className="space-y-4">
-          <p className="text-sm text-gray-500 dark:text-gray-400">
+          <p className="text-sm text-gray-500 dark:text-gray-300">
             Are you sure you want to delete this application? This action cannot
             be undone.
           </p>

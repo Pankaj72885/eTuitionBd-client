@@ -68,7 +68,7 @@ const StudentProfileSettings = () => {
               <h2 className="text-lg font-medium text-gray-900 dark:text-white">
                 {user?.name}
               </h2>
-              <p className="text-sm text-gray-500 dark:text-gray-400">{user?.email}</p>
+              <p className="text-sm text-gray-500 dark:text-gray-300">{user?.email}</p>
               <p className="text-sm text-gray-500 capitalize">{user?.role}</p>
 
               <div className="mt-6">

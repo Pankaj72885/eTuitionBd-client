@@ -129,7 +129,7 @@ const TutorsListPage = () => {
           <h1 className="text-2xl md:text-3xl font-semibold text-gray-900 dark:text-white">
             Find Tutors
           </h1>
-          <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
+          <p className="mt-2 text-sm text-gray-500 dark:text-gray-300">
             Discover qualified tutors for your learning needs.
           </p>
         </div>
@@ -140,7 +140,7 @@ const TutorsListPage = () => {
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                 <MagnifyingGlassIcon
-                  className="h-5 w-5 text-gray-400 dark:text-gray-500"
+                  className="h-5 w-5 text-gray-400 dark:text-gray-400"
                   aria-hidden="true"
                 />
               </div>
@@ -264,10 +264,10 @@ const TutorsListPage = () => {
                         <h3 className="text-base font-semibold text-gray-900 dark:text-white truncate">
                           {tutor.name}
                         </h3>
-                        <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                        <p className="text-xs text-gray-500 dark:text-gray-300 mt-1">
                           {tutor.city || "Dhaka"}
                         </p>
-                        <p className="text-xs text-gray-500 dark:text-gray-400">
+                        <p className="text-xs text-gray-500 dark:text-gray-300">
                           {tutor.experienceYears || 0}+ years exp.
                         </p>
                       </div>
@@ -284,7 +284,7 @@ const TutorsListPage = () => {
                         </span>
                       ))}
                       {tutor.subjects?.length > 3 && (
-                        <span className="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300">
+                        <span className="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-200">
                           +{tutor.subjects.length - 3}
                         </span>
                       )}
@@ -297,7 +297,7 @@ const TutorsListPage = () => {
                         <span className="text-sm font-medium text-gray-900 dark:text-white">
                           {tutor.averageRating?.toFixed(1) || "5.0"}
                         </span>
-                        <span className="text-xs text-gray-500 dark:text-gray-400">
+                        <span className="text-xs text-gray-500 dark:text-gray-300">
                           ({tutor.reviewCount || 0})
                         </span>
                       </div>
@@ -372,7 +372,7 @@ const TutorsListPage = () => {
             </DialogHeader>
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1">
                   Subject
                 </label>
                 <Select

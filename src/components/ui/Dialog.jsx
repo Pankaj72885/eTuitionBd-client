@@ -61,7 +61,7 @@ function DialogContent({
             data-slot="dialog-close"
             className={cn(
               "absolute top-4 right-4 rounded-sm opacity-70 transition-opacity hover:opacity-100",
-              "text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200",
+              "text-gray-500 dark:text-gray-300 hover:text-gray-700 dark:hover:text-gray-200",
               "focus:outline-none focus:ring-2 focus:ring-brand dark:focus:ring-indigo-400 focus:ring-offset-2 dark:focus:ring-offset-gray-800",
               "disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4"
             )}
@@ -115,7 +115,7 @@ function DialogDescription({ className, ...props }) {
   return (
     <DialogPrimitive.Description
       data-slot="dialog-description"
-      className={cn("text-sm text-gray-600 dark:text-gray-300", className)}
+      className={cn("text-sm text-gray-600 dark:text-gray-200", className)}
       {...props}
     />
   );

@@ -169,7 +169,7 @@ const UserManagement = () => {
             <div>
               <label
                 htmlFor="search"
-                className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1"
               >
                 Search
               </label>
@@ -183,7 +183,7 @@ const UserManagement = () => {
             <div>
               <label
                 htmlFor="role"
-                className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1"
               >
                 Role
               </label>
@@ -220,31 +220,31 @@ const UserManagement = () => {
                   <tr>
                     <th
                       scope="col"
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
+                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider"
                     >
                       User
                     </th>
                     <th
                       scope="col"
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
+                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider"
                     >
                       Role
                     </th>
                     <th
                       scope="col"
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
+                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider"
                     >
                       Verification Status
                     </th>
                     <th
                       scope="col"
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
+                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider"
                     >
                       Created At
                     </th>
                     <th
                       scope="col"
-                      className="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
+                      className="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider"
                     >
                       Actions
                     </th>
@@ -264,7 +264,7 @@ const UserManagement = () => {
                             <div className="text-sm font-medium text-gray-900 dark:text-white">
                               {user.name}
                             </div>
-                            <div className="text-sm text-gray-500 dark:text-gray-400">
+                            <div className="text-sm text-gray-500 dark:text-gray-300">
                               {user.email}
                             </div>
                           </div>
@@ -286,7 +286,7 @@ const UserManagement = () => {
                           {user.isVerified ? "Verified" : "Not Verified"}
                         </span>
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-300">
                         {new Date(user.createdAt).toLocaleDateString()}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
@@ -356,7 +356,7 @@ const UserManagement = () => {
           <div>
             <label
               htmlFor="name"
-              className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+              className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1"
             >
               Name
             </label>
@@ -372,7 +372,7 @@ const UserManagement = () => {
           <div>
             <label
               htmlFor="phone"
-              className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+              className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1"
             >
               Phone Number
             </label>
@@ -391,7 +391,7 @@ const UserManagement = () => {
           <div>
             <label
               htmlFor="city"
-              className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+              className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1"
             >
               City
             </label>
@@ -447,7 +447,7 @@ const UserManagement = () => {
           <div>
             <label
               htmlFor="role"
-              className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+              className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1"
             >
               Role
             </label>
@@ -488,7 +488,7 @@ const UserManagement = () => {
         size="sm"
       >
         <div className="space-y-4">
-          <p className="text-sm text-gray-500 dark:text-gray-400">
+          <p className="text-sm text-gray-500 dark:text-gray-300">
             Are you sure you want to delete this user? This action cannot be
             undone.
           </p>
@@ -531,7 +531,7 @@ const UserManagement = () => {
                 <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
                   {userToView.name}
                 </h3>
-                <p className="text-sm text-gray-500 dark:text-gray-400">
+                <p className="text-sm text-gray-500 dark:text-gray-300">
                   {userToView.email}
                 </p>
               </div>

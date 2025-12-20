@@ -44,7 +44,7 @@ const HomePage = () => {
             <h1 className="text-3xl md:text-4xl font-bold tracking-tight text-gray-900 dark:text-white">
               Find trusted tutors in minutes
             </h1>
-            <p className="mt-3 text-gray-600 dark:text-gray-300 max-w-lg">
+            <p className="mt-3 text-gray-600 dark:text-gray-200 max-w-lg">
               eTuitionBd connects students with qualified, verified tutors
               across Bangladesh. Our platform ensures transparency, security,
               and quality education for all.
@@ -65,7 +65,7 @@ const HomePage = () => {
           >
             <Card className="shadow-lg dark:shadow-indigo-900/20 border-gray-200 dark:border-gray-700">
               <CardContent className="p-6">
-                <p className="text-sm text-gray-500 dark:text-gray-400">
+                <p className="text-sm text-gray-500 dark:text-gray-300">
                   Platform snapshot
                 </p>
                 <div className="mt-4 grid grid-cols-2 gap-4">
@@ -73,7 +73,7 @@ const HomePage = () => {
                     <p className="text-2xl font-bold text-brand dark:text-indigo-400">
                       500+
                     </p>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">
+                    <p className="text-sm text-gray-600 dark:text-gray-300">
                       Successful tuitions
                     </p>
                   </div>
@@ -81,7 +81,7 @@ const HomePage = () => {
                     <p className="text-2xl font-bold text-brand dark:text-indigo-400">
                       4.8★
                     </p>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">
+                    <p className="text-sm text-gray-600 dark:text-gray-300">
                       Average rating
                     </p>
                   </div>
@@ -89,7 +89,7 @@ const HomePage = () => {
                     <p className="text-2xl font-bold text-brand dark:text-indigo-400">
                       200+
                     </p>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">
+                    <p className="text-sm text-gray-600 dark:text-gray-300">
                       Verified tutors
                     </p>
                   </div>
@@ -97,7 +97,7 @@ const HomePage = () => {
                     <p className="text-2xl font-bold text-brand dark:text-indigo-400">
                       15+
                     </p>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">
+                    <p className="text-sm text-gray-600 dark:text-gray-300">
                       Cities covered
                     </p>
                   </div>
@@ -114,7 +114,7 @@ const HomePage = () => {
           <h2 className="text-center text-2xl md:text-3xl font-semibold text-gray-900 dark:text-white">
             How eTuitionBd works
           </h2>
-          <p className="mt-2 text-center text-gray-500 dark:text-gray-400 max-w-2xl mx-auto">
+          <p className="mt-2 text-center text-gray-500 dark:text-gray-300 max-w-2xl mx-auto">
             Simple, transparent steps to connect students and tutors.
           </p>
 
@@ -133,7 +133,7 @@ const HomePage = () => {
                   <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
                     Post a tuition
                   </h3>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">
+                  <p className="text-sm text-gray-600 dark:text-gray-300">
                     Students share their requirements, subject, location, and
                     budget.
                   </p>
@@ -150,7 +150,7 @@ const HomePage = () => {
                   <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
                     Tutors apply
                   </h3>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">
+                  <p className="text-sm text-gray-600 dark:text-gray-300">
                     Qualified tutors apply with their qualifications,
                     experience, and expected salary.
                   </p>
@@ -167,7 +167,7 @@ const HomePage = () => {
                   <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
                     Approve & start classes
                   </h3>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">
+                  <p className="text-sm text-gray-600 dark:text-gray-300">
                     Students review applications, select a tutor, make payment,
                     and begin learning.
                   </p>
@@ -184,7 +184,7 @@ const HomePage = () => {
           <h2 className="text-center text-2xl md:text-3xl font-semibold text-gray-900 dark:text-white">
             Why choose eTuitionBd
           </h2>
-          <p className="mt-2 text-center text-gray-500 dark:text-gray-400 max-w-2xl mx-auto">
+          <p className="mt-2 text-center text-gray-500 dark:text-gray-300 max-w-2xl mx-auto">
             We're committed to providing the best tuition experience for
             students and tutors.
           </p>
@@ -217,7 +217,7 @@ const HomePage = () => {
                   <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
                     Verified tutors
                   </h3>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">
+                  <p className="text-sm text-gray-600 dark:text-gray-300">
                     All tutors go through a verification process to ensure
                     quality and safety.
                   </p>

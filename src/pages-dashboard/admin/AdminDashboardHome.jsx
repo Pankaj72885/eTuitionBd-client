@@ -99,7 +99,7 @@ const AdminDashboardHome = () => {
         <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
           Admin Dashboard
         </h1>
-        <p className="text-gray-600 dark:text-gray-300 mt-1">
+        <p className="text-gray-600 dark:text-gray-200 mt-1">
           Welcome to the admin dashboard. Here's an overview of the platform.
         </p>
       </div>
@@ -235,12 +235,12 @@ const AdminDashboardHome = () => {
                       <p className="font-medium text-gray-900 dark:text-white">
                         {user.name}
                       </p>
-                      <p className="text-sm text-gray-500 dark:text-gray-400 capitalize">
+                      <p className="text-sm text-gray-500 dark:text-gray-300 capitalize">
                         {user.role} • {user.city}
                       </p>
                     </div>
                     <div className="text-right">
-                      <p className="text-xs text-gray-500 dark:text-gray-400">
+                      <p className="text-xs text-gray-500 dark:text-gray-300">
                         {new Date(user.createdAt).toLocaleDateString()}
                       </p>
                     </div>
@@ -248,7 +248,7 @@ const AdminDashboardHome = () => {
                 ))}
               </div>
             ) : (
-              <p className="text-gray-500 dark:text-gray-400 text-center py-4">
+              <p className="text-gray-500 dark:text-gray-300 text-center py-4">
                 No users yet.
               </p>
             )}
@@ -275,7 +275,7 @@ const AdminDashboardHome = () => {
                       <p className="font-medium text-gray-900 dark:text-white">
                         {tuition.subject}
                       </p>
-                      <p className="text-sm text-gray-500 dark:text-gray-400">
+                      <p className="text-sm text-gray-500 dark:text-gray-300">
                         {tuition.classLevel} • {tuition.location}
                       </p>
                     </div>
@@ -283,7 +283,7 @@ const AdminDashboardHome = () => {
                       <p className="text-sm font-medium text-gray-900 dark:text-white">
                         ৳ {tuition.budget}
                       </p>
-                      <p className="text-xs text-gray-500 dark:text-gray-400">
+                      <p className="text-xs text-gray-500 dark:text-gray-300">
                         {tuition.status}
                       </p>
                     </div>
@@ -291,7 +291,7 @@ const AdminDashboardHome = () => {
                 ))}
               </div>
             ) : (
-              <p className="text-gray-500 dark:text-gray-400 text-center py-4">
+              <p className="text-gray-500 dark:text-gray-300 text-center py-4">
                 No tuitions yet.
               </p>
             )}

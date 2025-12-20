@@ -47,14 +47,14 @@ const TutorOngoingTuitions = () => {
                   </h3>
                   <StatusBadge status="Ongoing" />
                 </div>
-                <p className="text-xs text-gray-500 dark:text-gray-400">
+                <p className="text-xs text-gray-500 dark:text-gray-300">
                   Student: {application.tuitionId?.studentId?.name} •{" "}
                   {application.tuitionId?.location}
                 </p>
-                <p className="text-xs text-gray-500 dark:text-gray-400">
+                <p className="text-xs text-gray-500 dark:text-gray-300">
                   Schedule: {application.tuitionId?.schedule}
                 </p>
-                <p className="text-xs text-gray-500 dark:text-gray-400">
+                <p className="text-xs text-gray-500 dark:text-gray-300">
                   Started:{" "}
                   {new Date(application.updatedAt).toLocaleDateString()}
                 </p>

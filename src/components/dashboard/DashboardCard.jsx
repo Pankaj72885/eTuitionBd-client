@@ -24,7 +24,7 @@ const DashboardCard = ({
             </div>
           </div>
           <div className="ml-4 flex-1">
-            <p className="text-sm font-medium text-gray-500 dark:text-gray-400 truncate">
+            <p className="text-sm font-medium text-gray-500 dark:text-gray-300 truncate">
               {title}
             </p>
             <p className="text-2xl font-semibold text-gray-900 dark:text-white">

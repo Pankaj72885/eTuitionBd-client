@@ -66,7 +66,7 @@ const StudentDashboardHome = () => {
         <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
           Welcome back, {user?.name}!
         </h1>
-        <p className="text-gray-600 dark:text-gray-300 mt-1">
+        <p className="text-gray-600 dark:text-gray-200 mt-1">
           Here's what's happening with your tuitions today.
         </p>
       </div>
@@ -142,7 +142,7 @@ const StudentDashboardHome = () => {
                       <p className="font-medium text-gray-900 dark:text-white">
                         {tuition.subject}
                       </p>
-                      <p className="text-sm text-gray-500 dark:text-gray-400">
+                      <p className="text-sm text-gray-500 dark:text-gray-300">
                         {tuition.classLevel} • {tuition.location}
                       </p>
                     </div>
@@ -150,7 +150,7 @@ const StudentDashboardHome = () => {
                       <p className="text-sm font-medium text-gray-900 dark:text-white">
                         ৳ {tuition.budget}
                       </p>
-                      <p className="text-xs text-gray-500 dark:text-gray-400">
+                      <p className="text-xs text-gray-500 dark:text-gray-300">
                         {tuition.status}
                       </p>
                     </div>
@@ -158,7 +158,7 @@ const StudentDashboardHome = () => {
                 ))}
               </div>
             ) : (
-              <p className="text-gray-500 dark:text-gray-400 text-center py-4">
+              <p className="text-gray-500 dark:text-gray-300 text-center py-4">
                 No tuitions posted yet.
               </p>
             )}
@@ -192,13 +192,13 @@ const StudentDashboardHome = () => {
                         <p className="font-medium text-gray-900 dark:text-white">
                           {application.tutorId?.name}
                         </p>
-                        <p className="text-sm text-gray-500 dark:text-gray-400">
+                        <p className="text-sm text-gray-500 dark:text-gray-300">
                           {application.expectedSalary} ৳/month
                         </p>
                       </div>
                     </div>
                     <div className="text-right">
-                      <p className="text-xs text-gray-500 dark:text-gray-400">
+                      <p className="text-xs text-gray-500 dark:text-gray-300">
                         {application.status}
                       </p>
                     </div>
@@ -206,7 +206,7 @@ const StudentDashboardHome = () => {
                 ))}
               </div>
             ) : (
-              <p className="text-gray-500 dark:text-gray-400 text-center py-4">
+              <p className="text-gray-500 dark:text-gray-300 text-center py-4">
                 No applications yet.
               </p>
             )}

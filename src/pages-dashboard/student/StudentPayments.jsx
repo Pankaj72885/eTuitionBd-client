@@ -90,7 +90,7 @@ const StudentPayments = () => {
           </h2>
           <div className="grid md:grid-cols-2 gap-6">
             <div>
-              <p className="text-sm text-gray-500 dark:text-gray-400">Total Spent</p>
+              <p className="text-sm text-gray-500 dark:text-gray-300">Total Spent</p>
               <p className="text-2xl font-bold text-gray-900 dark:text-white">
                 ৳{" "}
                 {payments?.data?.reduce(
@@ -100,7 +100,7 @@ const StudentPayments = () => {
               </p>
             </div>
             <div>
-              <p className="text-sm text-gray-500 dark:text-gray-400">Total Transactions</p>
+              <p className="text-sm text-gray-500 dark:text-gray-300">Total Transactions</p>
               <p className="text-2xl font-bold text-gray-900 dark:text-white">
                 {payments?.data?.length || 0}
               </p>

@@ -36,7 +36,7 @@ const AboutPage = () => {
           <h1 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
             About eTuitionBd
           </h1>
-          <p className="text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+          <p className="text-lg text-gray-600 dark:text-gray-200 max-w-3xl mx-auto">
             We're on a mission to connect students with qualified tutors across
             Bangladesh, making quality education accessible to everyone.
           </p>
@@ -61,7 +61,7 @@ const AboutPage = () => {
                       Our Mission
                     </h2>
                   </div>
-                  <p className="text-gray-600 dark:text-gray-300">
+                  <p className="text-gray-600 dark:text-gray-200">
                     To create a trusted platform that connects students with
                     qualified tutors, fostering educational growth and academic
                     excellence across Bangladesh.
@@ -119,7 +119,7 @@ const AboutPage = () => {
                   <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
                     Post Tuition
                   </h3>
-                  <p className="text-gray-600 dark:text-gray-300">
+                  <p className="text-gray-600 dark:text-gray-200">
                     Students post their tuition requirements with details about
                     subject, location, and budget.
                   </p>
@@ -285,10 +285,10 @@ const AboutPage = () => {
                 <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-1">
                   John Doe
                 </h3>
-                <p className="text-sm text-gray-500 dark:text-gray-400 mb-2">
+                <p className="text-sm text-gray-500 dark:text-gray-300 mb-2">
                   CEO & Founder
                 </p>
-                <p className="text-gray-600 dark:text-gray-300 text-sm">
+                <p className="text-gray-600 dark:text-gray-200 text-sm">
                   Passionate about education technology with over 10 years of
                   experience.
                 </p>
@@ -329,7 +329,7 @@ const AboutPage = () => {
           <h2 className="text-2xl md:text-3xl font-semibold text-gray-900 dark:text-white mb-4">
             Ready to Get Started?
           </h2>
-          <p className="text-lg text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto">
+          <p className="text-lg text-gray-600 dark:text-gray-200 mb-8 max-w-2xl mx-auto">
             Join thousands of students and tutors who are already benefiting
             from eTuitionBd.
           </p>

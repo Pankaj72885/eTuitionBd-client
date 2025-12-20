@@ -43,9 +43,9 @@
 
 /* Dark Mode */
 --text-primary-dark: #f9fafb; /* Gray-50 */
---text-secondary-dark: #d1d5db; /* Gray-300 */
---text-tertiary-dark: #9ca3af; /* Gray-400 */
---text-muted-dark: #6b7280; /* Gray-500 */
+--text-secondary-dark: #e5e7eb; /* Gray-200 */
+--text-tertiary-dark: #d1d5db; /* Gray-300 */
+--text-muted-dark: #9ca3af; /* Gray-400 */
 ```
 
 ### Border Colors

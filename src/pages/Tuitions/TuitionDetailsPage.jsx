@@ -137,7 +137,7 @@ const TuitionDetailsPage = () => {
           <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
             Tuition not found
           </h1>
-          <p className="text-gray-600 dark:text-gray-300 mb-6">
+          <p className="text-gray-600 dark:text-gray-200 mb-6">
             The tuition you're looking for doesn't exist or has been removed.
           </p>
           <Button onClick={() => navigate("/tuitions")}>Browse Tuitions</Button>
@@ -155,7 +155,7 @@ const TuitionDetailsPage = () => {
             <h1 className="text-2xl md:text-3xl font-semibold text-gray-900 dark:text-white">
               {tuition.subject} tuition for {tuition.classLevel}
             </h1>
-            <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+            <p className="mt-1 text-sm text-gray-500 dark:text-gray-300">
               {tuition.location} • {tuition.mode} • {tuition.schedule}
             </p>
           </div>
@@ -165,21 +165,21 @@ const TuitionDetailsPage = () => {
         {/* Main info card */}
         <Card>
           <CardContent className="p-4 md:p-6 space-y-4">
-            <div className="grid sm:grid-cols-2 gap-4 text-sm text-gray-700 dark:text-gray-300">
+            <div className="grid sm:grid-cols-2 gap-4 text-sm text-gray-700 dark:text-gray-200">
               <div className="flex items-center">
-                <MapPinIcon className="h-5 w-5 mr-2 text-gray-400 dark:text-gray-500" />
+                <MapPinIcon className="h-5 w-5 mr-2 text-gray-400 dark:text-gray-400" />
                 <span>{tuition.location}</span>
               </div>
               <div className="flex items-center">
-                <CurrencyDollarIcon className="h-5 w-5 mr-2 text-gray-400 dark:text-gray-500" />
+                <CurrencyDollarIcon className="h-5 w-5 mr-2 text-gray-400 dark:text-gray-400" />
                 <span>৳ {tuition.budget} / month</span>
               </div>
               <div className="flex items-center">
-                <CalendarIcon className="h-5 w-5 mr-2 text-gray-400 dark:text-gray-500" />
+                <CalendarIcon className="h-5 w-5 mr-2 text-gray-400 dark:text-gray-400" />
                 <span>{tuition.schedule}</span>
               </div>
               <div className="flex items-center">
-                <AcademicCapIcon className="h-5 w-5 mr-2 text-gray-400 dark:text-gray-500" />
+                <AcademicCapIcon className="h-5 w-5 mr-2 text-gray-400 dark:text-gray-400" />
                 <span>{tuition.mode}</span>
               </div>
             </div>
@@ -189,14 +189,14 @@ const TuitionDetailsPage = () => {
                 <h3 className="text-sm font-semibold text-gray-900 dark:text-white">
                   Additional requirements
                 </h3>
-                <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
+                <p className="mt-1 text-sm text-gray-600 dark:text-gray-300">
                   {tuition.description}
                 </p>
               </div>
             )}
 
-            <div className="flex items-center gap-3 text-sm text-gray-500 dark:text-gray-400">
-              <span className="font-medium text-gray-700 dark:text-gray-300">
+            <div className="flex items-center gap-3 text-sm text-gray-500 dark:text-gray-300">
+              <span className="font-medium text-gray-700 dark:text-gray-200">
                 Posted by:
               </span>
               <span>Student in {tuition.location}</span>
@@ -212,7 +212,7 @@ const TuitionDetailsPage = () => {
                 <h3 className="text-sm font-semibold text-gray-900 dark:text-white">
                   Interested in this tuition?
                 </h3>
-                <p className="text-sm text-gray-600 dark:text-gray-400">
+                <p className="text-sm text-gray-600 dark:text-gray-300">
                   Share your qualifications, experience, and expected salary to
                   apply.
                 </p>
@@ -233,7 +233,7 @@ const TuitionDetailsPage = () => {
         {tuition.applicationCount > 0 && (
           <Card>
             <CardContent className="p-4 md:p-5">
-              <p className="text-sm text-gray-600 dark:text-gray-400">
+              <p className="text-sm text-gray-600 dark:text-gray-300">
                 {tuition.applicationCount} application
                 {tuition.applicationCount > 1 ? "s" : ""} received.
               </p>
@@ -245,7 +245,7 @@ const TuitionDetailsPage = () => {
         {user && user.role !== "tutor" && (
           <Card>
             <CardContent className="p-4 md:p-5">
-              <p className="text-sm text-gray-600 dark:text-gray-400">
+              <p className="text-sm text-gray-600 dark:text-gray-300">
                 Only tutors can apply to this tuition.
               </p>
             </CardContent>
@@ -261,7 +261,7 @@ const TuitionDetailsPage = () => {
         >
           <div className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1">
                 Your Name
               </label>
               <Input

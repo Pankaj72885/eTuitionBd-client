@@ -161,7 +161,7 @@ const AdminAnalytics = () => {
               Total Users
             </h2>
             <p className="text-3xl font-bold text-gray-900 dark:text-white">{totalUsers}</p>
-            <div className="mt-2 text-sm text-gray-500 dark:text-gray-400">
+            <div className="mt-2 text-sm text-gray-500 dark:text-gray-300">
               {totalStudents} students, {totalTutors} tutors, {totalAdmins}{" "}
               admins
             </div>
@@ -174,7 +174,7 @@ const AdminAnalytics = () => {
               Total Tuitions
             </h2>
             <p className="text-3xl font-bold text-gray-900 dark:text-white">{totalTuitions}</p>
-            <div className="mt-2 text-sm text-gray-500 dark:text-gray-400">
+            <div className="mt-2 text-sm text-gray-500 dark:text-gray-300">
               {pendingTuitions} pending, {approvedTuitions} approved,{" "}
               {ongoingTuitions} ongoing
             </div>
@@ -189,7 +189,7 @@ const AdminAnalytics = () => {
             <p className="text-3xl font-bold text-gray-900 dark:text-white">
               ৳ {totalEarnings}
             </p>
-            <div className="mt-2 text-sm text-gray-500 dark:text-gray-400">
+            <div className="mt-2 text-sm text-gray-500 dark:text-gray-300">
               Platform revenue: ৳ {platformEarnings}
             </div>
           </CardContent>
@@ -206,7 +206,7 @@ const AdminAnalytics = () => {
                 ? Math.round(totalEarnings / totalTuitions)
                 : 0}
             </p>
-            <div className="mt-2 text-sm text-gray-500 dark:text-gray-400">Per tuition</div>
+            <div className="mt-2 text-sm text-gray-500 dark:text-gray-300">Per tuition</div>
           </CardContent>
         </Card>
       </div>

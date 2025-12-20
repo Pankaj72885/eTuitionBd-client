@@ -127,7 +127,7 @@ const TutorProfilePage = () => {
           <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
             Tutor not found
           </h1>
-          <p className="text-gray-600 dark:text-gray-300 mb-6">
+          <p className="text-gray-600 dark:text-gray-200 mb-6">
             The tutor you're looking for doesn't exist or has been removed.
           </p>
           <Button onClick={() => navigate("/tutors")}>Browse Tutors</Button>
@@ -158,14 +158,14 @@ const TutorProfilePage = () => {
                     Tutor
                   </span>
                 </div>
-                <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+                <p className="mt-1 text-sm text-gray-500 dark:text-gray-300">
                   {tutor.city} • {tutor.experienceYears}+ years experience
                 </p>
                 <div className="mt-2 flex flex-wrap items-center gap-3 text-sm">
                   <div className="flex items-center gap-1 text-amber-500">
                     <StarIcon className="h-4 w-4" />
                     {tutor.averageRating || "4.8"}{" "}
-                    <span className="text-xs text-gray-500 dark:text-gray-400">
+                    <span className="text-xs text-gray-500 dark:text-gray-300">
                       ({tutor.reviewCount || 32} reviews)
                     </span>
                   </div>
@@ -202,18 +202,18 @@ const TutorProfilePage = () => {
             </h2>
             <div className="space-y-3">
               <div>
-                <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                <h3 className="text-sm font-medium text-gray-700 dark:text-gray-200">
                   Qualifications
                 </h3>
-                <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
+                <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">
                   {tutor.qualifications || "No qualifications provided"}
                 </p>
               </div>
               <div>
-                <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                <h3 className="text-sm font-medium text-gray-700 dark:text-gray-200">
                   Experience
                 </h3>
-                <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
+                <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">
                   {tutor.experienceYears}+ years of teaching experience
                 </p>
               </div>
@@ -229,7 +229,7 @@ const TutorProfilePage = () => {
             </h2>
             <div className="space-y-3">
               <div>
-                <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <h3 className="text-sm font-medium text-gray-700 dark:text-gray-200 mb-2">
                   Subjects
                 </h3>
                 <div className="flex flex-wrap gap-2">
@@ -243,14 +243,14 @@ const TutorProfilePage = () => {
                       </span>
                     ))
                   ) : (
-                    <p className="text-sm text-gray-500 dark:text-gray-400">
+                    <p className="text-sm text-gray-500 dark:text-gray-300">
                       No subjects specified
                     </p>
                   )}
                 </div>
               </div>
               <div>
-                <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <h3 className="text-sm font-medium text-gray-700 dark:text-gray-200 mb-2">
                   Class Levels
                 </h3>
                 <div className="flex flex-wrap gap-2">
@@ -258,13 +258,13 @@ const TutorProfilePage = () => {
                     tutor.classLevels.map((level, index) => (
                       <span
                         key={index}
-                        className="inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200"
+                        className="inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-100"
                       >
                         {level}
                       </span>
                     ))
                   ) : (
-                    <p className="text-sm text-gray-500 dark:text-gray-400">
+                    <p className="text-sm text-gray-500 dark:text-gray-300">
                       No class levels specified
                     </p>
                   )}
@@ -300,25 +300,25 @@ const TutorProfilePage = () => {
                               className={`h-4 w-4 ${
                                 i < review.rating
                                   ? "text-amber-400"
-                                  : "text-gray-300 dark:text-gray-600"
+                                  : "text-gray-300 dark:text-gray-500"
                               }`}
                               fill="currentColor"
                             />
                           ))}
                         </div>
-                        <span className="ml-2 text-sm text-gray-500 dark:text-gray-400">
+                        <span className="ml-2 text-sm text-gray-500 dark:text-gray-300">
                           {new Date(review.createdAt).toLocaleDateString()}
                         </span>
                       </div>
                     </div>
-                    <p className="mt-2 text-sm text-gray-700 dark:text-gray-300">
+                    <p className="mt-2 text-sm text-gray-700 dark:text-gray-200">
                       {review.comment}
                     </p>
                   </div>
                 ))}
               </div>
             ) : (
-              <p className="text-sm text-gray-500 dark:text-gray-400">
+              <p className="text-sm text-gray-500 dark:text-gray-300">
                 No reviews yet.
               </p>
             )}

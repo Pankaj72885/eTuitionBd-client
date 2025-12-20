@@ -144,7 +144,7 @@ const AppliedTutors = () => {
                             <div className="text-sm font-medium text-gray-900 dark:text-white">
                               {application.tutorId?.name}
                             </div>
-                            <div className="text-sm text-gray-500 dark:text-gray-400">
+                            <div className="text-sm text-gray-500 dark:text-gray-300">
                               {application.tutorId?.city}
                             </div>
                           </div>
@@ -232,7 +232,7 @@ const AppliedTutors = () => {
         size="sm"
       >
         <div className="space-y-4">
-          <p className="text-sm text-gray-500 dark:text-gray-400">
+          <p className="text-sm text-gray-500 dark:text-gray-300">
             Are you sure you want to reject this application? This action cannot
             be undone.
           </p>

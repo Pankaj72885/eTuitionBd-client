@@ -101,7 +101,7 @@ const TuitionsListPage = () => {
           <h1 className="text-2xl md:text-3xl font-semibold text-gray-900 dark:text-white">
             Browse Tuitions
           </h1>
-          <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
+          <p className="mt-2 text-sm text-gray-500 dark:text-gray-300">
             Filter and find tuition opportunities that match your expertise.
           </p>
         </div>
@@ -112,7 +112,7 @@ const TuitionsListPage = () => {
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                 <MagnifyingGlassIcon
-                  className="h-5 w-5 text-gray-400 dark:text-gray-500"
+                  className="h-5 w-5 text-gray-400 dark:text-gray-400"
                   aria-hidden="true"
                 />
               </div>
@@ -227,20 +227,20 @@ const TuitionsListPage = () => {
                         <h3 className="text-base md:text-lg font-semibold text-gray-900 dark:text-white">
                           {tuition.subject} for {tuition.classLevel}
                         </h3>
-                        <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+                        <p className="mt-1 text-sm text-gray-500 dark:text-gray-300">
                           {tuition.location} • {tuition.mode}
                         </p>
                       </div>
                       <StatusBadge status={tuition.status} />
                     </div>
 
-                    <div className="text-sm text-gray-600 dark:text-gray-300">
+                    <div className="text-sm text-gray-600 dark:text-gray-200">
                       <p>{tuition.schedule}</p>
                     </div>
 
-                    <div className="flex items-center justify-between text-sm text-gray-600 dark:text-gray-300">
+                    <div className="flex items-center justify-between text-sm text-gray-600 dark:text-gray-200">
                       <span>৳ {tuition.budget} / month</span>
-                      <span className="text-xs text-gray-400 dark:text-gray-500">
+                      <span className="text-xs text-gray-400 dark:text-gray-400">
                         Posted{" "}
                         {new Date(tuition.createdAt).toLocaleDateString()}
                       </span>
@@ -277,7 +277,7 @@ const TuitionsListPage = () => {
         {/* Empty state */}
         {!isLoading && !error && data?.data?.length === 0 && (
           <div className="text-center py-12">
-            <p className="text-gray-500 dark:text-gray-400 mb-4">
+            <p className="text-gray-500 dark:text-gray-300 mb-4">
               No tuitions found matching your criteria.
             </p>
             <Button variant="outline" onClick={() => setSearchParams({})}>
@@ -294,7 +294,7 @@ const TuitionsListPage = () => {
             </DialogHeader>
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1">
                   Class/Grade
                 </label>
                 <Select
@@ -312,7 +312,7 @@ const TuitionsListPage = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1">
                   Subject
                 </label>
                 <Select
@@ -334,7 +334,7 @@ const TuitionsListPage = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1">
                   Location
                 </label>
                 <Select

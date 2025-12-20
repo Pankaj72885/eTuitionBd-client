@@ -145,7 +145,7 @@ const TuitionManagement = () => {
             <div>
               <label
                 htmlFor="search"
-                className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1"
               >
                 Search
               </label>
@@ -159,7 +159,7 @@ const TuitionManagement = () => {
             <div>
               <label
                 htmlFor="status"
-                className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1"
               >
                 Status
               </label>
@@ -181,7 +181,7 @@ const TuitionManagement = () => {
             <div>
               <label
                 htmlFor="classLevel"
-                className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1"
               >
                 Class Level
               </label>
@@ -211,7 +211,7 @@ const TuitionManagement = () => {
             <div>
               <label
                 htmlFor="minBudget"
-                className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1"
               >
                 Min Budget (৳)
               </label>
@@ -228,7 +228,7 @@ const TuitionManagement = () => {
             <div>
               <label
                 htmlFor="maxBudget"
-                className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1"
               >
                 Max Budget (৳)
               </label>
@@ -267,37 +267,37 @@ const TuitionManagement = () => {
                   <tr>
                     <th
                       scope="col"
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
+                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider"
                     >
                       Title
                     </th>
                     <th
                       scope="col"
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
+                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider"
                     >
                       Student
                     </th>
                     <th
                       scope="col"
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
+                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider"
                     >
                       Location
                     </th>
                     <th
                       scope="col"
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
+                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider"
                     >
                       Budget
                     </th>
                     <th
                       scope="col"
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
+                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider"
                     >
                       Status
                     </th>
                     <th
                       scope="col"
-                      className="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
+                      className="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider"
                     >
                       Actions
                     </th>
@@ -427,7 +427,7 @@ const TuitionManagement = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">
+                <label className="block text-sm font-medium text-gray-500 dark:text-gray-300 mb-1">
                   Budget
                 </label>
                 <p className="text-sm text-gray-900 dark:text-white font-semibold">
@@ -572,13 +572,13 @@ const TuitionManagement = () => {
         size="sm"
       >
         <div className="space-y-4">
-          <p className="text-sm text-gray-500 dark:text-gray-400">
+          <p className="text-sm text-gray-500 dark:text-gray-300">
             Select the new status for this tuition.
           </p>
           <div>
             <label
               htmlFor="newStatus"
-              className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+              className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1"
             >
               Status
             </label>
@@ -622,7 +622,7 @@ const TuitionManagement = () => {
         size="sm"
       >
         <div className="space-y-4">
-          <p className="text-sm text-gray-500 dark:text-gray-400">
+          <p className="text-sm text-gray-500 dark:text-gray-300">
             Are you sure you want to delete this tuition? This action cannot be
             undone.
           </p>

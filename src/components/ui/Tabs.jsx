@@ -32,7 +32,7 @@ function TabsTrigger({ className, ...props }) {
       data-slot="tabs-trigger"
       className={cn(
         "inline-flex h-[calc(100%-1px)] flex-1 items-center justify-center gap-1.5 rounded-md border border-transparent px-2 py-1 text-sm font-medium whitespace-nowrap transition-colors",
-        "text-gray-700 dark:text-gray-400",
+        "text-gray-700 dark:text-gray-300",
         "data-[state=active]:bg-white dark:data-[state=active]:bg-gray-700 data-[state=active]:text-gray-900 dark:data-[state=active]:text-white data-[state=active]:shadow-sm",
         "hover:text-gray-900 dark:hover:text-gray-200",
         "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand dark:focus-visible:ring-indigo-400 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-800",

@@ -49,7 +49,7 @@ const ContactPage = () => {
           <h1 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
             Contact Us
           </h1>
-          <p className="text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+          <p className="text-lg text-gray-600 dark:text-gray-200 max-w-3xl mx-auto">
             Have questions or feedback? We'd love to hear from you. Reach out to
             us using the form below or contact information.
           </p>
@@ -79,7 +79,7 @@ const ContactPage = () => {
                         <p className="text-sm font-medium text-gray-900 dark:text-white">
                           Email
                         </p>
-                        <p className="text-sm text-gray-600 dark:text-gray-300">
+                        <p className="text-sm text-gray-600 dark:text-gray-200">
                           info@etuitionbd.com
                         </p>
                       </div>
@@ -118,7 +118,7 @@ const ContactPage = () => {
                     <h3 className="text-sm font-medium text-gray-900 dark:text-white mb-4">
                       Office Hours
                     </h3>
-                    <div className="space-y-2 text-sm text-gray-600 dark:text-gray-300">
+                    <div className="space-y-2 text-sm text-gray-600 dark:text-gray-200">
                       <p>Monday - Friday: 9:00 AM - 6:00 PM</p>
                       <p>Saturday: 10:00 AM - 4:00 PM</p>
                       <p>Sunday: Closed</p>
@@ -148,7 +148,7 @@ const ContactPage = () => {
                       <div>
                         <label
                           htmlFor="name"
-                          className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+                          className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1"
                         >
                           Name
                         </label>
@@ -258,7 +258,7 @@ const ContactPage = () => {
                   <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
                     How do I become a tutor on eTuitionBd?
                   </h3>
-                  <p className="text-gray-600 dark:text-gray-300">
+                  <p className="text-gray-600 dark:text-gray-200">
                     Simply register as a tutor, fill out your profile with
                     qualifications and experience, and start applying to tuition
                     opportunities that match your expertise.

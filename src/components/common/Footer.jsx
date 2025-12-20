@@ -16,7 +16,7 @@ const Footer = () => {
             <h3 className="text-sm font-semibold text-gray-900 dark:text-gray-100 tracking-wider uppercase mb-4">
               About eTuitionBd
             </h3>
-            <p className="text-base text-gray-600 dark:text-gray-400">
+            <p className="text-base text-gray-600 dark:text-gray-300">
               A trusted platform connecting students with qualified tutors
               across Bangladesh.
             </p>
@@ -31,7 +31,7 @@ const Footer = () => {
               <li>
                 <Link
                   to="/"
-                  className="text-base text-gray-600 dark:text-gray-400 hover:text-brand dark:hover:text-indigo-400 transition-colors"
+                  className="text-base text-gray-600 dark:text-gray-300 hover:text-brand dark:hover:text-indigo-400 transition-colors"
                 >
                   Home
                 </Link>
@@ -39,7 +39,7 @@ const Footer = () => {
               <li>
                 <Link
                   to="/tuitions"
-                  className="text-base text-gray-600 dark:text-gray-400 hover:text-brand dark:hover:text-indigo-400 transition-colors"
+                  className="text-base text-gray-600 dark:text-gray-300 hover:text-brand dark:hover:text-indigo-400 transition-colors"
                 >
                   Tuitions
                 </Link>
@@ -47,7 +47,7 @@ const Footer = () => {
               <li>
                 <Link
                   to="/tutors"
-                  className="text-base text-gray-600 dark:text-gray-400 hover:text-brand dark:hover:text-indigo-400 transition-colors"
+                  className="text-base text-gray-600 dark:text-gray-300 hover:text-brand dark:hover:text-indigo-400 transition-colors"
                 >
                   Tutors
                 </Link>
@@ -55,7 +55,7 @@ const Footer = () => {
               <li>
                 <Link
                   to="/about"
-                  className="text-base text-gray-600 dark:text-gray-400 hover:text-brand dark:hover:text-indigo-400 transition-colors"
+                  className="text-base text-gray-600 dark:text-gray-300 hover:text-brand dark:hover:text-indigo-400 transition-colors"
                 >
                   About
                 </Link>
@@ -63,7 +63,7 @@ const Footer = () => {
               <li>
                 <Link
                   to="/contact"
-                  className="text-base text-gray-600 dark:text-gray-400 hover:text-brand dark:hover:text-indigo-400 transition-colors"
+                  className="text-base text-gray-600 dark:text-gray-300 hover:text-brand dark:hover:text-indigo-400 transition-colors"
                 >
                   Contact
                 </Link>
@@ -77,13 +77,13 @@ const Footer = () => {
               Contact Us
             </h3>
             <ul className="space-y-2">
-              <li className="text-base text-gray-600 dark:text-gray-400">
+              <li className="text-base text-gray-600 dark:text-gray-300">
                 Email: info@etuitionbd.com
               </li>
-              <li className="text-base text-gray-600 dark:text-gray-400">
+              <li className="text-base text-gray-600 dark:text-gray-300">
                 Phone: +880 1234 567890
               </li>
-              <li className="text-base text-gray-600 dark:text-gray-400">
+              <li className="text-base text-gray-600 dark:text-gray-300">
                 Location: Rajshahi, Bangladesh
               </li>
             </ul>
@@ -97,25 +97,25 @@ const Footer = () => {
             <div className="flex space-x-4">
               <a
                 href="#"
-                className="text-gray-600 dark:text-gray-400 hover:text-brand dark:hover:text-indigo-400 transition-colors"
+                className="text-gray-600 dark:text-gray-300 hover:text-brand dark:hover:text-indigo-400 transition-colors"
               >
                 <FacebookIcon className="h-6 w-6" />
               </a>
               <a
                 href="#"
-                className="text-gray-600 dark:text-gray-400 hover:text-brand dark:hover:text-indigo-400 transition-colors"
+                className="text-gray-600 dark:text-gray-300 hover:text-brand dark:hover:text-indigo-400 transition-colors"
               >
                 <InstagramIcon className="h-6 w-6" />
               </a>
               <a
                 href="#"
-                className="text-gray-600 dark:text-gray-400 hover:text-brand dark:hover:text-indigo-400 transition-colors"
+                className="text-gray-600 dark:text-gray-300 hover:text-brand dark:hover:text-indigo-400 transition-colors"
               >
                 <LinkedinIcon className="h-6 w-6" />
               </a>
               <a
                 href="#"
-                className="text-gray-600 dark:text-gray-400 hover:text-brand dark:hover:text-indigo-400 transition-colors"
+                className="text-gray-600 dark:text-gray-300 hover:text-brand dark:hover:text-indigo-400 transition-colors"
               >
                 <XIcon className="h-6 w-6" />
               </a>
@@ -125,7 +125,7 @@ const Footer = () => {
 
         {/* Bottom bar */}
         <div className="mt-8 pt-8 border-t border-gray-200 dark:border-gray-700">
-          <p className="text-center text-base text-gray-500 dark:text-gray-400">
+          <p className="text-center text-base text-gray-500 dark:text-gray-300">
             © {new Date().getFullYear()} eTuitionBd. All rights reserved.
           </p>
         </div>

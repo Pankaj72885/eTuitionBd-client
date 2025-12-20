@@ -145,7 +145,7 @@ const TutorDashboardHome = () => {
                       <p className="font-medium text-gray-900 dark:text-white">
                         {application.tuitionId?.subject}
                       </p>
-                      <p className="text-sm text-gray-500 dark:text-gray-400">
+                      <p className="text-sm text-gray-500 dark:text-gray-300">
                         {application.tuitionId?.classLevel} •{" "}
                         {application.tuitionId?.location}
                       </p>
@@ -154,7 +154,7 @@ const TutorDashboardHome = () => {
                       <p className="text-sm font-medium text-gray-900 dark:text-white">
                         ৳ {application.expectedSalary}
                       </p>
-                      <p className="text-xs text-gray-500 dark:text-gray-400">
+                      <p className="text-xs text-gray-500 dark:text-gray-300">
                         {application.status}
                       </p>
                     </div>
@@ -190,7 +190,7 @@ const TutorDashboardHome = () => {
                       <p className="font-medium text-gray-900 dark:text-white">
                         {payment.tuitionId?.subject}
                       </p>
-                      <p className="text-sm text-gray-500 dark:text-gray-400">
+                      <p className="text-sm text-gray-500 dark:text-gray-300">
                         {payment.studentId?.name}
                       </p>
                     </div>
@@ -198,7 +198,7 @@ const TutorDashboardHome = () => {
                       <p className="text-sm font-medium text-gray-900 dark:text-white">
                         ৳ {payment.amount}
                       </p>
-                      <p className="text-xs text-gray-500 dark:text-gray-400">
+                      <p className="text-xs text-gray-500 dark:text-gray-300">
                         {new Date(payment.createdAt).toLocaleDateString()}
                       </p>
                     </div>
