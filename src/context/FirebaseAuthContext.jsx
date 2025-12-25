@@ -12,6 +12,40 @@ import { FirebaseAuthContext } from "./FirebaseContext";
 
 console.log("FirebaseAuthContext loaded");
 
+// Helper function to get user-friendly error messages
+const getFirebaseErrorMessage = (error) => {
+  const errorCode = error.code;
+  
+  switch (errorCode) {
+    case "auth/email-already-in-use":
+      return "This email is already registered. Please sign in instead or use a different email.";
+    case "auth/invalid-email":
+      return "Invalid email address. Please check and try again.";
+    case "auth/operation-not-allowed":
+      return "Email/password accounts are not enabled. Please contact support.";
+    case "auth/weak-password":
+      return "Password is too weak. Please use a stronger password.";
+    case "auth/user-disabled":
+      return "This account has been disabled. Please contact support.";
+    case "auth/user-not-found":
+      return "No account found with this email. Please sign up first.";
+    case "auth/wrong-password":
+      return "Incorrect password. Please try again.";
+    case "auth/invalid-credential":
+      return "Invalid email or password. Please check your credentials.";
+    case "auth/too-many-requests":
+      return "Too many failed attempts. Please try again later.";
+    case "auth/network-request-failed":
+      return "Network error. Please check your internet connection.";
+    case "auth/popup-closed-by-user":
+      return "Sign-in popup was closed. Please try again.";
+    case "auth/cancelled-popup-request":
+      return "Sign-in was cancelled. Please try again.";
+    default:
+      return error.message || "An error occurred. Please try again.";
+  }
+};
+
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -48,7 +82,8 @@ export const AuthProvider = ({ children }) => {
       return { success: true, user: result.user };
     } catch (error) {
       console.error("Firebase signup error:", error);
-      return { success: false, error: error.message };
+      const friendlyMessage = getFirebaseErrorMessage(error);
+      return { success: false, error: friendlyMessage };
     }
   };
 
@@ -60,7 +95,8 @@ export const AuthProvider = ({ children }) => {
       return { success: true, user: result.user };
     } catch (error) {
       console.error("Firebase login error:", error);
-      return { success: false, error: error.message };
+      const friendlyMessage = getFirebaseErrorMessage(error);
+      return { success: false, error: friendlyMessage };
     }
   };
 
@@ -72,7 +108,8 @@ export const AuthProvider = ({ children }) => {
       return { success: true, user: result.user };
     } catch (error) {
       console.error("Google login error:", error);
-      return { success: false, error: error.message };
+      const friendlyMessage = getFirebaseErrorMessage(error);
+      return { success: false, error: friendlyMessage };
     }
   };
 

@@ -62,7 +62,7 @@ const RegisterPage = () => {
           email: userData.email,
           phone: userData.phone,
           role: userData.role,
-          city: userData.city,
+          city: userData.city || "Dhaka", // Default city if not provided
         });
 
         console.log("Backend register response:", response);
@@ -72,6 +72,7 @@ const RegisterPage = () => {
         throw error;
       }
     },
+    retry: false, // Disable retries - registration is not idempotent
     onSuccess: (data) => {
       console.log("Register success:", data);
       setAuthLogin(data.token, data.user);
@@ -115,6 +116,7 @@ const RegisterPage = () => {
         throw error;
       }
     },
+    retry: false, // Disable retries - registration is not idempotent
     onSuccess: (data) => {
       console.log("Google register success:", data);
       setAuthLogin(data.token, data.user);
@@ -451,9 +453,9 @@ const RegisterPage = () => {
             <Button
               type="submit"
               className="w-full"
-              disabled={registerMutation.isLoading}
+              disabled={registerMutation.isPending}
             >
-              {registerMutation.isLoading ? "Creating account..." : "Sign up"}
+              {registerMutation.isPending ? "Creating account..." : "Sign up"}
             </Button>
           </form>
         )}
@@ -499,7 +501,7 @@ const RegisterPage = () => {
                 variant="outline"
                 className="w-full flex items-center justify-center gap-2"
                 onClick={handleGoogleSignup}
-                disabled={googleRegisterMutation.isLoading}
+                disabled={googleRegisterMutation.isPending}
               >
                 <svg className="h-5 w-5" viewBox="0 0 24 24">
                   <path
@@ -520,7 +522,7 @@ const RegisterPage = () => {
                   />
                 </svg>
                 <span>
-                  {googleRegisterMutation.isLoading
+                  {googleRegisterMutation.isPending
                     ? "Creating account with Google..."
                     : "Continue with Google"}
                 </span>
