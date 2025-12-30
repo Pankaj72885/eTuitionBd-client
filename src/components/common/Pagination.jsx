@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/Button";
-import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
+import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
+import { motion } from "framer-motion";
 
 const Pagination = ({ currentPage, totalPages, onPageChange }) => {
   const pages = [];
@@ -19,108 +20,137 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
     pages.push(i);
   }
 
+  if (totalPages <= 1) return null;
+
   return (
-    <div className="flex items-center justify-between px-4 py-3 sm:px-6">
-      <div className="flex-1 flex justify-between sm:hidden">
+    <motion.div
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      className="flex flex-col sm:flex-row items-center justify-between gap-4 px-2 py-4"
+    >
+      {/* Mobile View */}
+      <div className="flex sm:hidden items-center gap-3 w-full">
         <Button
           variant="outline"
           size="sm"
           onClick={() => onPageChange(currentPage - 1)}
           disabled={currentPage === 1}
+          className="flex-1 gap-2 rounded-xl"
         >
+          <ChevronLeftIcon className="w-4 h-4" />
           Previous
         </Button>
+        <span className="text-sm font-medium text-gray-600 dark:text-gray-300 px-3">
+          {currentPage} / {totalPages}
+        </span>
         <Button
           variant="outline"
           size="sm"
           onClick={() => onPageChange(currentPage + 1)}
           disabled={currentPage === totalPages}
+          className="flex-1 gap-2 rounded-xl"
         >
           Next
+          <ChevronRightIcon className="w-4 h-4" />
         </Button>
       </div>
-      <div className="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
-        <div>
-          <p className="text-sm text-gray-700 dark:text-gray-200">
-            Showing page <span className="font-medium">{currentPage}</span> of{" "}
-            <span className="font-medium">{totalPages}</span>
-          </p>
-        </div>
-        <div>
-          <nav
-            className="relative z-0 inline-flex rounded-md shadow-sm -space-x-px"
-            aria-label="Pagination"
+
+      {/* Desktop View */}
+      <div className="hidden sm:flex sm:items-center sm:justify-between w-full">
+        <p className="text-sm text-gray-600 dark:text-gray-400">
+          Page{" "}
+          <span className="font-semibold text-gray-900 dark:text-white">
+            {currentPage}
+          </span>{" "}
+          of{" "}
+          <span className="font-semibold text-gray-900 dark:text-white">
+            {totalPages}
+          </span>
+        </p>
+
+        <nav className="flex items-center gap-1" aria-label="Pagination">
+          {/* Previous Button */}
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => onPageChange(currentPage - 1)}
+            disabled={currentPage === 1}
+            className="w-9 h-9 p-0 rounded-xl"
           >
-            <Button
-              variant="outline"
-              size="sm"
-              className="rounded-l-md"
-              onClick={() => onPageChange(currentPage - 1)}
-              disabled={currentPage === 1}
-            >
-              <span className="sr-only">Previous</span>
-              <ChevronLeftIcon className="h-5 w-5" aria-hidden="true" />
-            </Button>
+            <ChevronLeftIcon className="w-5 h-5" />
+          </Button>
 
-            {startPage > 1 && (
-              <>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => onPageChange(1)}
-                >
-                  1
-                </Button>
-                {startPage > 2 && (
-                  <span className="relative inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-sm font-medium text-gray-700 dark:text-gray-200">
-                    ...
-                  </span>
-                )}
-              </>
-            )}
-
-            {pages.map((page) => (
+          {/* First Page */}
+          {startPage > 1 && (
+            <>
               <Button
-                key={page}
-                variant={page === currentPage ? "primary" : "outline"}
+                variant={currentPage === 1 ? "primary" : "ghost"}
+                size="sm"
+                onClick={() => onPageChange(1)}
+                className="w-9 h-9 p-0 rounded-xl"
+              >
+                1
+              </Button>
+              {startPage > 2 && (
+                <span className="w-9 h-9 flex items-center justify-center text-gray-400 dark:text-gray-500">
+                  ⋯
+                </span>
+              )}
+            </>
+          )}
+
+          {/* Page Numbers */}
+          {pages.map((page) => (
+            <motion.div
+              key={page}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <Button
+                variant={page === currentPage ? "primary" : "ghost"}
                 size="sm"
                 onClick={() => onPageChange(page)}
+                className={`w-9 h-9 p-0 rounded-xl ${
+                  page === currentPage ? "shadow-lg shadow-indigo-500/20" : ""
+                }`}
               >
                 {page}
               </Button>
-            ))}
+            </motion.div>
+          ))}
 
-            {endPage < totalPages && (
-              <>
-                {endPage < totalPages - 1 && (
-                  <span className="relative inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-sm font-medium text-gray-700 dark:text-gray-200">
-                    ...
-                  </span>
-                )}
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => onPageChange(totalPages)}
-                >
-                  {totalPages}
-                </Button>
-              </>
-            )}
+          {/* Last Page */}
+          {endPage < totalPages && (
+            <>
+              {endPage < totalPages - 1 && (
+                <span className="w-9 h-9 flex items-center justify-center text-gray-400 dark:text-gray-500">
+                  ⋯
+                </span>
+              )}
+              <Button
+                variant={currentPage === totalPages ? "primary" : "ghost"}
+                size="sm"
+                onClick={() => onPageChange(totalPages)}
+                className="w-9 h-9 p-0 rounded-xl"
+              >
+                {totalPages}
+              </Button>
+            </>
+          )}
 
-            <Button
-              variant="outline"
-              size="sm"
-              className="rounded-r-md"
-              onClick={() => onPageChange(currentPage + 1)}
-              disabled={currentPage === totalPages}
-            >
-              <span className="sr-only">Next</span>
-              <ChevronRightIcon className="h-5 w-5" aria-hidden="true" />
-            </Button>
-          </nav>
-        </div>
+          {/* Next Button */}
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => onPageChange(currentPage + 1)}
+            disabled={currentPage === totalPages}
+            className="w-9 h-9 p-0 rounded-xl"
+          >
+            <ChevronRightIcon className="w-5 h-5" />
+          </Button>
+        </nav>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

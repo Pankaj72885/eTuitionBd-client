@@ -1,33 +1,58 @@
-const LoadingSpinner = ({ size = "md" }) => {
+import { motion } from "framer-motion";
+
+const LoadingSpinner = ({ size = "md", className = "" }) => {
   const sizeClasses = {
-    sm: "h-4 w-4",
-    md: "h-8 w-8",
-    lg: "h-12 w-12",
-    xl: "h-16 w-16",
+    xs: "w-3 h-3",
+    sm: "w-4 h-4",
+    md: "w-8 h-8",
+    lg: "w-12 h-12",
+    xl: "w-16 h-16",
   };
 
+  const dotSize = {
+    xs: "w-1 h-1",
+    sm: "w-1.5 h-1.5",
+    md: "w-2 h-2",
+    lg: "w-3 h-3",
+    xl: "w-4 h-4",
+  };
+
+  // For xs and sm, use simple spinner
+  if (size === "xs" || size === "sm") {
+    return (
+      <div className={`flex justify-center items-center ${className}`}>
+        <motion.div
+          animate={{ rotate: 360 }}
+          transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+          className={`${sizeClasses[size]} rounded-full border-2 border-indigo-200 dark:border-indigo-900 border-t-indigo-600 dark:border-t-indigo-400`}
+        />
+      </div>
+    );
+  }
+
+  // For md and up, use animated dots
   return (
-    <div className="flex justify-center items-center">
-      <svg
-        className={`animate-spin ${sizeClasses[size]} text-brand dark:text-indigo-400`}
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 24 24"
+    <div className={`flex justify-center items-center ${className}`}>
+      <div
+        className={`${sizeClasses[size]} flex items-center justify-center gap-1`}
       >
-        <circle
-          className="opacity-25"
-          cx="12"
-          cy="12"
-          r="10"
-          stroke="currentColor"
-          strokeWidth="4"
-        ></circle>
-        <path
-          className="opacity-75"
-          fill="currentColor"
-          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-        ></path>
-      </svg>
+        {[0, 1, 2].map((i) => (
+          <motion.div
+            key={i}
+            className={`${dotSize[size]} rounded-full bg-linear-to-r from-indigo-500 to-purple-500`}
+            animate={{
+              y: [0, -8, 0],
+              opacity: [0.5, 1, 0.5],
+            }}
+            transition={{
+              duration: 0.6,
+              repeat: Infinity,
+              delay: i * 0.15,
+              ease: "easeInOut",
+            }}
+          />
+        ))}
+      </div>
     </div>
   );
 };

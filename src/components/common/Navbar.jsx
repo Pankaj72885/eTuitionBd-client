@@ -2,15 +2,32 @@ import ThemeToggle from "@/components/common/ThemeToggle";
 import { Button } from "@/components/ui/Button";
 import { Dropdown, DropdownItem } from "@/components/ui/Dropdown";
 import { useAuth } from "@/hooks/useAuth";
-import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
-import { useState } from "react";
+import {
+  ArrowRightEndOnRectangleIcon,
+  Bars3Icon,
+  Squares2X2Icon,
+  UserCircleIcon,
+  XMarkIcon,
+} from "@heroicons/react/24/outline";
+import { AnimatePresence, motion } from "framer-motion";
+import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router";
 
 const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const { user, logout } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
+
+  // Handle scroll effect
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const handleLogout = () => {
     logout();
@@ -21,294 +38,293 @@ const Navbar = () => {
     return location.pathname === path;
   };
 
+  const navLinks = [
+    { path: "/", label: "Home" },
+    { path: "/tuitions", label: "Tuitions" },
+    { path: "/tutors", label: "Tutors" },
+    { path: "/about", label: "About" },
+    { path: "/contact", label: "Contact" },
+  ];
+
   return (
-    <header className="bg-white dark:bg-gray-900 shadow-sm sticky top-0 z-40 transition-colors duration-200 border-b border-gray-200 dark:border-gray-800">
+    <header
+      className={`sticky top-0 z-50 transition-all duration-300 ${
+        scrolled
+          ? "bg-white/80 dark:bg-gray-900/80 backdrop-blur-xl shadow-lg shadow-black/5 dark:shadow-black/20"
+          : "bg-white dark:bg-gray-900"
+      } border-b border-gray-200/50 dark:border-gray-800/50`}
+    >
       <nav className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-16">
-          <div className="flex">
+        <div className="flex justify-between h-16 md:h-18">
+          <div className="flex items-center">
+            {/* Logo */}
             <div className="shrink-0 flex items-center">
-              <Link
-                to="/"
-                className="text-xl font-bold text-brand dark:text-indigo-400"
-              >
-                eTuitionBd
+              <Link to="/" className="flex items-center gap-2 group">
+                <div className="w-9 h-9 rounded-xl bg-linear-to-br from-indigo-500 to-purple-600 flex items-center justify-center shadow-lg group-hover:shadow-indigo-500/30 transition-all duration-300">
+                  <span className="text-white font-bold text-lg">e</span>
+                </div>
+                <span className="text-xl font-bold bg-linear-to-r from-indigo-600 to-purple-600 dark:from-indigo-400 dark:to-purple-400 bg-clip-text text-transparent">
+                  TuitionBd
+                </span>
               </Link>
             </div>
-            <div className="hidden md:ml-6 md:flex md:space-x-8">
-              <Link
-                to="/"
-                className={`inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-colors duration-200 ${
-                  isActive("/")
-                    ? "border-brand dark:border-indigo-400 text-gray-900 dark:text-gray-100"
-                    : "border-transparent text-gray-500 dark:text-gray-300 hover:border-gray-300 dark:hover:border-gray-600 hover:text-gray-700 dark:hover:text-gray-200"
-                }`}
-              >
-                Home
-              </Link>
-              <Link
-                to="/tuitions"
-                className={`inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-colors duration-200 ${
-                  isActive("/tuitions")
-                    ? "border-brand dark:border-indigo-400 text-gray-900 dark:text-gray-100"
-                    : "border-transparent text-gray-500 dark:text-gray-300 hover:border-gray-300 dark:hover:border-gray-600 hover:text-gray-700 dark:hover:text-gray-200"
-                }`}
-              >
-                Tuitions
-              </Link>
-              <Link
-                to="/tutors"
-                className={`inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-colors duration-200 ${
-                  isActive("/tutors")
-                    ? "border-brand dark:border-indigo-400 text-gray-900 dark:text-gray-100"
-                    : "border-transparent text-gray-500 dark:text-gray-300 hover:border-gray-300 dark:hover:border-gray-600 hover:text-gray-700 dark:hover:text-gray-200"
-                }`}
-              >
-                Tutors
-              </Link>
-              <Link
-                to="/about"
-                className={`inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-colors duration-200 ${
-                  isActive("/about")
-                    ? "border-brand dark:border-indigo-400 text-gray-900 dark:text-gray-100"
-                    : "border-transparent text-gray-500 dark:text-gray-300 hover:border-gray-300 dark:hover:border-gray-600 hover:text-gray-700 dark:hover:text-gray-200"
-                }`}
-              >
-                About
-              </Link>
-              <Link
-                to="/contact"
-                className={`inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-colors duration-200 ${
-                  isActive("/contact")
-                    ? "border-brand dark:border-indigo-400 text-gray-900 dark:text-gray-100"
-                    : "border-transparent text-gray-500 dark:text-gray-300 hover:border-gray-300 dark:hover:border-gray-600 hover:text-gray-700 dark:hover:text-gray-200"
-                }`}
-              >
-                Contact
-              </Link>
+
+            {/* Desktop Navigation */}
+            <div className="hidden md:ml-10 md:flex md:items-center md:space-x-1">
+              {navLinks.map((link) => (
+                <Link
+                  key={link.path}
+                  to={link.path}
+                  className={`relative px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200 ${
+                    isActive(link.path)
+                      ? "text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30"
+                      : "text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-gray-100 dark:hover:bg-gray-800"
+                  }`}
+                >
+                  {link.label}
+                  {isActive(link.path) && (
+                    <motion.div
+                      layoutId="activeNav"
+                      className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-indigo-500"
+                    />
+                  )}
+                </Link>
+              ))}
             </div>
           </div>
-          <div className="flex items-center gap-2">
+
+          <div className="flex items-center gap-3">
             {/* Theme Toggle */}
             <ThemeToggle />
 
             {user ? (
-              <div className="hidden md:ml-2 md:shrink-0 md:flex md:items-center">
+              <div className="hidden md:flex md:items-center gap-3">
                 <Button
                   variant="primary"
                   size="sm"
-                  className="mr-3"
+                  className="gap-2 shadow-lg shadow-indigo-500/20 hover:shadow-indigo-500/30 transition-all"
                   onClick={() => navigate(`/dashboard/${user.role}`)}
                 >
+                  <Squares2X2Icon className="w-4 h-4" />
                   Dashboard
                 </Button>
                 <Dropdown
                   trigger={
-                    <div className="flex items-center group cursor-pointer">
-                      <span className="mr-2 text-sm font-medium text-gray-700 dark:text-gray-200 group-hover:text-gray-900 dark:group-hover:text-white transition-colors">
-                        {user.name}
-                      </span>
+                    <div className="flex items-center group cursor-pointer p-1.5 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
                       <img
-                        className="h-8 w-8 rounded-full ring-2 ring-gray-200 dark:ring-gray-700 group-hover:ring-brand dark:group-hover:ring-indigo-500 transition-all"
+                        className="h-9 w-9 rounded-xl ring-2 ring-gray-200 dark:ring-gray-700 group-hover:ring-indigo-300 dark:group-hover:ring-indigo-700 transition-all object-cover"
                         src={
                           user.photoUrl ||
-                          "https://picsum.photos/seed/user/40/40.jpg"
+                          `https://ui-avatars.com/api/?name=${encodeURIComponent(
+                            user.name
+                          )}&background=6366f1&color=fff`
                         }
                         alt="Profile"
                       />
                     </div>
                   }
                 >
+                  <div className="px-4 py-3 border-b border-gray-100 dark:border-gray-700">
+                    <p className="text-sm font-semibold text-gray-900 dark:text-white">
+                      {user.name}
+                    </p>
+                    <p className="text-xs text-gray-500 dark:text-gray-400 truncate">
+                      {user.email}
+                    </p>
+                  </div>
                   <DropdownItem
                     onClick={() => navigate(`/dashboard/${user.role}/profile`)}
+                    className="flex items-center gap-2"
                   >
+                    <UserCircleIcon className="w-4 h-4" />
                     Profile
                   </DropdownItem>
-                  <DropdownItem onClick={handleLogout}>Logout</DropdownItem>
+                  <DropdownItem
+                    onClick={handleLogout}
+                    className="flex items-center gap-2 text-red-600 dark:text-red-400"
+                  >
+                    <ArrowRightEndOnRectangleIcon className="w-4 h-4" />
+                    Logout
+                  </DropdownItem>
                 </Dropdown>
               </div>
             ) : (
-              <div className="hidden md:ml-4 md:shrink-0 md:flex md:items-center gap-3">
-                <button
-                  className={`px-4 py-2 text-sm font-medium rounded-md transition-all ${
-                    isActive("/login")
-                      ? "bg-brand dark:bg-indigo-600 text-white shadow-sm"
-                      : "text-brand dark:text-indigo-400 hover:bg-brand dark:hover:bg-indigo-600 hover:text-white border border-brand dark:border-indigo-400"
-                  }`}
+              <div className="hidden md:flex md:items-center gap-3">
+                <Button
+                  variant="ghost"
+                  size="sm"
                   onClick={() => navigate("/login")}
+                  className={`font-medium ${
+                    isActive("/login") ? "bg-gray-100 dark:bg-gray-800" : ""
+                  }`}
                 >
                   Login
-                </button>
-                <button
-                  className={`px-4 py-2 text-sm font-medium rounded-md transition-all ${
-                    isActive("/register")
-                      ? "bg-brand dark:bg-indigo-600 text-white shadow-sm"
-                      : "text-brand dark:text-indigo-400 hover:bg-brand dark:hover:bg-indigo-600 hover:text-white border border-brand dark:border-indigo-400"
-                  }`}
+                </Button>
+                <Button
+                  variant="primary"
+                  size="sm"
                   onClick={() => navigate("/register")}
+                  className="shadow-lg shadow-indigo-500/20 hover:shadow-indigo-500/30 transition-all"
                 >
-                  Register
-                </button>
+                  Get Started
+                </Button>
               </div>
             )}
-            <div className="flex md:hidden ml-2">
-              <button
-                type="button"
-                className="bg-white dark:bg-gray-800 p-2 rounded-md text-gray-400 hover:text-gray-500 dark:hover:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-brand dark:focus:ring-indigo-500"
-                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              >
+
+            {/* Mobile menu button */}
+            <button
+              type="button"
+              className="md:hidden p-2 rounded-xl text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            >
+              <AnimatePresence mode="wait">
                 {mobileMenuOpen ? (
-                  <XMarkIcon className="block h-6 w-6" aria-hidden="true" />
+                  <motion.div
+                    key="close"
+                    initial={{ rotate: -90, opacity: 0 }}
+                    animate={{ rotate: 0, opacity: 1 }}
+                    exit={{ rotate: 90, opacity: 0 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <XMarkIcon className="h-6 w-6" />
+                  </motion.div>
                 ) : (
-                  <Bars3Icon className="block h-6 w-6" aria-hidden="true" />
+                  <motion.div
+                    key="open"
+                    initial={{ rotate: 90, opacity: 0 }}
+                    animate={{ rotate: 0, opacity: 1 }}
+                    exit={{ rotate: -90, opacity: 0 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <Bars3Icon className="h-6 w-6" />
+                  </motion.div>
                 )}
-              </button>
-            </div>
+              </AnimatePresence>
+            </button>
           </div>
         </div>
       </nav>
 
       {/* Mobile menu */}
-      {mobileMenuOpen && (
-        <div className="md:hidden bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800 transition-colors duration-200">
-          <div className="pt-2 pb-3 space-y-1">
-            <Link
-              to="/"
-              className={`block pl-3 pr-4 py-2 border-l-4 text-base font-medium transition-colors duration-200 ${
-                isActive("/")
-                  ? "bg-brand/10 dark:bg-indigo-900/30 border-brand dark:border-indigo-400 text-brand dark:text-indigo-400"
-                  : "border-transparent text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 hover:border-gray-300 dark:hover:border-gray-600 hover:text-gray-800 dark:hover:text-gray-200"
-              }`}
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              Home
-            </Link>
-            <Link
-              to="/tuitions"
-              className={`block pl-3 pr-4 py-2 border-l-4 text-base font-medium transition-colors duration-200 ${
-                isActive("/tuitions")
-                  ? "bg-brand/10 dark:bg-indigo-900/30 border-brand dark:border-indigo-400 text-brand dark:text-indigo-400"
-                  : "border-transparent text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 hover:border-gray-300 dark:hover:border-gray-600 hover:text-gray-800 dark:hover:text-gray-200"
-              }`}
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              Tuitions
-            </Link>
-            <Link
-              to="/tutors"
-              className={`block pl-3 pr-4 py-2 border-l-4 text-base font-medium transition-colors duration-200 ${
-                isActive("/tutors")
-                  ? "bg-brand/10 dark:bg-indigo-900/30 border-brand dark:border-indigo-400 text-brand dark:text-indigo-400"
-                  : "border-transparent text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 hover:border-gray-300 dark:hover:border-gray-600 hover:text-gray-800 dark:hover:text-gray-200"
-              }`}
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              Tutors
-            </Link>
-            <Link
-              to="/about"
-              className={`block pl-3 pr-4 py-2 border-l-4 text-base font-medium transition-colors duration-200 ${
-                isActive("/about")
-                  ? "bg-brand/10 dark:bg-indigo-900/30 border-brand dark:border-indigo-400 text-brand dark:text-indigo-400"
-                  : "border-transparent text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 hover:border-gray-300 dark:hover:border-gray-600 hover:text-gray-800 dark:hover:text-gray-200"
-              }`}
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              About
-            </Link>
-            <Link
-              to="/contact"
-              className={`block pl-3 pr-4 py-2 border-l-4 text-base font-medium transition-colors duration-200 ${
-                isActive("/contact")
-                  ? "bg-brand/10 dark:bg-indigo-900/30 border-brand dark:border-indigo-400 text-brand dark:text-indigo-400"
-                  : "border-transparent text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 hover:border-gray-300 dark:hover:border-gray-600 hover:text-gray-800 dark:hover:text-gray-200"
-              }`}
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              Contact
-            </Link>
-          </div>
-          <div className="pt-4 pb-3 border-t border-gray-200 dark:border-gray-700">
-            {user ? (
-              <div>
-                <div className="flex items-center px-4">
-                  <div className="shrink-0">
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+            className="md:hidden overflow-hidden bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800"
+          >
+            <div className="px-4 py-4 space-y-2">
+              {navLinks.map((link, index) => (
+                <motion.div
+                  key={link.path}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: index * 0.05 }}
+                >
+                  <Link
+                    to={link.path}
+                    className={`block px-4 py-3 rounded-xl text-base font-medium transition-all ${
+                      isActive(link.path)
+                        ? "bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400"
+                        : "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
+                    }`}
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    {link.label}
+                  </Link>
+                </motion.div>
+              ))}
+            </div>
+
+            <div className="px-4 py-4 border-t border-gray-200 dark:border-gray-800">
+              {user ? (
+                <div className="space-y-3">
+                  <div className="flex items-center gap-3 px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800">
                     <img
-                      className="h-10 w-10 rounded-full ring-2 ring-gray-200 dark:ring-gray-700"
+                      className="h-12 w-12 rounded-xl object-cover ring-2 ring-gray-200 dark:ring-gray-700"
                       src={
                         user.photoUrl ||
-                        "https://picsum.photos/seed/user/40/40.jpg"
+                        `https://ui-avatars.com/api/?name=${encodeURIComponent(
+                          user.name
+                        )}&background=6366f1&color=fff`
                       }
                       alt="Profile"
                     />
-                  </div>
-                  <div className="ml-3">
-                    <div className="text-base font-medium text-gray-800 dark:text-white">
-                      {user.name}
+                    <div>
+                      <p className="font-semibold text-gray-900 dark:text-white">
+                        {user.name}
+                      </p>
+                      <p className="text-sm text-gray-500 dark:text-gray-400">
+                        {user.email}
+                      </p>
                     </div>
-                    <div className="text-sm font-medium text-gray-500 dark:text-gray-300">
-                      {user.email}
-                    </div>
                   </div>
-                </div>
-                <div className="mt-3 space-y-1 px-2">
-                  <Link
-                    to={`/dashboard/${user.role}`}
-                    className="block rounded-md px-3 py-2 text-base font-medium text-gray-500 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    Dashboard
-                  </Link>
-                  <Link
-                    to={`/dashboard/${user.role}/profile`}
-                    className="block rounded-md px-3 py-2 text-base font-medium text-gray-500 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    Profile
-                  </Link>
-                  <button
-                    className="block w-full text-left rounded-md px-3 py-2 text-base font-medium text-gray-500 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+
+                  <div className="grid grid-cols-2 gap-2">
+                    <Button
+                      variant="primary"
+                      className="w-full"
+                      onClick={() => {
+                        navigate(`/dashboard/${user.role}`);
+                        setMobileMenuOpen(false);
+                      }}
+                    >
+                      Dashboard
+                    </Button>
+                    <Button
+                      variant="outline"
+                      className="w-full"
+                      onClick={() => {
+                        navigate(`/dashboard/${user.role}/profile`);
+                        setMobileMenuOpen(false);
+                      }}
+                    >
+                      Profile
+                    </Button>
+                  </div>
+
+                  <Button
+                    variant="ghost"
+                    className="w-full text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20"
                     onClick={() => {
                       handleLogout();
                       setMobileMenuOpen(false);
                     }}
                   >
+                    <ArrowRightEndOnRectangleIcon className="w-5 h-5 mr-2" />
                     Logout
-                  </button>
+                  </Button>
                 </div>
-              </div>
-            ) : (
-              <div className="space-y-2 px-4 pb-3">
-                <button
-                  className={`w-full px-4 py-2 text-sm font-medium rounded-md transition-all ${
-                    isActive("/login")
-                      ? "bg-brand dark:bg-indigo-600 text-white shadow-sm"
-                      : "text-brand dark:text-indigo-400 hover:bg-brand dark:hover:bg-indigo-600 hover:text-white border border-brand dark:border-indigo-400"
-                  }`}
-                  onClick={() => {
-                    navigate("/login");
-                    setMobileMenuOpen(false);
-                  }}
-                >
-                  Login
-                </button>
-                <button
-                  className={`w-full px-4 py-2 text-sm font-medium rounded-md transition-all ${
-                    isActive("/register")
-                      ? "bg-brand dark:bg-indigo-600 text-white shadow-sm"
-                      : "text-brand dark:text-indigo-400 hover:bg-brand dark:hover:bg-indigo-600 hover:text-white border border-brand dark:border-indigo-400"
-                  }`}
-                  onClick={() => {
-                    navigate("/register");
-                    setMobileMenuOpen(false);
-                  }}
-                >
-                  Register
-                </button>
-              </div>
-            )}
-          </div>
-        </div>
-      )}
+              ) : (
+                <div className="grid grid-cols-2 gap-3">
+                  <Button
+                    variant="outline"
+                    className="w-full"
+                    onClick={() => {
+                      navigate("/login");
+                      setMobileMenuOpen(false);
+                    }}
+                  >
+                    Login
+                  </Button>
+                  <Button
+                    variant="primary"
+                    className="w-full"
+                    onClick={() => {
+                      navigate("/register");
+                      setMobileMenuOpen(false);
+                    }}
+                  >
+                    Get Started
+                  </Button>
+                </div>
+              )}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </header>
   );
 };

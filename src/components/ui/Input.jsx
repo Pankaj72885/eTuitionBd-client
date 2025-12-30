@@ -6,13 +6,21 @@ function Input({ className, type, ...props }) {
       type={type}
       data-slot="input"
       className={cn(
-        "h-9 w-full min-w-0 rounded-md border px-3 py-1 text-base shadow-xs transition-colors outline-none md:text-sm",
-        "bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100",
-        "border-gray-300 dark:border-gray-600",
+        // Base styles
+        "flex h-11 w-full rounded-xl border-2 bg-white dark:bg-gray-800 px-4 py-2 text-base transition-all duration-200",
+        // Border & focus
+        "border-gray-200 dark:border-gray-700",
+        "focus:border-indigo-500 dark:focus:border-indigo-400 focus:ring-4 focus:ring-indigo-500/10 dark:focus:ring-indigo-400/10",
+        "focus:outline-none",
+        // Text
+        "text-gray-900 dark:text-gray-100",
         "placeholder:text-gray-400 dark:placeholder:text-gray-500",
-        "focus:border-brand dark:focus:border-indigo-400 focus:ring-2 focus:ring-brand/20 dark:focus:ring-indigo-400/20",
-        "disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50",
-        "file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-gray-900 dark:file:text-gray-100",
+        // Hover
+        "hover:border-gray-300 dark:hover:border-gray-600",
+        // Disabled
+        "disabled:cursor-not-allowed disabled:opacity-50 disabled:bg-gray-50 dark:disabled:bg-gray-900",
+        // File input
+        "file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-gray-700 dark:file:text-gray-300",
         className
       )}
       {...props}

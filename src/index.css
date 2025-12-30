@@ -1,24 +1,92 @@
+/**
+ * ============================================================================
+ * eTuitionBd - Modern UI Stylesheet
+ * ============================================================================
+ * 
+ * This stylesheet provides the foundation for the eTuitionBd modern UI design.
+ * It includes:
+ *   - Tailwind CSS base imports
+ *   - Custom theme variables (colors, fonts, radii)
+ *   - Light and dark mode color schemes using OKLCH color space
+ *   - Reusable component classes (glassmorphism, gradients, animations)
+ *   - Utility classes for common effects
+ *   - Keyframe animations for micro-interactions
+ * 
+ * Design System:
+ *   - Primary Color: Indigo (#6366f1)
+ *   - Font: Inter (body) / Outfit (headings)
+ *   - Border Radius: 0.75rem base
+ *   - Supports light/dark mode
+ * 
+ * Last Updated: December 2024
+ * ============================================================================
+ */
+
+/* ==========================================================================
+   1. IMPORTS & PLUGINS
+   ========================================================================== */
+
+/* Tailwind CSS core styles */
 @import "tailwindcss";
+
+/* Animation utilities from tw-animate-css */
 @import "tw-animate-css";
 
+/* Enable dark mode variant using class-based approach */
 @custom-variant dark (&:is(.dark *));
+
+/* DaisyUI component library plugin */
 @plugin "daisyui";
+
+/* Google Fonts: Inter for body text, Outfit for headings */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap");
+
+
+/* ==========================================================================
+   2. THEME CONFIGURATION
+   ========================================================================== */
+
+/**
+ * Custom theme variables using Tailwind's @theme directive.
+ * These are available throughout the app as CSS custom properties.
+ */
 @theme {
-  /* Brand Colors */
-  --color-brand: #4f46e5;
-  --color-brand-dark: #3730a3;
-  --color-brand-light: #e0e7ff;
+  /* ---- Brand Colors ----
+   * The primary brand color palette using vibrant indigo tones.
+   * These create a consistent, recognizable brand identity.
+   */
+  --color-brand: #6366f1;           /* Primary brand indigo */
+  --color-brand-dark: #4f46e5;      /* Darker shade for hover states */
+  --color-brand-light: #e0e7ff;     /* Light tint for backgrounds */
+  --color-brand-glow: rgba(99, 102, 241, 0.4); /* Glow effect color */
 
-  /* Accent Colors */
-  --color-accent-success: #10b981;
-  --color-accent-warning: #f59e0b;
-  --color-accent-danger: #ef4444;
+  /* ---- Accent Colors ----
+   * Semantic colors for different UI states and feedback.
+   */
+  --color-accent-success: #10b981; /* Green - success states */
+  --color-accent-warning: #f59e0b; /* Amber - warnings */
+  --color-accent-danger: #ef4444;  /* Red - errors/destructive */
+  --color-accent-info: #3b82f6;    /* Blue - informational */
 
-  /* Fonts */
-  --font-sans: "Inter", "Manrope", sans-serif;
+  /* ---- Glass Effect Colors ----
+   * Semi-transparent colors for glassmorphism effects.
+   */
+  --color-glass-light: rgba(255, 255, 255, 0.7); /* Light mode glass */
+  --color-glass-dark: rgba(17, 24, 39, 0.7);     /* Dark mode glass */
+
+  /* ---- Typography ----
+   * Font stacks with fallbacks for optimal rendering.
+   */
+  --font-sans: "Inter", "Outfit", system-ui, sans-serif;   /* Body text */
+  --font-display: "Outfit", "Inter", sans-serif;           /* Headings */
 }
 
+/**
+ * Inline theme variables for Tailwind integration.
+ * These map CSS custom properties to Tailwind's color system.
+ */
 @theme inline {
+  /* Border radius scale */
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -26,6 +94,8 @@
   --radius-2xl: calc(var(--radius) + 8px);
   --radius-3xl: calc(var(--radius) + 12px);
   --radius-4xl: calc(var(--radius) + 16px);
+
+  /* Semantic color mappings */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -44,11 +114,15 @@
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
+
+  /* Chart colors for data visualization */
   --color-chart-1: var(--chart-1);
   --color-chart-2: var(--chart-2);
   --color-chart-3: var(--chart-3);
   --color-chart-4: var(--chart-4);
   --color-chart-5: var(--chart-5);
+
+  /* Sidebar component colors */
   --color-sidebar: var(--sidebar);
   --color-sidebar-foreground: var(--sidebar-foreground);
   --color-sidebar-primary: var(--sidebar-primary);
@@ -59,80 +133,549 @@
   --color-sidebar-ring: var(--sidebar-ring);
 }
 
+
+/* ==========================================================================
+   3. LIGHT MODE COLOR SCHEME (Default)
+   ========================================================================== */
+
+/**
+ * Root variables define the light mode color palette.
+ * Uses OKLCH color space for perceptually uniform colors.
+ * OKLCH format: oklch(lightness chroma hue)
+ */
 :root {
-  --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
+  /* Base radius for rounded corners */
+  --radius: 0.75rem;
+
+  /* Background and foreground */
+  --background: oklch(0.99 0.002 285);    /* Near-white with subtle purple tint */
+  --foreground: oklch(0.145 0.02 285);    /* Very dark purple-gray for text */
+
+  /* Card component */
+  --card: oklch(1 0 0);                   /* Pure white */
+  --card-foreground: oklch(0.145 0 0);    /* Dark text */
+
+  /* Popover component */
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
+
+  /* Primary action color (buttons, links) */
+  --primary: oklch(0.52 0.18 265);        /* Indigo */
+  --primary-foreground: oklch(0.985 0 0); /* White text on primary */
+
+  /* Secondary/muted elements */
+  --secondary: oklch(0.97 0.01 285);
   --secondary-foreground: oklch(0.205 0 0);
+
+  /* Muted elements (disabled, placeholders) */
   --muted: oklch(0.97 0 0);
   --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
+
+  /* Accent highlights */
+  --accent: oklch(0.97 0.015 285);
   --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: oklch(0.985 0 0);
+
+  /* Destructive actions (delete, cancel) */
+  --destructive: oklch(0.577 0.245 27.325); /* Red */
+
+  /* Borders and inputs */
+  --border: oklch(0.92 0.01 285);
+  --input: oklch(0.92 0.01 285);
+  --ring: oklch(0.52 0.18 265);           /* Focus ring color */
+
+  /* Chart/data visualization colors */
+  --chart-1: oklch(0.646 0.222 41.116);   /* Orange */
+  --chart-2: oklch(0.6 0.118 184.704);    /* Teal */
+  --chart-3: oklch(0.398 0.07 227.392);   /* Dark blue */
+  --chart-4: oklch(0.828 0.189 84.429);   /* Yellow */
+  --chart-5: oklch(0.769 0.188 70.08);    /* Light orange */
+
+  /* Sidebar colors */
+  --sidebar: oklch(0.985 0.005 285);
   --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
+  --sidebar-primary: oklch(0.52 0.18 265);
   --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent: oklch(0.97 0.01 285);
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
+
+  /* ---- Modern Gradient Definitions ----
+   * Pre-defined gradients for consistent visual effects.
+   */
+  --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --gradient-secondary: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  
+  /* Mesh gradient for decorative backgrounds
+   * Creates a multi-color radial gradient effect
+   */
+  --gradient-mesh: radial-gradient(
+      at 40% 20%,
+      hsla(240, 80%, 70%, 0.3) 0px,
+      transparent 50%
+    ),
+    radial-gradient(at 80% 0%, hsla(280, 70%, 60%, 0.2) 0px, transparent 50%),
+    radial-gradient(at 0% 50%, hsla(220, 80%, 60%, 0.2) 0px, transparent 50%),
+    radial-gradient(at 80% 50%, hsla(340, 80%, 60%, 0.15) 0px, transparent 50%);
 }
 
+
+/* ==========================================================================
+   4. DARK MODE COLOR SCHEME
+   ========================================================================== */
+
+/**
+ * Dark mode overrides using the .dark class.
+ * All colors are adjusted for comfortable viewing in low-light conditions.
+ */
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
+  /* Background and foreground - inverted for dark UI */
+  --background: oklch(0.12 0.015 285);    /* Very dark with purple tint */
+  --foreground: oklch(0.985 0 0);         /* Near-white text */
+
+  /* Card component */
+  --card: oklch(0.18 0.02 285);           /* Dark gray with purple tint */
   --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
+
+  /* Popover component */
+  --popover: oklch(0.18 0.02 285);
   --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
+
+  /* Primary color - slightly brighter for dark backgrounds */
+  --primary: oklch(0.7 0.15 265);
+  --primary-foreground: oklch(0.12 0 0);
+
+  /* Secondary elements */
+  --secondary: oklch(0.25 0.02 285);
   --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
+
+  /* Muted elements */
+  --muted: oklch(0.25 0.02 285);
   --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
+
+  /* Accent */
+  --accent: oklch(0.25 0.03 285);
   --accent-foreground: oklch(0.985 0 0);
+
+  /* Destructive - brighter red for visibility */
   --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.488 0.243 264.376);
+
+  /* Borders and inputs */
+  --border: oklch(0.3 0.02 285);
+  --input: oklch(0.25 0.02 285);
+  --ring: oklch(0.7 0.15 265);
+
+  /* Chart colors - adjusted for dark mode */
+  --chart-1: oklch(0.6 0.2 265);
   --chart-2: oklch(0.696 0.17 162.48);
   --chart-3: oklch(0.769 0.188 70.08);
   --chart-4: oklch(0.627 0.265 303.9);
   --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.205 0 0);
+
+  /* Sidebar */
+  --sidebar: oklch(0.15 0.02 285);
   --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary: oklch(0.65 0.18 265);
   --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
+  --sidebar-accent: oklch(0.25 0.02 285);
   --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-border: oklch(0.3 0.02 285);
   --sidebar-ring: oklch(0.556 0 0);
+
+  /* Dark mode mesh gradient - more subtle colors */
+  --gradient-mesh: radial-gradient(
+      at 40% 20%,
+      hsla(240, 100%, 50%, 0.15) 0px,
+      transparent 50%
+    ),
+    radial-gradient(at 80% 0%, hsla(280, 100%, 40%, 0.15) 0px, transparent 50%),
+    radial-gradient(at 0% 50%, hsla(220, 100%, 40%, 0.1) 0px, transparent 50%),
+    radial-gradient(at 80% 50%, hsla(340, 100%, 40%, 0.1) 0px, transparent 50%);
 }
 
+
+/* ==========================================================================
+   5. BASE LAYER STYLES
+   ========================================================================== */
+
+/**
+ * Base layer contains fundamental element styles.
+ * These apply globally to all matching elements.
+ */
 @layer base {
+  /* Universal border and outline styles */
   * {
     @apply border-border outline-ring/50;
   }
+
+  /* Body defaults */
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground antialiased;
+    /* OpenType features for better typography */
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
   }
+
+  /* Heading styles - use display font */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-display);
+    @apply font-semibold tracking-tight;
+  }
+}
+
+
+/* ==========================================================================
+   6. COMPONENT LAYER - Reusable UI Components
+   ========================================================================== */
+
+@layer components {
+  
+  /* ---- Glassmorphism Card ----
+   * Modern frosted glass effect with backdrop blur.
+   * Usage: <div class="glass-card">...</div>
+   */
+  .glass-card {
+    @apply backdrop-blur-xl bg-white/70 dark:bg-gray-900/70;
+    @apply border border-white/20 dark:border-gray-700/50;
+    @apply shadow-lg shadow-black/5 dark:shadow-black/20;
+  }
+
+  /* ---- Gradient Text Effects ----
+   * Apply colorful gradient to text.
+   * Usage: <span class="gradient-text">Colorful Text</span>
+   */
+  .gradient-text {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(
+      135deg,
+      #667eea 0%,
+      #764ba2 50%,
+      #f093fb 100%
+    );
+  }
+
+  /* Brand-specific gradient (indigo to purple) */
+  .gradient-text-brand {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(
+      135deg,
+      #6366f1 0%,
+      #8b5cf6 50%,
+      #a855f7 100%
+    );
+  }
+
+  /* ---- Animated Gradient Border ----
+   * Creates a gradient border using pseudo-element masking.
+   * Usage: <div class="gradient-border rounded-xl">...</div>
+   */
+  .gradient-border {
+    position: relative;
+    background: transparent;
+  }
+  .gradient-border::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 2px;
+    background: linear-gradient(135deg, #667eea, #764ba2, #f093fb);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+  }
+
+  /* ---- Floating Animation ----
+   * Gentle up-and-down floating effect.
+   * Usage: <div class="float-animation">...</div>
+   */
+  .float-animation {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  /* ---- Glow Effects ----
+   * Indigo-colored glow shadows for emphasis.
+   * .glow - Always visible glow
+   * .glow-hover - Glow appears on hover
+   */
+  .glow {
+    box-shadow: 0 0 20px rgba(99, 102, 241, 0.3),
+      0 0 40px rgba(99, 102, 241, 0.2), 0 0 60px rgba(99, 102, 241, 0.1);
+  }
+
+  .glow-hover:hover {
+    box-shadow: 0 0 25px rgba(99, 102, 241, 0.4),
+      0 0 50px rgba(99, 102, 241, 0.25), 0 0 75px rgba(99, 102, 241, 0.15);
+  }
+
+  /* ---- Shimmer Effect ----
+   * Loading/skeleton shimmer animation.
+   * Usage: <div class="shimmer">Loading...</div>
+   */
+  .shimmer {
+    position: relative;
+    overflow: hidden;
+  }
+  .shimmer::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.2),
+      transparent
+    );
+    animation: shimmer 2s infinite;
+  }
+
+  /* ---- Card Hover Effect ----
+   * Subtle lift and shadow on hover.
+   * Usage: <div class="card-hover">...</div>
+   */
+  .card-hover {
+    @apply transition-all duration-300;
+  }
+  .card-hover:hover {
+    @apply -translate-y-1 shadow-xl;
+  }
+
+  /* ---- Gradient Badge ----
+   * Colorful badge with gradient background.
+   * Usage: <span class="badge-gradient">New</span>
+   */
+  .badge-gradient {
+    @apply bg-linear-to-r from-indigo-500 to-purple-500 text-white;
+  }
+
+  /* ---- Mesh Background ----
+   * Multi-color decorative background using CSS gradients.
+   * Usage: <section class="mesh-bg">...</section>
+   */
+  .mesh-bg {
+    background-image: var(--gradient-mesh);
+    background-attachment: fixed;
+  }
+
+  /* ---- Animated Underline ----
+   * Underline expands on hover from left to right.
+   * Usage: <a class="animated-underline">Link</a>
+   */
+  .animated-underline {
+    position: relative;
+  }
+  .animated-underline::after {
+    content: "";
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #6366f1, #a855f7);
+    transition: width 0.3s ease;
+  }
+  .animated-underline:hover::after {
+    width: 100%;
+  }
+
+  /* ---- Pulse Ring Animation ----
+   * Ripple/pulse effect expanding outward.
+   * Usage: <div class="pulse-ring">...</div>
+   */
+  .pulse-ring {
+    @apply relative;
+  }
+  .pulse-ring::before {
+    content: "";
+    @apply absolute inset-0 rounded-full;
+    animation: pulse-ring 2s cubic-bezier(0.455, 0.03, 0.515, 0.955) infinite;
+  }
+
+  /* ---- Stats Number Style ----
+   * Large gradient text for statistics/counters.
+   * Usage: <span class="stat-number">500+</span>
+   */
+  .stat-number {
+    @apply text-4xl font-bold;
+    background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* ---- Modern Input Focus ----
+   * Enhanced focus state for input fields.
+   * Usage: <input class="input-modern" />
+   */
+  .input-modern {
+    @apply transition-all duration-300;
+  }
+  .input-modern:focus {
+    @apply ring-2 ring-indigo-500/50 border-indigo-500;
+    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+  }
+
+  /* ---- Feature Icon Container ----
+   * Styled container for feature/benefit icons.
+   * Usage: <div class="feature-icon"><Icon /></div>
+   */
+  .feature-icon {
+    @apply w-14 h-14 rounded-2xl flex items-center justify-center;
+    @apply bg-linear-to-br from-indigo-500/20 to-purple-500/20;
+    @apply border border-indigo-500/20;
+  }
+
+  /* ---- Section Divider ----
+   * Subtle gradient line to separate sections.
+   * Usage: <div class="section-divider"></div>
+   */
+  .section-divider {
+    @apply h-px w-full;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(99, 102, 241, 0.3),
+      transparent
+    );
+  }
+}
+
+
+/* ==========================================================================
+   7. UTILITY LAYER - Helper Classes
+   ========================================================================== */
+
+@layer utilities {
+  /* Smooth scrolling behavior */
+  .scroll-smooth {
+    scroll-behavior: smooth;
+  }
+
+  /* Text wrapping for balanced line lengths */
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  /* Hide scrollbar while maintaining scroll functionality */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Radial gradient background utility */
+  .bg-gradient-radial {
+    background: radial-gradient(circle at center, var(--tw-gradient-stops));
+  }
+}
+
+
+/* ==========================================================================
+   8. KEYFRAME ANIMATIONS
+   ========================================================================== */
+
+/**
+ * Float Animation
+ * Gentle up-and-down motion for decorative elements.
+ */
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+/**
+ * Shimmer Animation
+ * Moving highlight effect for loading states.
+ */
+@keyframes shimmer {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+/**
+ * Pulse Ring Animation
+ * Expanding ring effect for attention-grabbing elements.
+ */
+@keyframes pulse-ring {
+  0% {
+    box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 15px rgba(99, 102, 241, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(99, 102, 241, 0);
+  }
+}
+
+/**
+ * Gradient Shift Animation
+ * Moving gradient background for dynamic effects.
+ */
+@keyframes gradient-shift {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+
+/* ==========================================================================
+   9. ANIMATION UTILITY CLASSES
+   ========================================================================== */
+
+/* Animated gradient background */
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradient-shift 3s ease infinite;
+}
+
+/* Floating animation */
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* Slow pulse animation */
+.animate-pulse-slow {
+  animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Animation delay utilities for staggered effects */
+.delay-100 {
+  animation-delay: 100ms;
+}
+.delay-200 {
+  animation-delay: 200ms;
+}
+.delay-300 {
+  animation-delay: 300ms;
+}
+.delay-400 {
+  animation-delay: 400ms;
+}
+.delay-500 {
+  animation-delay: 500ms;
 }

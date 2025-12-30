@@ -7,12 +7,18 @@ import { Dialog } from "@/components/ui/DialogWrapper";
 import { Input } from "@/components/ui/Input";
 import { Select } from "@/components/ui/Select";
 import {
-  CheckCircleIcon,
+  ExclamationTriangleIcon,
   EyeIcon,
+  FunnelIcon,
+  MagnifyingGlassIcon,
   PencilIcon,
+  ShieldCheckIcon,
   TrashIcon,
+  UserGroupIcon,
+  XMarkIcon,
 } from "@heroicons/react/24/outline";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { motion } from "framer-motion";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
@@ -27,10 +33,7 @@ const UserManagement = () => {
   const [userToDelete, setUserToDelete] = useState(null);
   const [userToChangeRole, setUserToChangeRole] = useState(null);
   const [userToView, setUserToView] = useState(null);
-  const [filters, setFilters] = useState({
-    role: "",
-    search: "",
-  });
+  const [filters, setFilters] = useState({ role: "", search: "" });
 
   const {
     register,
@@ -46,7 +49,7 @@ const UserManagement = () => {
     queryFn: () => usersAPI.getAllUsers(filters),
   });
 
-  // Update user mutation
+  // Mutations
   const updateUserMutation = useMutation({
     mutationFn: ({ id, data }) => usersAPI.updateUserProfile(id, data),
     onSuccess: () => {
@@ -60,7 +63,6 @@ const UserManagement = () => {
     },
   });
 
-  // Change user role mutation
   const changeRoleMutation = useMutation({
     mutationFn: ({ id, role }) => usersAPI.changeUserRole(id, role),
     onSuccess: () => {
@@ -76,7 +78,6 @@ const UserManagement = () => {
     },
   });
 
-  // Delete user mutation
   const deleteUserMutation = useMutation({
     mutationFn: usersAPI.deleteUser,
     onSuccess: () => {
@@ -114,19 +115,13 @@ const UserManagement = () => {
 
   const handleUpdate = (data) => {
     if (userToEdit) {
-      updateUserMutation.mutate({
-        id: userToEdit._id,
-        data,
-      });
+      updateUserMutation.mutate({ id: userToEdit._id, data });
     }
   };
 
   const handleChangeRoleSubmit = (data) => {
     if (userToChangeRole) {
-      changeRoleMutation.mutate({
-        id: userToChangeRole._id,
-        role: data.role,
-      });
+      changeRoleMutation.mutate({ id: userToChangeRole._id, role: data.role });
     }
   };
 
@@ -137,17 +132,11 @@ const UserManagement = () => {
   };
 
   const handleFilterChange = (field, value) => {
-    setFilters((prev) => ({
-      ...prev,
-      [field]: value,
-    }));
+    setFilters((prev) => ({ ...prev, [field]: value }));
   };
 
   const clearFilters = () => {
-    setFilters({
-      role: "",
-      search: "",
-    });
+    setFilters({ role: "", search: "" });
   };
 
   const handleView = (user) => {
@@ -155,187 +144,229 @@ const UserManagement = () => {
     setViewDialogOpen(true);
   };
 
+  const getRoleBadgeColor = (role) => {
+    switch (role) {
+      case "admin":
+        return "bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400";
+      case "tutor":
+        return "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400";
+      default:
+        return "bg-indigo-100 text-indigo-700 dark:bg-indigo-900/30 dark:text-indigo-400";
+    }
+  };
+
   return (
-    <div>
-      <h1 className="text-2xl font-bold text-gray-900 mb-6">User Management</h1>
+    <div className="space-y-6">
+      {/* Header */}
+      <div>
+        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+          User Management
+        </h1>
+        <p className="text-gray-500 dark:text-gray-400 mt-1">
+          Manage all registered users on the platform
+        </p>
+      </div>
 
       {/* Filters */}
-      <Card className="mb-6">
-        <CardContent className="p-6">
-          <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-            Filter Users
-          </h2>
-          <div className="grid md:grid-cols-2 gap-4">
-            <div>
-              <label
-                htmlFor="search"
-                className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1"
-              >
-                Search
-              </label>
-              <Input
-                id="search"
-                placeholder="Search by name or email..."
-                value={filters.search}
-                onChange={(e) => handleFilterChange("search", e.target.value)}
-              />
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+      >
+        <Card>
+          <CardContent className="p-6">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-10 h-10 rounded-xl bg-indigo-100 dark:bg-indigo-900/30 flex items-center justify-center">
+                <FunnelIcon className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />
+              </div>
+              <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
+                Filter Users
+              </h2>
             </div>
-            <div>
-              <label
-                htmlFor="role"
-                className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1"
-              >
-                Role
-              </label>
-              <Select
-                id="role"
-                value={filters.role}
-                onChange={(e) => handleFilterChange("role", e.target.value)}
-              >
-                <option value="">All Roles</option>
-                <option value="student">Student</option>
-                <option value="tutor">Tutor</option>
-                <option value="admin">Admin</option>
-              </Select>
+            <div className="grid md:grid-cols-3 gap-4">
+              <div className="md:col-span-2">
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  Search
+                </label>
+                <div className="relative">
+                  <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                    <MagnifyingGlassIcon className="h-5 w-5 text-gray-400" />
+                  </div>
+                  <Input
+                    className="pl-12 rounded-xl"
+                    placeholder="Search by name or email..."
+                    value={filters.search}
+                    onChange={(e) =>
+                      handleFilterChange("search", e.target.value)
+                    }
+                  />
+                </div>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  Role
+                </label>
+                <Select
+                  className="rounded-xl"
+                  value={filters.role}
+                  onChange={(e) => handleFilterChange("role", e.target.value)}
+                >
+                  <option value="">All Roles</option>
+                  <option value="student">Student</option>
+                  <option value="tutor">Tutor</option>
+                  <option value="admin">Admin</option>
+                </Select>
+              </div>
             </div>
-          </div>
-          <div className="mt-4">
-            <Button variant="outline" onClick={clearFilters}>
-              Clear Filters
-            </Button>
-          </div>
-        </CardContent>
-      </Card>
+            {(filters.search || filters.role) && (
+              <div className="mt-4">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={clearFilters}
+                  className="gap-2 text-gray-500"
+                >
+                  <XMarkIcon className="w-4 h-4" />
+                  Clear Filters
+                </Button>
+              </div>
+            )}
+          </CardContent>
+        </Card>
+      </motion.div>
 
+      {/* Users Table */}
       {isLoading ? (
-        <div className="flex justify-center py-12">
+        <div className="flex justify-center py-16">
           <LoadingSpinner size="lg" />
         </div>
       ) : users?.data?.length > 0 ? (
-        <Card>
-          <CardContent className="p-0">
-            <div className="overflow-x-auto">
-              <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-                <thead className="bg-gray-50 dark:bg-gray-800">
-                  <tr>
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider"
-                    >
-                      User
-                    </th>
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider"
-                    >
-                      Role
-                    </th>
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider"
-                    >
-                      Verification Status
-                    </th>
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider"
-                    >
-                      Created At
-                    </th>
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider"
-                    >
-                      Actions
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="bg-white dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-700">
-                  {users.data.map((user) => (
-                    <tr key={user._id}>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="flex items-center">
-                          <ProtectedImage
-                            src={user.photoUrl}
-                            alt={user.name}
-                            className="w-10 h-10 rounded-full mr-3"
-                          />
-                          <div>
-                            <div className="text-sm font-medium text-gray-900 dark:text-white">
-                              {user.name}
-                            </div>
-                            <div className="text-sm text-gray-500 dark:text-gray-300">
-                              {user.email}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1 }}
+        >
+          <Card className="overflow-hidden">
+            <CardContent className="p-0">
+              <div className="overflow-x-auto">
+                <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                  <thead className="bg-gray-50 dark:bg-gray-800">
+                    <tr>
+                      <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wider">
+                        User
+                      </th>
+                      <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wider">
+                        Role
+                      </th>
+                      <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wider">
+                        Status
+                      </th>
+                      <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wider">
+                        Joined
+                      </th>
+                      <th className="px-6 py-4 text-right text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wider">
+                        Actions
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody className="bg-white dark:bg-gray-900 divide-y divide-gray-100 dark:divide-gray-800">
+                    {users.data.map((user, index) => (
+                      <motion.tr
+                        key={user._id}
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: index * 0.03 }}
+                        className="hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors"
+                      >
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="flex items-center gap-3">
+                            <ProtectedImage
+                              src={user.photoUrl}
+                              alt={user.name}
+                              className="w-10 h-10 rounded-xl object-cover"
+                            />
+                            <div>
+                              <p className="font-medium text-gray-900 dark:text-white">
+                                {user.name}
+                              </p>
+                              <p className="text-sm text-gray-500 dark:text-gray-400">
+                                {user.email}
+                              </p>
                             </div>
                           </div>
-                        </div>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 text-gray-800 capitalize">
-                          {user.role}
-                        </span>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <span
-                          className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                            user.isVerified
-                              ? "bg-green-100 text-green-800"
-                              : "bg-red-100 text-red-800"
-                          }`}
-                        >
-                          {user.isVerified ? "Verified" : "Not Verified"}
-                        </span>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-300">
-                        {new Date(user.createdAt).toLocaleDateString()}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                        <div className="flex justify-end space-x-2">
-                          <button
-                            type="button"
-                            className="text-brand hover:text-brand-dark"
-                            onClick={() => handleView(user)}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <span
+                            className={`px-2.5 py-1 rounded-lg text-xs font-medium capitalize ${getRoleBadgeColor(
+                              user.role
+                            )}`}
                           >
-                            <EyeIcon className="h-5 w-5" />
-                          </button>
-                          <button
-                            type="button"
-                            className="text-indigo-600 hover:text-indigo-900"
-                            onClick={() => handleEdit(user)}
+                            {user.role}
+                          </span>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <span
+                            className={`px-2.5 py-1 rounded-lg text-xs font-medium ${
+                              user.isVerified
+                                ? "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400"
+                                : "bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-400"
+                            }`}
                           >
-                            <PencilIcon className="h-5 w-5" />
-                          </button>
-                          <button
-                            type="button"
-                            className="text-amber-600 hover:text-amber-900"
-                            onClick={() => handleChangeRole(user)}
-                          >
-                            <CheckCircleIcon className="h-5 w-5" />
-                          </button>
-                          <button
-                            type="button"
-                            className="text-red-600 hover:text-red-900"
-                            onClick={() => handleDelete(user)}
-                            disabled={deleteUserMutation.isLoading}
-                          >
-                            <TrashIcon className="h-5 w-5" />
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </CardContent>
-        </Card>
+                            {user.isVerified ? "Verified" : "Unverified"}
+                          </span>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
+                          {new Date(user.createdAt).toLocaleDateString()}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-right">
+                          <div className="flex justify-end gap-1">
+                            <button
+                              className="p-2 rounded-lg text-gray-500 hover:text-indigo-600 hover:bg-indigo-50 dark:hover:bg-indigo-900/30 transition-colors"
+                              onClick={() => handleView(user)}
+                              title="View"
+                            >
+                              <EyeIcon className="h-5 w-5" />
+                            </button>
+                            <button
+                              className="p-2 rounded-lg text-gray-500 hover:text-amber-600 hover:bg-amber-50 dark:hover:bg-amber-900/30 transition-colors"
+                              onClick={() => handleEdit(user)}
+                              title="Edit"
+                            >
+                              <PencilIcon className="h-5 w-5" />
+                            </button>
+                            <button
+                              className="p-2 rounded-lg text-gray-500 hover:text-purple-600 hover:bg-purple-50 dark:hover:bg-purple-900/30 transition-colors"
+                              onClick={() => handleChangeRole(user)}
+                              title="Change Role"
+                            >
+                              <ShieldCheckIcon className="h-5 w-5" />
+                            </button>
+                            <button
+                              className="p-2 rounded-lg text-gray-500 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/30 transition-colors"
+                              onClick={() => handleDelete(user)}
+                              title="Delete"
+                            >
+                              <TrashIcon className="h-5 w-5" />
+                            </button>
+                          </div>
+                        </td>
+                      </motion.tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </CardContent>
+          </Card>
+        </motion.div>
       ) : (
         <Card>
-          <CardContent className="p-12 text-center">
-            <h3 className="text-lg font-medium text-gray-900 mb-2">
+          <CardContent className="py-16 text-center">
+            <div className="w-20 h-20 mx-auto mb-6 rounded-2xl bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
+              <UserGroupIcon className="w-10 h-10 text-gray-400" />
+            </div>
+            <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
               No users found
             </h3>
-            <p className="text-gray-500 mb-6">
+            <p className="text-gray-500 dark:text-gray-400 mb-6">
               Try adjusting your filters or check back later.
             </p>
             <Button variant="outline" onClick={clearFilters}>
@@ -352,82 +383,62 @@ const UserManagement = () => {
         title="Edit User"
         size="md"
       >
-        <form onSubmit={handleSubmit(handleUpdate)} className="space-y-4">
+        <form onSubmit={handleSubmit(handleUpdate)} className="space-y-5 py-4">
           <div>
-            <label
-              htmlFor="name"
-              className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1"
-            >
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               Name
             </label>
             <Input
-              id="name"
-              {...register("name", {
-                required: "Name is required",
-              })}
+              className="rounded-xl"
+              {...register("name", { required: "Name is required" })}
               error={errors.name?.message}
             />
           </div>
-
           <div>
-            <label
-              htmlFor="phone"
-              className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1"
-            >
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               Phone Number
             </label>
             <Input
-              id="phone"
+              className="rounded-xl"
               {...register("phone", {
                 pattern: {
                   value: /^01[3-9]\d{8}$/,
-                  message: "Invalid Bangladeshi phone number",
+                  message: "Invalid phone number",
                 },
               })}
               error={errors.phone?.message}
             />
           </div>
-
           <div>
-            <label
-              htmlFor="city"
-              className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1"
-            >
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               City
             </label>
-            <Input
-              id="city"
-              {...register("city")}
-              error={errors.city?.message}
-            />
+            <Input className="rounded-xl" {...register("city")} />
           </div>
-
-          <div className="flex items-center">
+          <div className="flex items-center gap-3 p-3 rounded-xl bg-gray-50 dark:bg-gray-800">
             <input
               id="isVerified"
               type="checkbox"
-              className="h-4 w-4 text-brand focus:ring-brand border-gray-300 rounded"
+              className="w-5 h-5 text-indigo-600 rounded"
               {...register("isVerified")}
             />
             <label
               htmlFor="isVerified"
-              className="ml-2 block text-sm text-gray-900 dark:text-white"
+              className="text-sm text-gray-700 dark:text-gray-300"
             >
-              Verified User
+              Mark as Verified User
             </label>
           </div>
-
-          <div className="flex justify-end pt-4">
+          <div className="flex justify-end gap-3 pt-4">
             <Button
               type="button"
               variant="outline"
               onClick={() => setEditDialogOpen(false)}
-              className="mr-2"
             >
               Cancel
             </Button>
-            <Button type="submit" disabled={updateUserMutation.isLoading}>
-              {updateUserMutation.isLoading ? "Updating..." : "Update User"}
+            <Button type="submit" disabled={updateUserMutation.isPending}>
+              {updateUserMutation.isPending ? "Updating..." : "Update User"}
             </Button>
           </div>
         </form>
@@ -442,72 +453,66 @@ const UserManagement = () => {
       >
         <form
           onSubmit={handleSubmit(handleChangeRoleSubmit)}
-          className="space-y-4"
+          className="space-y-5 py-4"
         >
           <div>
-            <label
-              htmlFor="role"
-              className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1"
-            >
-              Role
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              Select New Role
             </label>
             <Select
-              id="role"
-              {...register("role", {
-                required: "Role is required",
-              })}
-              error={errors.role?.message}
+              className="rounded-xl"
+              {...register("role", { required: "Role is required" })}
             >
               <option value="student">Student</option>
               <option value="tutor">Tutor</option>
               <option value="admin">Admin</option>
             </Select>
           </div>
-
-          <div className="flex justify-end pt-4">
+          <div className="flex justify-end gap-3 pt-4">
             <Button
               type="button"
               variant="outline"
               onClick={() => setRoleChangeDialogOpen(false)}
-              className="mr-2"
             >
               Cancel
             </Button>
-            <Button type="submit" disabled={changeRoleMutation.isLoading}>
-              {changeRoleMutation.isLoading ? "Changing..." : "Change Role"}
+            <Button type="submit" disabled={changeRoleMutation.isPending}>
+              {changeRoleMutation.isPending ? "Changing..." : "Change Role"}
             </Button>
           </div>
         </form>
       </Dialog>
 
-      {/* Delete confirmation dialog */}
+      {/* Delete Dialog */}
       <Dialog
         open={deleteDialogOpen}
         onClose={() => setDeleteDialogOpen(false)}
         title="Delete User"
         size="sm"
       >
-        <div className="space-y-4">
-          <p className="text-sm text-gray-500 dark:text-gray-300">
-            Are you sure you want to delete this user? This action cannot be
-            undone.
-          </p>
-          <div className="flex justify-end pt-4">
-            <Button
-              variant="outline"
-              onClick={() => setDeleteDialogOpen(false)}
-              className="mr-2"
-            >
-              Cancel
-            </Button>
-            <Button
-              variant="danger"
-              onClick={confirmDelete}
-              disabled={deleteUserMutation.isLoading}
-            >
-              {deleteUserMutation.isLoading ? "Deleting..." : "Delete"}
-            </Button>
+        <div className="py-4">
+          <div className="flex items-center gap-3 p-4 rounded-xl bg-red-50 dark:bg-red-900/20 mb-4">
+            <ExclamationTriangleIcon className="w-6 h-6 text-red-500" />
+            <p className="text-red-700 dark:text-red-300">
+              This action cannot be undone.
+            </p>
           </div>
+          <p className="text-gray-600 dark:text-gray-300">
+            Are you sure you want to delete this user? All their data will be
+            permanently removed.
+          </p>
+        </div>
+        <div className="flex justify-end gap-3">
+          <Button variant="outline" onClick={() => setDeleteDialogOpen(false)}>
+            Cancel
+          </Button>
+          <Button
+            variant="danger"
+            onClick={confirmDelete}
+            disabled={deleteUserMutation.isPending}
+          >
+            {deleteUserMutation.isPending ? "Deleting..." : "Delete User"}
+          </Button>
         </div>
       </Dialog>
 
@@ -519,167 +524,82 @@ const UserManagement = () => {
         size="md"
       >
         {userToView && (
-          <div className="space-y-6">
-            {/* User Profile Section */}
-            <div className="flex items-center space-x-4 pb-4 border-b border-gray-200">
+          <div className="space-y-6 py-4">
+            <div className="flex items-center gap-4 p-4 rounded-xl bg-gray-50 dark:bg-gray-800">
               <ProtectedImage
                 src={userToView.photoUrl}
                 alt={userToView.name}
-                className="w-20 h-20 rounded-full"
+                className="w-16 h-16 rounded-xl"
               />
               <div>
-                <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
                   {userToView.name}
                 </h3>
-                <p className="text-sm text-gray-500 dark:text-gray-300">
+                <p className="text-gray-500 dark:text-gray-400">
                   {userToView.email}
                 </p>
               </div>
             </div>
-
-            {/* User Information Grid */}
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-500 mb-1">
-                  Phone Number
+                <label className="block text-xs font-medium text-gray-500 dark:text-gray-400 uppercase mb-1">
+                  Phone
                 </label>
-                <p className="text-sm text-gray-900 dark:text-white">
+                <p className="text-gray-900 dark:text-white">
                   {userToView.phone || "Not provided"}
                 </p>
               </div>
-
               <div>
-                <label className="block text-sm font-medium text-gray-500 mb-1">
+                <label className="block text-xs font-medium text-gray-500 dark:text-gray-400 uppercase mb-1">
                   City
                 </label>
-                <p className="text-sm text-gray-900 dark:text-white">
+                <p className="text-gray-900 dark:text-white">
                   {userToView.city || "Not provided"}
                 </p>
               </div>
-
               <div>
-                <label className="block text-sm font-medium text-gray-500 mb-1">
+                <label className="block text-xs font-medium text-gray-500 dark:text-gray-400 uppercase mb-1">
                   Role
                 </label>
-                <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 text-gray-800 capitalize">
+                <span
+                  className={`px-2.5 py-1 rounded-lg text-xs font-medium capitalize ${getRoleBadgeColor(
+                    userToView.role
+                  )}`}
+                >
                   {userToView.role}
                 </span>
               </div>
-
               <div>
-                <label className="block text-sm font-medium text-gray-500 mb-1">
-                  Verification Status
+                <label className="block text-xs font-medium text-gray-500 dark:text-gray-400 uppercase mb-1">
+                  Status
                 </label>
                 <span
-                  className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                  className={`px-2.5 py-1 rounded-lg text-xs font-medium ${
                     userToView.isVerified
-                      ? "bg-green-100 text-green-800"
-                      : "bg-red-100 text-red-800"
+                      ? "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400"
+                      : "bg-gray-100 text-gray-600 dark:bg-gray-800"
                   }`}
                 >
-                  {userToView.isVerified ? "Verified" : "Not Verified"}
+                  {userToView.isVerified ? "Verified" : "Unverified"}
                 </span>
               </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-500 mb-1">
-                  Account Created
-                </label>
-                <p className="text-sm text-gray-900 dark:text-white">
-                  {new Date(userToView.createdAt).toLocaleDateString("en-US", {
-                    year: "numeric",
-                    month: "long",
-                    day: "numeric",
-                  })}
-                </p>
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-500 mb-1">
-                  Last Updated
-                </label>
-                <p className="text-sm text-gray-900 dark:text-white">
-                  {new Date(userToView.updatedAt).toLocaleDateString("en-US", {
-                    year: "numeric",
-                    month: "long",
-                    day: "numeric",
-                  })}
-                </p>
-              </div>
             </div>
-
-            {/* Additional Info if Tutor */}
-            {userToView.role === "tutor" && userToView.tutorProfile && (
-              <div className="pt-4 border-t border-gray-200">
-                <h4 className="text-sm font-semibold text-gray-900 mb-3">
-                  Tutor Profile Information
-                </h4>
-                <div className="grid grid-cols-2 gap-4">
-                  {userToView.tutorProfile.education && (
-                    <div>
-                      <label className="block text-sm font-medium text-gray-500 mb-1">
-                        Education
-                      </label>
-                      <p className="text-sm text-gray-900 dark:text-white">
-                        {userToView.tutorProfile.education}
-                      </p>
-                    </div>
-                  )}
-                  {userToView.tutorProfile.experience && (
-                    <div>
-                      <label className="block text-sm font-medium text-gray-500 mb-1">
-                        Experience
-                      </label>
-                      <p className="text-sm text-gray-900 dark:text-white">
-                        {userToView.tutorProfile.experience} years
-                      </p>
-                    </div>
-                  )}
-                </div>
-              </div>
-            )}
-
-            {/* Action Buttons */}
-            <div className="flex justify-between pt-4 border-t border-gray-200">
+            <div className="flex justify-between pt-4 border-t border-gray-200 dark:border-gray-700">
               <Button
                 variant="outline"
                 onClick={() => setViewDialogOpen(false)}
               >
                 Close
               </Button>
-              <div className="flex space-x-2">
+              <div className="flex gap-2">
                 <Button
-                  variant="primary"
                   onClick={() => {
                     setViewDialogOpen(false);
                     handleEdit(userToView);
                   }}
-                  className="flex items-center space-x-1"
+                  className="gap-2"
                 >
-                  <PencilIcon className="h-4 w-4" />
-                  <span>Edit</span>
-                </Button>
-                <Button
-                  variant="warning"
-                  onClick={() => {
-                    setViewDialogOpen(false);
-                    handleChangeRole(userToView);
-                  }}
-                  className="flex items-center space-x-1 bg-amber-600 hover:bg-amber-700 text-white"
-                >
-                  <CheckCircleIcon className="h-4 w-4" />
-                  <span>Change Role</span>
-                </Button>
-                <Button
-                  variant="danger"
-                  onClick={() => {
-                    setViewDialogOpen(false);
-                    handleDelete(userToView);
-                  }}
-                  className="flex items-center space-x-1"
-                >
-                  <TrashIcon className="h-4 w-4" />
-                  <span>Delete</span>
+                  <PencilIcon className="w-4 h-4" /> Edit
                 </Button>
               </div>
             </div>

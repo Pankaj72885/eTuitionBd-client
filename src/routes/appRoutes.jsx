@@ -1,7 +1,8 @@
-import { createBrowserRouter, Navigate, Outlet } from "react-router";
+import { createBrowserRouter, Outlet } from "react-router";
 import DashboardLayout from "../layouts/DashboardLayout";
 import MainLayout from "../layouts/MainLayout";
 import NotFoundPage from "../pages/Error/NotFoundPage";
+import DashboardRedirect from "./DashboardRedirect";
 import PrivateRoute from "./PrivateRoute";
 import RoleRoute from "./RoleRoute";
 
@@ -36,6 +37,7 @@ import TutorRevenueHistory from "../pages-dashboard/tutor/TutorRevenueHistory";
 // Admin Dashboard Pages
 import AdminAnalytics from "../pages-dashboard/admin/AdminAnalytics";
 import AdminDashboardHome from "../pages-dashboard/admin/AdminDashboardHome";
+import AdminProfileSettings from "../pages-dashboard/admin/AdminProfileSettings";
 import ReportsTransactions from "../pages-dashboard/admin/ReportsTransactions";
 import TuitionManagement from "../pages-dashboard/admin/TuitionManagement";
 import UserManagement from "../pages-dashboard/admin/UserManagement";
@@ -76,12 +78,9 @@ const router = createBrowserRouter([
     ),
     children: [
       {
+        // Redirect to role-specific dashboard
         index: true,
-        element: <Navigate to="student" replace />, // Default redirect? Or maybe a generic dashboard landing?
-        // Since roles are strict, maybe we should redirect based on role?
-        // But RoleRoute handles that. If I go to /dashboard, I probably want to be redirected to my role's dashboard.
-        // I will adding a redirect component or just let 404 happen?
-        // Better: A component that checks role and redirects.
+        element: <DashboardRedirect />,
       },
       // Student Routes
       {
@@ -132,6 +131,7 @@ const router = createBrowserRouter([
           { path: "tuitions", element: <TuitionManagement /> },
           { path: "reports", element: <ReportsTransactions /> },
           { path: "analytics", element: <AdminAnalytics /> },
+          { path: "profile", element: <AdminProfileSettings role="admin" /> },
         ],
       },
     ],

@@ -108,6 +108,11 @@ const Sidebar = () => {
       path: `/dashboard/admin/reports`,
       icon: CurrencyDollarIcon,
     },
+    {
+      name: "Profile Settings",
+      path: `/dashboard/admin/profile`,
+      icon: Cog6ToothIcon,
+    },
   ];
 
   const getLinks = () => {

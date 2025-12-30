@@ -2,8 +2,12 @@ import { Button } from "@/components/ui/Button";
 import { Card, CardContent } from "@/components/ui/Card";
 import {
   AcademicCapIcon,
+  ChatBubbleLeftRightIcon,
   GlobeAltIcon,
+  HeartIcon,
+  RocketLaunchIcon,
   ShieldCheckIcon,
+  SparklesIcon,
   UserGroupIcon,
 } from "@heroicons/react/24/outline";
 import { motion } from "framer-motion";
@@ -14,57 +18,131 @@ const AboutPage = () => {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-      },
+      transition: { staggerChildren: 0.1 },
     },
   };
 
   const itemVariants = {
-    hidden: { y: 20, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-    },
+    hidden: { y: 30, opacity: 0 },
+    visible: { y: 0, opacity: 1, transition: { duration: 0.6 } },
   };
 
-  return (
-    <div className="py-12 md:py-16 bg-white dark:bg-gray-900 transition-colors duration-200">
-      <div className="max-w-6xl mx-auto px-4 md:px-6">
-        {/* Hero Section */}
-        <div className="text-center mb-16">
-          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
-            About eTuitionBd
-          </h1>
-          <p className="text-lg text-gray-600 dark:text-gray-200 max-w-3xl mx-auto">
-            We're on a mission to connect students with qualified tutors across
-            Bangladesh, making quality education accessible to everyone.
-          </p>
-        </div>
+  const teamMembers = [
+    {
+      name: "Mohammad Rahim",
+      role: "CEO & Founder",
+      bio: "Passionate about education technology with over 10 years of experience.",
+      avatar: "https://i.pravatar.cc/150?img=68",
+    },
+    {
+      name: "Fatema Khatun",
+      role: "CTO",
+      bio: "Tech enthusiast focused on building scalable educational platforms.",
+      avatar: "https://i.pravatar.cc/150?img=47",
+    },
+    {
+      name: "Abdul Karim",
+      role: "Head of Operations",
+      bio: "Ensuring smooth operations and excellent user experience.",
+      avatar: "https://i.pravatar.cc/150?img=60",
+    },
+  ];
 
-        {/* Mission & Vision */}
-        <section className="mb-16">
+  const stats = [
+    { value: "500+", label: "Tuitions Completed", icon: AcademicCapIcon },
+    { value: "200+", label: "Verified Tutors", icon: ShieldCheckIcon },
+    { value: "15+", label: "Cities Covered", icon: GlobeAltIcon },
+    { value: "98%", label: "Satisfaction Rate", icon: HeartIcon },
+  ];
+
+  return (
+    <div className="min-h-screen bg-linear-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-950 transition-colors duration-300">
+      {/* Hero Section */}
+      <section className="relative py-20 md:py-28 overflow-hidden">
+        <div className="absolute inset-0 mesh-bg" />
+        <div className="absolute inset-0 bg-linear-to-b from-indigo-500/5 via-transparent to-transparent dark:from-indigo-500/10" />
+
+        <div className="max-w-6xl mx-auto px-4 md:px-6 relative z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="text-center"
+          >
+            <motion.div
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              transition={{ delay: 0.2, type: "spring" }}
+              className="w-20 h-20 mx-auto mb-6 rounded-3xl bg-linear-to-br from-indigo-500 to-purple-600 flex items-center justify-center shadow-lg shadow-indigo-500/30"
+            >
+              <SparklesIcon className="w-10 h-10 text-white" />
+            </motion.div>
+
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 dark:text-white mb-6">
+              About <span className="gradient-text-brand">eTuitionBd</span>
+            </h1>
+            <p className="text-lg md:text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">
+              We're on a mission to connect students with qualified tutors
+              across Bangladesh, making quality education accessible to
+              everyone.
+            </p>
+          </motion.div>
+
+          {/* Stats */}
+          <motion.div
+            className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-6"
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+          >
+            {stats.map((stat, index) => (
+              <motion.div
+                key={index}
+                variants={itemVariants}
+                className="text-center p-6 rounded-2xl bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm border border-gray-200/50 dark:border-gray-700/50"
+              >
+                <div className="w-12 h-12 mx-auto mb-3 rounded-xl bg-linear-to-br from-indigo-500 to-purple-500 flex items-center justify-center">
+                  <stat.icon className="w-6 h-6 text-white" />
+                </div>
+                <p className="text-3xl font-bold text-gray-900 dark:text-white">
+                  {stat.value}
+                </p>
+                <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+                  {stat.label}
+                </p>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Mission & Vision */}
+      <section className="py-16 md:py-24">
+        <div className="max-w-6xl mx-auto px-4 md:px-6">
           <div className="grid md:grid-cols-2 gap-8">
             <motion.div
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6 }}
               viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
             >
-              <Card>
-                <CardContent className="p-6 md:p-8">
-                  <div className="flex items-center mb-4">
-                    <div className="w-12 h-12 bg-brand-light dark:bg-indigo-900/50 rounded-lg flex items-center justify-center text-brand dark:text-indigo-400 mr-4">
-                      <AcademicCapIcon className="h-6 w-6" />
+              <Card className="h-full overflow-hidden group">
+                <div className="h-2 bg-linear-to-r from-indigo-500 to-purple-500" />
+                <CardContent className="p-8">
+                  <div className="flex items-center gap-4 mb-6">
+                    <div className="w-14 h-14 rounded-2xl bg-linear-to-br from-indigo-500 to-purple-500 flex items-center justify-center shadow-lg">
+                      <RocketLaunchIcon className="w-7 h-7 text-white" />
                     </div>
-                    <h2 className="text-2xl font-semibold text-gray-900 dark:text-white">
+                    <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
                       Our Mission
                     </h2>
                   </div>
-                  <p className="text-gray-600 dark:text-gray-200">
+                  <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
                     To create a trusted platform that connects students with
                     qualified tutors, fostering educational growth and academic
-                    excellence across Bangladesh.
+                    excellence across Bangladesh. We believe every student
+                    deserves access to quality education, regardless of their
+                    location or background.
                   </p>
                 </CardContent>
               </Card>
@@ -73,101 +151,133 @@ const AboutPage = () => {
             <motion.div
               initial={{ opacity: 0, x: 30 }}
               whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6 }}
               viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
             >
-              <Card>
-                <CardContent className="p-6 md:p-8">
-                  <div className="flex items-center mb-4">
-                    <div className="w-12 h-12 bg-brand-light rounded-lg flex items-center justify-center text-brand mr-4">
-                      <GlobeAltIcon className="h-6 w-6" />
+              <Card className="h-full overflow-hidden group">
+                <div className="h-2 bg-linear-to-r from-emerald-500 to-teal-500" />
+                <CardContent className="p-8">
+                  <div className="flex items-center gap-4 mb-6">
+                    <div className="w-14 h-14 rounded-2xl bg-linear-to-br from-emerald-500 to-teal-500 flex items-center justify-center shadow-lg">
+                      <GlobeAltIcon className="w-7 h-7 text-white" />
                     </div>
-                    <h2 className="text-2xl font-semibold text-gray-900">
+                    <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
                       Our Vision
                     </h2>
                   </div>
-                  <p className="text-gray-600">
+                  <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
                     To be the leading tuition management platform in Bangladesh,
                     known for quality, reliability, and innovation in education
-                    technology.
+                    technology. We envision a future where finding the right
+                    tutor is effortless and education is truly accessible to
+                    all.
                   </p>
                 </CardContent>
               </Card>
             </motion.div>
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* How it works */}
-        <section className="mb-16">
-          <h2 className="text-2xl md:text-3xl font-semibold text-gray-900 dark:text-white text-center mb-8">
-            How eTuitionBd Works
-          </h2>
+      {/* How it works */}
+      <section className="py-16 md:py-24 bg-gray-50/50 dark:bg-gray-800/30">
+        <div className="max-w-6xl mx-auto px-4 md:px-6">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <span className="inline-block px-4 py-1.5 rounded-full text-sm font-medium bg-indigo-100 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 mb-4">
+              Simple Process
+            </span>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white">
+              How eTuitionBd <span className="gradient-text-brand">Works</span>
+            </h2>
+          </motion.div>
 
           <motion.div
-            className="grid md:grid-cols-3 gap-8"
+            className="grid md:grid-cols-3 gap-8 relative"
             variants={containerVariants}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
           >
-            <motion.div variants={itemVariants}>
-              <Card>
-                <CardContent className="p-6 text-center">
-                  <div className="w-16 h-16 bg-brand-light dark:bg-indigo-900/50 rounded-full flex items-center justify-center text-brand dark:text-indigo-400 mx-auto mb-4">
-                    <span className="text-2xl font-bold">1</span>
-                  </div>
-                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
-                    Post Tuition
-                  </h3>
-                  <p className="text-gray-600 dark:text-gray-200">
-                    Students post their tuition requirements with details about
-                    subject, location, and budget.
-                  </p>
-                </CardContent>
-              </Card>
-            </motion.div>
+            {/* Connection Line */}
+            <div className="hidden md:block absolute top-1/2 left-[16.67%] right-[16.67%] h-0.5 bg-linear-to-r from-indigo-500 via-purple-500 to-pink-500 -translate-y-1/2" />
 
-            <motion.div variants={itemVariants}>
-              <Card>
-                <CardContent className="p-6 text-center">
-                  <div className="w-16 h-16 bg-brand-light rounded-full flex items-center justify-center text-brand mx-auto mb-4">
-                    <span className="text-2xl font-bold">2</span>
-                  </div>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                    Tutors Apply
-                  </h3>
-                  <p className="text-gray-600">
-                    Qualified tutors apply with their qualifications,
-                    experience, and expected salary.
-                  </p>
-                </CardContent>
-              </Card>
-            </motion.div>
-
-            <motion.div variants={itemVariants}>
-              <Card>
-                <CardContent className="p-6 text-center">
-                  <div className="w-16 h-16 bg-brand-light rounded-full flex items-center justify-center text-brand mx-auto mb-4">
-                    <span className="text-2xl font-bold">3</span>
-                  </div>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                    Start Learning
-                  </h3>
-                  <p className="text-gray-600">
-                    Students review applications, select a tutor, make payment,
-                    and begin their learning journey.
-                  </p>
-                </CardContent>
-              </Card>
-            </motion.div>
+            {[
+              {
+                step: "01",
+                title: "Post Tuition",
+                description:
+                  "Students share their requirements with details about subject, location, and budget.",
+                icon: "📝",
+                color: "from-indigo-500 to-indigo-600",
+              },
+              {
+                step: "02",
+                title: "Tutors Apply",
+                description:
+                  "Qualified tutors apply with their qualifications, experience, and expected salary.",
+                icon: "👨‍🏫",
+                color: "from-purple-500 to-purple-600",
+              },
+              {
+                step: "03",
+                title: "Start Learning",
+                description:
+                  "Students review, select a tutor, make payment, and begin their learning journey.",
+                icon: "🚀",
+                color: "from-pink-500 to-pink-600",
+              },
+            ].map((item, index) => (
+              <motion.div key={index} variants={itemVariants}>
+                <Card className="relative overflow-hidden group card-hover border-0 shadow-lg h-full">
+                  <div
+                    className={`absolute top-0 left-0 right-0 h-1 bg-linear-to-r ${item.color}`}
+                  />
+                  <CardContent className="p-8 text-center">
+                    <div className="relative z-10 mb-6">
+                      <div
+                        className={`w-20 h-20 mx-auto rounded-2xl bg-linear-to-br ${item.color} flex items-center justify-center text-4xl shadow-lg group-hover:scale-110 transition-transform duration-300`}
+                      >
+                        {item.icon}
+                      </div>
+                      <span className="absolute -top-4 -right-4 text-7xl font-bold text-gray-100 dark:text-gray-800 -z-10">
+                        {item.step}
+                      </span>
+                    </div>
+                    <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">
+                      {item.title}
+                    </h3>
+                    <p className="text-gray-600 dark:text-gray-400">
+                      {item.description}
+                    </p>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            ))}
           </motion.div>
-        </section>
+        </div>
+      </section>
 
-        {/* Why Choose Us */}
-        <section className="mb-16">
-          <h2 className="text-2xl md:text-3xl font-semibold text-gray-900 dark:text-white text-center mb-8">
-            Why Choose eTuitionBd
-          </h2>
+      {/* Why Choose Us */}
+      <section className="py-16 md:py-24">
+        <div className="max-w-6xl mx-auto px-4 md:px-6">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <span className="inline-block px-4 py-1.5 rounded-full text-sm font-medium bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 mb-4">
+              Our Advantages
+            </span>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white">
+              Why Choose <span className="gradient-text-brand">eTuitionBd</span>
+            </h2>
+          </motion.div>
 
           <motion.div
             className="grid md:grid-cols-2 lg:grid-cols-4 gap-6"
@@ -176,173 +286,157 @@ const AboutPage = () => {
             whileInView="visible"
             viewport={{ once: true }}
           >
-            <motion.div variants={itemVariants}>
-              <Card>
-                <CardContent className="p-6 text-center">
-                  <div className="w-12 h-12 bg-emerald-100 rounded-lg flex items-center justify-center text-emerald-600 mx-auto mb-4">
-                    <ShieldCheckIcon className="h-6 w-6" />
-                  </div>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                    Verified Tutors
-                  </h3>
-                  <p className="text-gray-600 text-sm">
-                    All tutors go through a verification process to ensure
-                    quality and safety.
-                  </p>
-                </CardContent>
-              </Card>
-            </motion.div>
-
-            <motion.div variants={itemVariants}>
-              <Card>
-                <CardContent className="p-6 text-center">
-                  <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center text-blue-600 mx-auto mb-4">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-6 w-6"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
+            {[
+              {
+                icon: ShieldCheckIcon,
+                title: "Verified Tutors",
+                description:
+                  "All tutors go through a rigorous verification process.",
+                color: "bg-emerald-500",
+                lightBg: "bg-emerald-50 dark:bg-emerald-900/20",
+              },
+              {
+                icon: HeartIcon,
+                title: "Secure Payments",
+                description: "Safe and secure payment system for everyone.",
+                color: "bg-blue-500",
+                lightBg: "bg-blue-50 dark:bg-blue-900/20",
+              },
+              {
+                icon: ChatBubbleLeftRightIcon,
+                title: "Direct Communication",
+                description: "Connect directly with tutors and students.",
+                color: "bg-amber-500",
+                lightBg: "bg-amber-50 dark:bg-amber-900/20",
+              },
+              {
+                icon: UserGroupIcon,
+                title: "24/7 Support",
+                description: "Our team is always ready to help you.",
+                color: "bg-pink-500",
+                lightBg: "bg-pink-50 dark:bg-pink-900/20",
+              },
+            ].map((feature, index) => (
+              <motion.div key={index} variants={itemVariants}>
+                <Card
+                  className={`h-full group card-hover border-0 ${feature.lightBg}`}
+                >
+                  <CardContent className="p-6 text-center">
+                    <div
+                      className={`w-14 h-14 mx-auto mb-5 rounded-2xl ${feature.color} flex items-center justify-center text-white shadow-lg group-hover:scale-110 transition-transform`}
                     >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
-                      />
-                    </svg>
-                  </div>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                    Secure Payments
-                  </h3>
-                  <p className="text-gray-600 text-sm">
-                    Our payment system ensures transactions are safe and secure
-                    for everyone.
-                  </p>
-                </CardContent>
-              </Card>
-            </motion.div>
-
-            <motion.div variants={itemVariants}>
-              <Card>
-                <CardContent className="p-6 text-center">
-                  <div className="w-12 h-12 bg-amber-100 rounded-lg flex items-center justify-center text-amber-600 mx-auto mb-4">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-6 w-6"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                      />
-                    </svg>
-                  </div>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                    Transparent Tracking
-                  </h3>
-                  <p className="text-gray-600 text-sm">
-                    Track tuition progress, payments, and schedules in one
-                    place.
-                  </p>
-                </CardContent>
-              </Card>
-            </motion.div>
-
-            <motion.div variants={itemVariants}>
-              <Card>
-                <CardContent className="p-6 text-center">
-                  <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center text-purple-600 mx-auto mb-4">
-                    <UserGroupIcon className="h-6 w-6" />
-                  </div>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                    Dedicated Support
-                  </h3>
-                  <p className="text-gray-600 text-sm">
-                    Our support team is always ready to help with any questions
-                    or issues.
-                  </p>
-                </CardContent>
-              </Card>
-            </motion.div>
+                      <feature.icon className="w-7 h-7" />
+                    </div>
+                    <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">
+                      {feature.title}
+                    </h3>
+                    <p className="text-sm text-gray-600 dark:text-gray-400">
+                      {feature.description}
+                    </p>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            ))}
           </motion.div>
-        </section>
+        </div>
+      </section>
 
-        {/* Team Section */}
-        <section className="mb-16">
-          <h2 className="text-2xl md:text-3xl font-semibold text-gray-900 dark:text-white text-center mb-8">
-            Meet Our Team
-          </h2>
+      {/* Team Section */}
+      <section className="py-16 md:py-24 bg-gray-50/50 dark:bg-gray-800/30">
+        <div className="max-w-6xl mx-auto px-4 md:px-6">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <span className="inline-block px-4 py-1.5 rounded-full text-sm font-medium bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 mb-4">
+              Our Team
+            </span>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white">
+              Meet the <span className="gradient-text-brand">Team</span>
+            </h2>
+          </motion.div>
 
-          <div className="grid md:grid-cols-3 gap-8">
-            <Card>
-              <CardContent className="p-6 text-center">
-                <div className="w-24 h-24 rounded-full bg-gray-200 dark:bg-gray-700 mx-auto mb-4"></div>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-1">
-                  John Doe
-                </h3>
-                <p className="text-sm text-gray-500 dark:text-gray-300 mb-2">
-                  CEO & Founder
-                </p>
-                <p className="text-gray-600 dark:text-gray-200 text-sm">
-                  Passionate about education technology with over 10 years of
-                  experience.
-                </p>
-              </CardContent>
-            </Card>
+          <motion.div
+            className="grid md:grid-cols-3 gap-8"
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+          >
+            {teamMembers.map((member, index) => (
+              <motion.div key={index} variants={itemVariants}>
+                <Card className="text-center group card-hover overflow-hidden">
+                  <CardContent className="p-8">
+                    <div className="relative inline-block mb-6">
+                      <img
+                        src={member.avatar}
+                        alt={member.name}
+                        className="w-28 h-28 rounded-2xl object-cover ring-4 ring-white dark:ring-gray-800 shadow-xl group-hover:ring-indigo-200 dark:group-hover:ring-indigo-800 transition-all"
+                      />
+                      <div className="absolute -bottom-2 -right-2 w-8 h-8 bg-green-500 rounded-xl flex items-center justify-center shadow-lg">
+                        <ShieldCheckIcon className="w-4 h-4 text-white" />
+                      </div>
+                    </div>
+                    <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-1">
+                      {member.name}
+                    </h3>
+                    <p className="text-indigo-600 dark:text-indigo-400 font-medium text-sm mb-3">
+                      {member.role}
+                    </p>
+                    <p className="text-gray-600 dark:text-gray-400 text-sm">
+                      {member.bio}
+                    </p>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
 
-            <Card>
-              <CardContent className="p-6 text-center">
-                <div className="w-24 h-24 rounded-full bg-gray-200 mx-auto mb-4"></div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-1">
-                  Jane Smith
-                </h3>
-                <p className="text-sm text-gray-500 mb-2">CTO</p>
-                <p className="text-gray-600 text-sm">
-                  Tech enthusiast focused on building scalable educational
-                  platforms.
-                </p>
-              </CardContent>
-            </Card>
+      {/* CTA Section */}
+      <section className="py-20 md:py-28 relative overflow-hidden">
+        <div className="absolute inset-0 bg-linear-to-r from-indigo-600 via-purple-600 to-pink-600" />
+        <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg%20width%3D%2260%22%20height%3D%2260%22%20viewBox%3D%220%200%2060%2060%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cg%20fill%3D%22none%22%20fill-rule%3D%22evenodd%22%3E%3Cg%20fill%3D%22%23ffffff%22%20fill-opacity%3D%220.05%22%3E%3Cpath%20d%3D%22M36%2034v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6%2034v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6%204V0H4v4H0v2h4v4h2V6h4V4H6z%22%2F%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E')] opacity-30" />
 
-            <Card>
-              <CardContent className="p-6 text-center">
-                <div className="w-24 h-24 rounded-full bg-gray-200 mx-auto mb-4"></div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-1">
-                  Robert Johnson
-                </h3>
-                <p className="text-sm text-gray-500 mb-2">Head of Operations</p>
-                <p className="text-gray-600 text-sm">
-                  Ensuring smooth operations and excellent user experience.
-                </p>
-              </CardContent>
-            </Card>
-          </div>
-        </section>
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="max-w-4xl mx-auto px-4 md:px-6 text-center relative z-10"
+        >
+          <motion.div
+            animate={{ scale: [1, 1.1, 1] }}
+            transition={{ duration: 2, repeat: Infinity }}
+            className="w-20 h-20 mx-auto mb-8 rounded-3xl bg-white/10 backdrop-blur-sm flex items-center justify-center"
+          >
+            <AcademicCapIcon className="w-10 h-10 text-white" />
+          </motion.div>
 
-        {/* CTA Section */}
-        <section className="text-center">
-          <h2 className="text-2xl md:text-3xl font-semibold text-gray-900 dark:text-white mb-4">
+          <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">
             Ready to Get Started?
           </h2>
-          <p className="text-lg text-gray-600 dark:text-gray-200 mb-8 max-w-2xl mx-auto">
+          <p className="text-lg text-white/80 mb-10 max-w-2xl mx-auto">
             Join thousands of students and tutors who are already benefiting
             from eTuitionBd.
           </p>
+
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link to="/register">
-              <Button variant="primary">Sign Up Now</Button>
+              <Button className="bg-white text-indigo-600 hover:bg-gray-100 px-8 py-3 text-base font-semibold shadow-xl">
+                Sign Up Now
+              </Button>
             </Link>
             <Link to="/tuitions">
-              <Button variant="outline">Browse Tuitions</Button>
+              <Button className="bg-white/10 backdrop-blur-sm text-white border-2 border-white/30 hover:bg-white/20 px-8 py-3 text-base">
+                Browse Tuitions
+              </Button>
             </Link>
           </div>
-        </section>
-      </div>
+        </motion.div>
+      </section>
     </div>
   );
 };
