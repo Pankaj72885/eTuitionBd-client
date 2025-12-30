@@ -26,6 +26,9 @@
    1. IMPORTS & PLUGINS
    ========================================================================== */
 
+/* Google Fonts: Inter for body text, Outfit for headings - MUST be first */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap");
+
 /* Tailwind CSS core styles */
 @import "tailwindcss";
 
@@ -37,10 +40,6 @@
 
 /* DaisyUI component library plugin */
 @plugin "daisyui";
-
-/* Google Fonts: Inter for body text, Outfit for headings */
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap");
-
 
 /* ==========================================================================
    2. THEME CONFIGURATION
@@ -55,9 +54,9 @@
    * The primary brand color palette using vibrant indigo tones.
    * These create a consistent, recognizable brand identity.
    */
-  --color-brand: #6366f1;           /* Primary brand indigo */
-  --color-brand-dark: #4f46e5;      /* Darker shade for hover states */
-  --color-brand-light: #e0e7ff;     /* Light tint for backgrounds */
+  --color-brand: #6366f1; /* Primary brand indigo */
+  --color-brand-dark: #4f46e5; /* Darker shade for hover states */
+  --color-brand-light: #e0e7ff; /* Light tint for backgrounds */
   --color-brand-glow: rgba(99, 102, 241, 0.4); /* Glow effect color */
 
   /* ---- Accent Colors ----
@@ -65,20 +64,20 @@
    */
   --color-accent-success: #10b981; /* Green - success states */
   --color-accent-warning: #f59e0b; /* Amber - warnings */
-  --color-accent-danger: #ef4444;  /* Red - errors/destructive */
-  --color-accent-info: #3b82f6;    /* Blue - informational */
+  --color-accent-danger: #ef4444; /* Red - errors/destructive */
+  --color-accent-info: #3b82f6; /* Blue - informational */
 
   /* ---- Glass Effect Colors ----
    * Semi-transparent colors for glassmorphism effects.
    */
   --color-glass-light: rgba(255, 255, 255, 0.7); /* Light mode glass */
-  --color-glass-dark: rgba(17, 24, 39, 0.7);     /* Dark mode glass */
+  --color-glass-dark: rgba(17, 24, 39, 0.7); /* Dark mode glass */
 
   /* ---- Typography ----
    * Font stacks with fallbacks for optimal rendering.
    */
-  --font-sans: "Inter", "Outfit", system-ui, sans-serif;   /* Body text */
-  --font-display: "Outfit", "Inter", sans-serif;           /* Headings */
+  --font-sans: "Inter", "Outfit", system-ui, sans-serif; /* Body text */
+  --font-display: "Outfit", "Inter", sans-serif; /* Headings */
 }
 
 /**
@@ -133,7 +132,6 @@
   --color-sidebar-ring: var(--sidebar-ring);
 }
 
-
 /* ==========================================================================
    3. LIGHT MODE COLOR SCHEME (Default)
    ========================================================================== */
@@ -148,19 +146,19 @@
   --radius: 0.75rem;
 
   /* Background and foreground */
-  --background: oklch(0.99 0.002 285);    /* Near-white with subtle purple tint */
-  --foreground: oklch(0.145 0.02 285);    /* Very dark purple-gray for text */
+  --background: oklch(0.99 0.002 285); /* Near-white with subtle purple tint */
+  --foreground: oklch(0.145 0.02 285); /* Very dark purple-gray for text */
 
   /* Card component */
-  --card: oklch(1 0 0);                   /* Pure white */
-  --card-foreground: oklch(0.145 0 0);    /* Dark text */
+  --card: oklch(1 0 0); /* Pure white */
+  --card-foreground: oklch(0.145 0 0); /* Dark text */
 
   /* Popover component */
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.145 0 0);
 
   /* Primary action color (buttons, links) */
-  --primary: oklch(0.52 0.18 265);        /* Indigo */
+  --primary: oklch(0.52 0.18 265); /* Indigo */
   --primary-foreground: oklch(0.985 0 0); /* White text on primary */
 
   /* Secondary/muted elements */
@@ -181,14 +179,14 @@
   /* Borders and inputs */
   --border: oklch(0.92 0.01 285);
   --input: oklch(0.92 0.01 285);
-  --ring: oklch(0.52 0.18 265);           /* Focus ring color */
+  --ring: oklch(0.52 0.18 265); /* Focus ring color */
 
   /* Chart/data visualization colors */
-  --chart-1: oklch(0.646 0.222 41.116);   /* Orange */
-  --chart-2: oklch(0.6 0.118 184.704);    /* Teal */
-  --chart-3: oklch(0.398 0.07 227.392);   /* Dark blue */
-  --chart-4: oklch(0.828 0.189 84.429);   /* Yellow */
-  --chart-5: oklch(0.769 0.188 70.08);    /* Light orange */
+  --chart-1: oklch(0.646 0.222 41.116); /* Orange */
+  --chart-2: oklch(0.6 0.118 184.704); /* Teal */
+  --chart-3: oklch(0.398 0.07 227.392); /* Dark blue */
+  --chart-4: oklch(0.828 0.189 84.429); /* Yellow */
+  --chart-5: oklch(0.769 0.188 70.08); /* Light orange */
 
   /* Sidebar colors */
   --sidebar: oklch(0.985 0.005 285);
@@ -205,7 +203,7 @@
    */
   --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   --gradient-secondary: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-  
+
   /* Mesh gradient for decorative backgrounds
    * Creates a multi-color radial gradient effect
    */
@@ -219,7 +217,6 @@
     radial-gradient(at 80% 50%, hsla(340, 80%, 60%, 0.15) 0px, transparent 50%);
 }
 
-
 /* ==========================================================================
    4. DARK MODE COLOR SCHEME
    ========================================================================== */
@@ -230,11 +227,11 @@
  */
 .dark {
   /* Background and foreground - inverted for dark UI */
-  --background: oklch(0.12 0.015 285);    /* Very dark with purple tint */
-  --foreground: oklch(0.985 0 0);         /* Near-white text */
+  --background: oklch(0.12 0.015 285); /* Very dark with purple tint */
+  --foreground: oklch(0.985 0 0); /* Near-white text */
 
   /* Card component */
-  --card: oklch(0.18 0.02 285);           /* Dark gray with purple tint */
+  --card: oklch(0.18 0.02 285); /* Dark gray with purple tint */
   --card-foreground: oklch(0.985 0 0);
 
   /* Popover component */
@@ -293,7 +290,6 @@
     radial-gradient(at 80% 50%, hsla(340, 100%, 40%, 0.1) 0px, transparent 50%);
 }
 
-
 /* ==========================================================================
    5. BASE LAYER STYLES
    ========================================================================== */
@@ -327,13 +323,11 @@
   }
 }
 
-
 /* ==========================================================================
    6. COMPONENT LAYER - Reusable UI Components
    ========================================================================== */
 
 @layer components {
-  
   /* ---- Glassmorphism Card ----
    * Modern frosted glass effect with backdrop blur.
    * Usage: <div class="glass-card">...</div>
@@ -549,7 +543,6 @@
   }
 }
 
-
 /* ==========================================================================
    7. UTILITY LAYER - Helper Classes
    ========================================================================== */
@@ -579,7 +572,6 @@
     background: radial-gradient(circle at center, var(--tw-gradient-stops));
   }
 }
-
 
 /* ==========================================================================
    8. KEYFRAME ANIMATIONS
@@ -641,7 +633,6 @@
     background-position: 100% 50%;
   }
 }
-
 
 /* ==========================================================================
    9. ANIMATION UTILITY CLASSES
