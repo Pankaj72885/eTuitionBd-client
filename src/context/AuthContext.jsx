@@ -7,23 +7,27 @@ export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(localStorage.getItem("token"));
   const [isLoading, setIsLoading] = useState(true);
 
+  const fetchUser = async () => {
+    if (token) {
+      try {
+        const response = await authAPI.getCurrentUser();
+        setUser(response.user);
+      } catch (error) {
+        console.error("Authentication error:", error);
+        localStorage.removeItem("token");
+        setToken(null);
+      }
+    }
+  };
+
   // Check if user is authenticated on initial load
   useEffect(() => {
-    const checkAuth = async () => {
-      if (token) {
-        try {
-          const response = await authAPI.getCurrentUser();
-          setUser(response.user);
-        } catch (error) {
-          console.error("Authentication error:", error);
-          localStorage.removeItem("token");
-          setToken(null);
-        }
-      }
+    const initAuth = async () => {
+      await fetchUser();
       setIsLoading(false);
     };
 
-    checkAuth();
+    initAuth();
   }, [token]);
 
   const login = (token, user) => {
@@ -48,6 +52,7 @@ export const AuthProvider = ({ children }) => {
     login,
     logout,
     setUser,
+    refetchUser: fetchUser,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

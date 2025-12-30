@@ -20,7 +20,7 @@ import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
 const StudentProfileSettings = () => {
-  const { user, setUser } = useAuth();
+  const { user, refetchUser } = useAuth();
   const queryClient = useQueryClient();
 
   const {
@@ -33,9 +33,9 @@ const StudentProfileSettings = () => {
   // Update profile mutation
   const updateProfileMutation = useMutation({
     mutationFn: (data) => usersAPI.updateUserProfile(user._id, data),
-    onSuccess: (data) => {
+    onSuccess: () => {
       toast.success("Profile updated successfully!");
-      setUser(data.user);
+      refetchUser();
       queryClient.invalidateQueries(["user", user._id]);
     },
     onError: (error) => {

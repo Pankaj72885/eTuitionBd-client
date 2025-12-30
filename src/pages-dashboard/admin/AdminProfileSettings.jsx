@@ -51,7 +51,7 @@ const AdminProfileSettings = () => {
   }, [user, reset]);
 
   const updateMutation = useMutation({
-    mutationFn: (data) => usersAPI.updateProfile(data),
+    mutationFn: (data) => usersAPI.updateUserProfile(user._id, data),
     onSuccess: () => {
       toast.success("Profile updated successfully!");
       refetchUser();
