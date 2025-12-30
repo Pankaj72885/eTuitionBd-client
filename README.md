@@ -208,6 +208,6 @@ eTuitionBd/
 ---
 
 <div align="center">
-  <b>Developed by Pankaj Kumar</b><br>
+  <b>Developed by Pankaj Bepari</b><br>
   Built with ❤️ for the Education Community
 </div>
