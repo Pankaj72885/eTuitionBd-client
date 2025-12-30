@@ -1,440 +1,213 @@
-# eTuitionBd - Client Application
+# eTuitionBd - Complete Tuition Management Platform
 
 <div align="center">
-  <h3>🎓 A Modern Tuition Management Platform for Bangladesh</h3>
-  <p>Connecting students with qualified, verified tutors across Bangladesh</p>
-  
-  [![Live Demo](https://img.shields.io/badge/Live-Demo-success?style=for-the-badge)](https://etuitionbd-client-production.up.railway.app/)
-  [![Server Repo](https://img.shields.io/badge/Server-Repository-blue?style=for-the-badge)](https://github.com/Pankaj72885/eTuitionBd-server)
+
+![eTuitionBd Banner](https://via.placeholder.com/1200x400/4F46E5/FFFFFF?text=eTuitionBd+Platform)
+
+**A Modern, Full-Stack Educational Platform Connecting Students and Tutors in Bangladesh**
+
+[![Status](https://img.shields.io/badge/Status-Live_Demo-success)](https://etuitionbd-client-production.up.railway.app/)
+[![Version](https://img.shields.io/badge/Version-1.0.0-blue)](.)
+[![License](https://img.shields.io/badge/License-MIT-green)](.)
+
+[Live Demo](https://etuitionbd-client-production.up.railway.app/) • [Features](#-features-breakdown) • [Tech Stack](#-technology-stack) • [Installation](#-getting-started)
+
 </div>
 
 ---
 
-## 📋 Table of Contents
+## 📖 Overview
 
-- [Overview](#overview)
-- [Features](#features)
-- [Tech Stack](#tech-stack)
-- [Getting Started](#getting-started)
-- [Project Structure](#project-structure)
-- [Environment Variables](#environment-variables)
-- [Available Scripts](#available-scripts)
-- [User Roles & Permissions](#user-roles--permissions)
-- [Design System](#design-system)
-- [Screenshots](#screenshots)
-- [Contributing](#contributing)
-- [License](#license)
+**eTuitionBd** is a comprehensive tuition management ecosystem designed to bridge the gap between students seeking quality education and qualified tutors looking for opportunities.
+
+In the traditional landscape, finding a reliable tutor or a student is often a manual, disjointed process involving varying degrees of trust issues and lack of transparency. **eTuitionBd** solves this by providing a digital, verified, and secure platform where:
+
+- **Students** can post tuition requirements and find the perfect match.
+- **Tutors** can showcase their qualifications and apply for relevant jobs.
+- **Admins** oversee the ecosystem to ensure quality and safety.
+
+Built with the latest web technologies including **React 19**, **Vite 7**, and **Tailwind CSS 4**, it delivers a blazing-fast, responsive, and seamless user experience.
 
 ---
 
-## 🌟 Overview
+## ✨ Features Breakdown
 
-**eTuitionBd** is a full-stack tuition management platform designed to streamline the process of connecting students with qualified tutors in Bangladesh. The platform provides a transparent, secure, and efficient way to post tuition requirements, browse opportunities, manage applications, and handle payments.
+### 🎓 For Students
 
-### Key Highlights
+- **Smart Matching**: Post detailed tuition requests specifying subject, class, location, and budget.
+- **Tutor Discovery**: Browse verified top-rated tutors with filtering capabilities.
+- **Secure Hiring**: Review applications, interview candidates, and hire securely via the platform.
+- **Payment Management**: Make secure payments via Stripe and track transaction history.
+- **Dashboard**: Centralized hub to manage ongoing tuitions, applications, and bookmarks.
 
-- 🔐 **Secure Authentication** - Firebase Authentication with Google Sign-In support
-- 💳 **Integrated Payments** - Stripe payment integration for secure transactions
-- 🎨 **Modern UI/UX** - Beautiful, responsive design with dark mode support
-- 📱 **Fully Responsive** - Optimized for desktop, tablet, and mobile devices
-- ⚡ **Real-time Updates** - React Query for efficient data fetching and caching
-- 🔍 **Advanced Search** - Filter and search tuitions by subject, location, and more
+### 👨‍🏫 For Tutors
 
----
+- **Professional Profile**: Build a rich profile showcasing qualifications, experience, and subject expertise.
+- **Job Board**: Access a real-time feed of tuition opportunities tailored to your skills.
+- **Application System**: Apply to tuitions with customized proposals and expected salary.
+- **Revenue Tracking**: Visual analytics and charts to track monthly earnings and successful jobs.
+- **Reputation System**: Earn ratings and reviews to boost visibility.
 
-## ✨ Features
+### 🛡️ For Admins
 
-### For Students
-
-- ✅ Post tuition requirements with detailed specifications
-- ✅ Review and manage tutor applications
-- ✅ Secure payment processing via Stripe
-- ✅ Track ongoing tuitions and payment history
-- ✅ Bookmark favorite tutors
-- ✅ Rate and review tutors after completion
-
-### For Tutors
-
-- ✅ Browse available tuition opportunities
-- ✅ Apply to tuitions with qualifications and expected salary
-- ✅ Manage application status
-- ✅ Track ongoing tuitions and revenue
-- ✅ Build and showcase public tutor profile
-- ✅ View earnings analytics and history
-
-### For Admins
-
-- ✅ Comprehensive user management
-- ✅ Approve/reject tuition posts
-- ✅ Monitor platform analytics and earnings
-- ✅ Manage user roles and verification status
-- ✅ View transaction reports and statistics
+- **Platform Oversight**: Complete control over verified users, tuition posts, and platform activity.
+- **Analytics Dashboard**: Advanced charts (Recharts) visualizing revenue, user growth, and tuition trends.
+- **Financial Control**: Monitor and approve transaction flows.
+- **Content Moderation**: Approve or reject tuition posts to maintain community standards.
 
 ---
 
-## 🛠 Tech Stack
+## 🛠️ Technology Stack
 
-### Core Technologies
+This project leverages a modern, scalable, and type-safe stack:
 
-- **React 19** - Latest React with modern features
-- **Vite 7** - Next-generation frontend tooling
-- **React Router 7** - Client-side routing
-- **Tailwind CSS 4** - Utility-first CSS framework
-- **Bun** - Fast JavaScript runtime and package manager
+### Frontend
 
-### UI Libraries & Components
+| Tech               | Version | Role                         |
+| ------------------ | ------- | ---------------------------- |
+| **React**          | v19.2   | Core UI Library              |
+| **Vite**           | v7.3    | Next-Gen Build Tool          |
+| **React Router**   | v7.11   | Client-Side Routing          |
+| **TanStack Query** | v5.90   | Async State Management       |
+| **Tailwind CSS**   | v4.1    | Utility-First Styling        |
+| **Framer Motion**  | v12.2   | Production-Ready Animations  |
+| **Shadcn UI**      | Latest  | Accessible Component Library |
 
-- **DaisyUI** - Tailwind CSS component library
-- **Shadcn UI** - Re-usable component collection
-- **Framer Motion** - Animation library
-- **Headless UI** - Unstyled, accessible UI components
-- **Radix UI** - Low-level UI primitives
-- **Heroicons** - Beautiful hand-crafted SVG icons
-- **Lucide React** - Icon library
+### Backend
 
-### State Management & Data Fetching
+| Tech               | Version | Role                    |
+| ------------------ | ------- | ----------------------- |
+| **Node.js**        | Latest  | Runtime Environment     |
+| **Express.js**     | v4.21   | REST API Framework      |
+| **MongoDB**        | Latest  | NoSQL Database          |
+| **Mongoose**       | v8.9    | ODM & Schema Validation |
+| **Firebase Admin** | v13.6   | Secure Authentication   |
+| **Stripe**         | v20.1   | Payment Processing      |
 
-- **TanStack Query (React Query)** - Powerful data synchronization
-- **Axios** - HTTP client for API requests
-- **React Hook Form** - Performant form validation
+---
 
-### Authentication & Payments
+## 🧩 Challenges Faced & Technical Solutions
 
-- **Firebase** - Authentication and user management
-- **Stripe** - Payment processing (via backend)
+During development, several complex architectural challenges were encountered. Here's how they were solved:
 
-### Charts & Visualization
+### 1. Synchronizing Dual Authentication Systems
 
-- **Recharts** - Composable charting library
+**Challenge**: Integrating Firebase Auth (client-side) with a custom MongoDB backend role-based system.
+**Solution**: Implemented a hybrid auth flow. The client authenticates via Firebase to get an ID token. This token is sent to the backend, verified via Firebase Admin SDK, and then exchanged for a custom **JWT** that encodes the user's role (Student/Tutor/Admin). This ensures robust security while leveraging Firebase's ease of use.
 
-### Utilities
+### 2. Complex Role-Based Routing
 
-- **date-fns** - Modern JavaScript date utility library
-- **clsx** - Utility for constructing className strings
-- **tailwind-merge** - Merge Tailwind CSS classes
+**Challenge**: Efficiently directing users to their specific dashboards (Student/Tutor/Admin) upon login and preventing unauthorized access.
+**Solution**: Developed a `DashboardRedirect` component that acts as a traffic controller, checking the user's role from the JWT context and automatically routing them. Combined with `RoleRoute` wrappers, this ensures airtight route protection.
+
+### 3. Real-Time Data & State Consistency
+
+**Challenge**: Keeping the UI in sync when a tuition status changes (e.g., from "Pending" to "Approved") without refreshing the page.
+**Solution**: Leveraged **TanStack Query** (React Query) for aggressive caching and automatic background refetching. Implemented optimistic updates for actions like "Bookmarking" to make the app feel instant.
+
+### 4. Admin Analytics Performance
+
+**Challenge**: Generating revenue reports from thousands of transaction records without blocking the main thread.
+**Solution**: Offloaded aggregation logic to MongoDB Aggregation Pipelines to process data at the database level, returning only lightweight summary data (e.g., monthly totals) to the frontend for visualization with Recharts.
 
 ---
 
 ## 🚀 Getting Started
 
+Follow these steps to set up the project locally.
+
 ### Prerequisites
 
-- **Bun** (v1.3.5 or higher) - [Install Bun](https://bun.sh)
-- **Node.js** (v18 or higher) - Alternative to Bun
-- **Git** - Version control
+- **Node.js** (v18+) or **Bun**
+- **MongoDB** (Local or Atlas)
+- **Firebase Project**
 
 ### Installation
 
-1. **Clone the repository**
+1.  **Clone the Repository**
 
-   ```bash
-   git clone https://github.com/Pankaj72885/eTuitionBd-client.git
-   cd eTuitionBd-client
-   ```
+    ```bash
+    git clone https://github.com/Pankaj72885/eTuitionBd-client.git
+    git clone https://github.com/Pankaj72885/eTuitionBd-server.git
+    ```
 
-2. **Install dependencies**
+2.  **Setup Backend**
 
-   ```bash
-   bun install
-   # or
-   npm install
-   ```
+    ```bash
+    cd eTuitionBd-server
+    bun install
+    cp .env.example .env  # Configure MONGO_URI, STRIPE_KEY, FIREBASE_CREDS
+    bun run dev
+    ```
 
-3. **Set up environment variables**
+3.  **Setup Frontend**
+    ```bash
+    cd eTuitionBd-client
+    bun install
+    cp .env.example .env
+    bun run dev
+    ```
 
-   Create a `.env` file in the root directory:
+### Frontend Environment Variables (`.env`)
 
-   ```env
-   # Firebase Configuration
-   VITE_FIREBASE_API_KEY=your_firebase_api_key
-   VITE_FIREBASE_AUTH_DOMAIN=your_firebase_auth_domain
-   VITE_FIREBASE_PROJECT_ID=your_firebase_project_id
-   VITE_FIREBASE_STORAGE_BUCKET=your_firebase_storage_bucket
-   VITE_FIREBASE_MESSAGING_SENDER_ID=your_firebase_messaging_sender_id
-   VITE_FIREBASE_APP_ID=your_firebase_app_id
-
-   # API Configuration
-   VITE_API_BASE_URL=http://localhost:5000/api
-
-   # Stripe (Public Key)
-   VITE_STRIPE_PUBLIC_KEY=your_stripe_public_key
-   ```
-
-4. **Start the development server**
-
-   ```bash
-   bun run dev
-   # or
-   npm run dev
-   ```
-
-5. **Open your browser**
-
-   Navigate to `http://localhost:5173`
+| Variable                    | Description                                         |
+| --------------------------- | --------------------------------------------------- |
+| `VITE_FIREBASE_API_KEY`     | Firebase API Key                                    |
+| `VITE_FIREBASE_AUTH_DOMAIN` | Firebase Auth Domain                                |
+| `VITE_FIREBASE_PROJECT_ID`  | Firebase Project ID                                 |
+| `VITE_API_BASE_URL`         | Backend API URL (e.g., `http://localhost:5000/api`) |
+| `VITE_STRIPE_PUBLIC_KEY`    | Stripe Publishable Key                              |
 
 ---
 
-## 📁 Project Structure
+## 🔐 Admin Access & Demo Accounts
+
+Use these credentials to test the different user journeys:
+
+| Role        | Email                  | Password      | Access Level                                      |
+| ----------- | ---------------------- | ------------- | ------------------------------------------------- |
+| **Admin**   | `admin@etuitionbd.com` | `Admin@123`   | Full dashboard access, analytics, user management |
+| **Tutor**   | `tutor@demo.com`       | `Tutor@123`   | Apply for tuitions, view revenue                  |
+| **Student** | `student@demo.com`     | `Student@123` | Post tuitions, hire tutors                        |
+
+---
+
+## 🏗️ Project Architecture
+
+The project follows a modular, feature-based architecture for scalability.
 
 ```
-eTuitionBd-client/
-├── public/                 # Static assets
-├── src/
-│   ├── api/               # API service layer
-│   │   ├── auth.api.js
-│   │   ├── tuitions.api.js
-│   │   ├── applications.api.js
-│   │   ├── payments.api.js
-│   │   └── users.api.js
-│   ├── assets/            # Images, fonts, etc.
-│   ├── components/        # Reusable components
-│   │   ├── common/       # Shared components (Navbar, Footer, etc.)
-│   │   ├── dashboard/    # Dashboard-specific components
-│   │   └── ui/           # UI primitives (Button, Card, etc.)
-│   ├── config/           # Configuration files
-│   │   └── firebase.js
-│   ├── context/          # React Context providers
-│   │   ├── AuthContext.jsx
-│   │   ├── FirebaseAuthContext.jsx
-│   │   └── ThemeContext.jsx
-│   ├── hooks/            # Custom React hooks
-│   │   ├── useAuth.js
-│   │   ├── useTheme.js
-│   │   └── useUser.js
-│   ├── layouts/          # Layout components
-│   │   ├── MainLayout.jsx
-│   │   └── DashboardLayout.jsx
-│   ├── lib/              # Utility libraries
-│   │   └── utils.js
-│   ├── pages/            # Page components
-│   │   ├── home/
-│   │   ├── auth/
-│   │   ├── Tuitions/
-│   │   ├── Tutors/
-│   │   ├── About/
-│   │   ├── Contact/
-│   │   └── Error/
-│   ├── pages-dashboard/  # Dashboard pages
-│   │   ├── student/
-│   │   ├── tutor/
-│   │   └── admin/
-│   ├── routes/           # Route configuration
-│   │   ├── appRoutes.jsx
-│   │   ├── PrivateRoute.jsx
-│   │   └── RoleRoute.jsx
-│   ├── utils/            # Utility functions
-│   ├── index.css         # Global styles & Tailwind config
-│   └── main.jsx          # Application entry point
-├── .env                  # Environment variables
-├── .gitignore
-├── bun.lock
-├── components.json       # Shadcn UI configuration
-├── index.html
-├── jsconfig.json
-├── package.json
-├── README.md
-└── vite.config.js        # Vite configuration
+eTuitionBd/
+├── eTuitionBd-server/       # REST API
+│   ├── config/              # DB & Env Config
+│   ├── controllers/         # Request Handlers
+│   ├── models/              # Mongoose Schemas (User, Tuition, Payment)
+│   ├── routes/              # API Endpoints
+│   └── middleware/          # Auth & RBAC Logic
+│
+└── eTuitionBd-client/       # React Frontend
+    ├── src/
+    │   ├── api/             # Axios API Layer
+    │   ├── components/      # Shared Shadcn UI Components
+    │   ├── context/         # Auth & Global State
+    │   ├── hooks/           # Custom React Hooks (useAuth)
+    │   ├── pages/           # Public Pages (Home, Login)
+    │   ├── pages-dashboard/ # Protected Role-Based Views
+    │   └── routes/          # App Routes & Guards
 ```
 
 ---
 
-## 🔐 Environment Variables
-
-| Variable                            | Description                  | Required |
-| ----------------------------------- | ---------------------------- | -------- |
-| `VITE_FIREBASE_API_KEY`             | Firebase API key             | Yes      |
-| `VITE_FIREBASE_AUTH_DOMAIN`         | Firebase auth domain         | Yes      |
-| `VITE_FIREBASE_PROJECT_ID`          | Firebase project ID          | Yes      |
-| `VITE_FIREBASE_STORAGE_BUCKET`      | Firebase storage bucket      | Yes      |
-| `VITE_FIREBASE_MESSAGING_SENDER_ID` | Firebase messaging sender ID | Yes      |
-| `VITE_FIREBASE_APP_ID`              | Firebase app ID              | Yes      |
-| `VITE_API_BASE_URL`                 | Backend API base URL         | Yes      |
-| `VITE_STRIPE_PUBLIC_KEY`            | Stripe publishable key       | Yes      |
-
----
-
-## 📜 Available Scripts
-
-```bash
-# Development
-bun run dev          # Start development server with Vite
-npm run dev          # Alternative with npm
-
-# Build
-bun run build        # Build for production
-npm run build        # Alternative with npm
-
-# Preview
-bun run preview      # Preview production build locally
-npm run preview      # Alternative with npm
-
-# Linting
-bun run lint         # Run ESLint
-npm run lint         # Alternative with npm
-
-# Production (for deployment)
-bun run start        # Serve production build
-npm run start        # Alternative with npm
-```
-
----
-
-## 👥 User Roles & Permissions
-
-### Student
-
-- Post and manage tuition requests
-- Review tutor applications
-- Approve tutors via payment
-- Track ongoing tuitions
-- Manage bookmarks and reviews
-
-### Tutor
-
-- Browse available tuitions
-- Apply to tuitions
-- Manage applications
-- Track ongoing tuitions
-- View revenue analytics
-
-### Admin
-
-- Manage all users
-- Approve/reject tuition posts
-- View platform analytics
-- Monitor transactions
-- Manage user roles and verification
-
----
-
-## 🎨 Design System
-
-### Color Palette
-
-#### Light Mode
-
-- **Primary**: `#4F46E5` (Indigo-600)
-- **Primary Dark**: `#3730A3`
-- **Primary Light**: `#E0E7FF`
-- **Background**: `#F9FAFB`
-- **Surface**: `#FFFFFF`
-- **Text Primary**: `#111827`
-- **Text Secondary**: `#4B5563`
-
-#### Dark Mode
-
-- **Primary**: `#818CF8` (Indigo-400)
-- **Background**: `#030712` (Gray-950)
-- **Surface**: `#1F2937` (Gray-800)
-- **Text Primary**: `#F9FAFB`
-- **Text Secondary**: `#D1D5DB`
-
-### Typography
-
-- **Font Family**: Inter, Manrope, sans-serif
-- **Base Size**: 16px
-- **Headings**: Bold, responsive sizing
-- **Body**: Regular weight, optimized line height
-
-### Components
-
-- **Buttons**: Primary, Outline, Ghost variants
-- **Cards**: Elevated with hover effects
-- **Forms**: Clean, accessible inputs
-- **Badges**: Status indicators with semantic colors
-- **Modals**: Centered, backdrop blur
-
----
-
-## 📸 Screenshots
-
-### Home Page
-
-![Home Page](./screenshots/home.png)
-
-### Tuitions Listing
-
-![Tuitions](./screenshots/tuitions.png)
-
-### Student Dashboard
-
-![Student Dashboard](./screenshots/student-dashboard.png)
-
-### Tutor Dashboard
-
-![Tutor Dashboard](./screenshots/tutor-dashboard.png)
-
-### Admin Dashboard
-
-![Admin Dashboard](./screenshots/admin-dashboard.png)
-
----
-
-## 🔗 Related Links
-
-- **Live Application**: [https://etuitionbd-client-production.up.railway.app/](https://etuitionbd-client-production.up.railway.app/)
-- **Server Repository**: [https://github.com/Pankaj72885/eTuitionBd-server](https://github.com/Pankaj72885/eTuitionBd-server)
-- **Client Repository**: [https://github.com/Pankaj72885/eTuitionBd-client](https://github.com/Pankaj72885/eTuitionBd-client)
-
----
-
-## 🧪 Test Credentials
-
-### Admin Account
-
-- **Email**: admin@etuitionbd.com
-- **Password**: Admin@123
-
-### Student Account (Demo)
-
-- **Email**: student@demo.com
-- **Password**: Student@123
-
-### Tutor Account (Demo)
-
-- **Email**: tutor@demo.com
-- **Password**: Tutor@123
-
----
-
-## 🤝 Contributing
-
-Contributions are welcome! Please follow these steps:
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
----
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
-
-## 👨‍💻 Author
-
-**Pankaj Kumar**
-
-- GitHub: [@Pankaj72885](https://github.com/Pankaj72885)
-- Email: contact@etuitionbd.com
-
----
-
-## 🙏 Acknowledgments
-
-- Firebase for authentication services
-- Stripe for payment processing
-- Tailwind CSS for the amazing utility-first framework
-- React team for the incredible library
-- All open-source contributors
+## 🔮 Future Roadmap
+
+- [ ] **Real-time Chat**: WebSocket-based messaging between confirmed students and tutors.
+- [ ] **Video Calling**: In-app video classrooms using WebRTC/Zoom SDK.
+- [ ] **AI Recommendations**: Machine learning to recommend the best tutors based on student learning style.
+- [ ] **Mobile App**: React Native version for iOS and Android.
 
 ---
 
 <div align="center">
-  <p>Made with ❤️ for the education community in Bangladesh</p>
-  <p>© 2025 eTuitionBd. All rights reserved.</p>
+  <b>Developed by Pankaj Kumar</b><br>
+  Built with ❤️ for the Education Community
 </div>
