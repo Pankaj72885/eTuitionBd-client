@@ -12,6 +12,7 @@ import {
 } from "@heroicons/react/24/outline";
 import { useQuery } from "@tanstack/react-query";
 import { motion } from "framer-motion";
+import toast from "react-hot-toast";
 import { useNavigate } from "react-router";
 
 const TutorOngoingTuitions = () => {
@@ -115,9 +116,7 @@ const TutorOngoingTuitions = () => {
                       variant="outline"
                       size="sm"
                       className="flex-1 gap-2"
-                      onClick={() =>
-                        navigate(`/dashboard/tutor/chat/${application._id}`)
-                      }
+                      onClick={() => toast.success("Chat feature coming soon!")}
                     >
                       <ChatBubbleLeftRightIcon className="h-4 w-4" />
                       Chat
@@ -127,7 +126,7 @@ const TutorOngoingTuitions = () => {
                       size="sm"
                       className="flex-1 gap-2"
                       onClick={() =>
-                        navigate(`/dashboard/tutor/calendar/${application._id}`)
+                        toast.success("Calendar feature coming soon!")
                       }
                     >
                       <CalendarIcon className="h-4 w-4" />

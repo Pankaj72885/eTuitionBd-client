@@ -237,7 +237,7 @@ const StudentDashboardHome = () => {
                   </h2>
                 </div>
                 <Link
-                  to="/dashboard/student/applied-tutors"
+                  to="/dashboard/student/applications"
                   className="text-sm text-purple-600 dark:text-purple-400 hover:underline flex items-center gap-1"
                 >
                   View all <ArrowRightIcon className="w-4 h-4" />

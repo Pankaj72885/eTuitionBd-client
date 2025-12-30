@@ -92,7 +92,7 @@ const router = createBrowserRouter([
         ),
         children: [
           { index: true, element: <StudentDashboardHome /> },
-          { path: "tuitions", element: <MyTuitions /> },
+          { path: "my-tuitions", element: <MyTuitions /> },
           { path: "post-tuition", element: <PostNewTuition /> },
           { path: "post-tuition/:id", element: <PostNewTuition /> },
           { path: "applications", element: <AppliedTutors /> },

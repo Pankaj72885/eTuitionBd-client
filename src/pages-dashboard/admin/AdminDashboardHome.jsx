@@ -290,7 +290,7 @@ const AdminDashboardHome = () => {
                   </h2>
                 </div>
                 <Link
-                  to="/admin/users"
+                  to="/dashboard/admin/users"
                   className="text-sm text-emerald-600 dark:text-emerald-400 hover:underline flex items-center gap-1"
                 >
                   View all <ArrowRightIcon className="w-4 h-4" />
@@ -357,7 +357,7 @@ const AdminDashboardHome = () => {
                   </h2>
                 </div>
                 <Link
-                  to="/admin/tuitions"
+                  to="/dashboard/admin/tuitions"
                   className="text-sm text-amber-600 dark:text-amber-400 hover:underline flex items-center gap-1"
                 >
                   View all <ArrowRightIcon className="w-4 h-4" />

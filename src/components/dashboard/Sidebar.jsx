@@ -24,7 +24,7 @@ const Sidebar = () => {
     },
     {
       name: "My Tuitions",
-      path: `/dashboard/student/tuitions`,
+      path: `/dashboard/student/my-tuitions`,
       icon: BookOpenIcon,
     },
     {
