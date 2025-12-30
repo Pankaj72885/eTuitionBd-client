@@ -15,6 +15,7 @@ import { useQuery } from "@tanstack/react-query";
 import { motion } from "framer-motion";
 import { Link } from "react-router";
 import { tuitionsAPI } from "../../api/tuitions.api";
+import { usersAPI } from "../../api/users.api";
 import ProtectedImage from "../../components/common/ProtectedImage";
 import StatusBadge from "../../components/ui/StatusBadge";
 
@@ -22,6 +23,11 @@ const HomePage = () => {
   const { data: latestTuitions, isLoading: tuitionsLoading } = useQuery({
     queryKey: ["latestTuitions"],
     queryFn: () => tuitionsAPI.getTuitions({ limit: 6, sort: "dateDesc" }),
+  });
+
+  const { data: topTutors, isLoading: usersLoading } = useQuery({
+    queryKey: ["topTutors"],
+    queryFn: () => usersAPI.getAllUsers({ role: "tutor", limit: 6 }),
   });
 
   const containerVariants = {
@@ -572,120 +578,92 @@ const HomePage = () => {
             whileInView="visible"
             viewport={{ once: true }}
           >
-            {[
-              {
-                name: "Rahim Uddin",
-                city: "Rajshahi",
-                exp: "4+",
-                subject: "Math",
-                class: "Class 8-10",
-                rating: 4.9,
-                reviews: 45,
-              },
-              {
-                name: "Fatema Begum",
-                city: "Dhaka",
-                exp: "3+",
-                subject: "English",
-                class: "Class 5-8",
-                rating: 4.8,
-                reviews: 38,
-              },
-              {
-                name: "Karim Ahmed",
-                city: "Chittagong",
-                exp: "5+",
-                subject: "Physics",
-                class: "HSC",
-                rating: 4.9,
-                reviews: 52,
-              },
-              {
-                name: "Salma Khan",
-                city: "Sylhet",
-                exp: "2+",
-                subject: "Chemistry",
-                class: "SSC",
-                rating: 4.7,
-                reviews: 28,
-              },
-              {
-                name: "Jamal Hossain",
-                city: "Khulna",
-                exp: "6+",
-                subject: "Biology",
-                class: "Class 6-9",
-                rating: 4.8,
-                reviews: 41,
-              },
-              {
-                name: "Nusrat Jahan",
-                city: "Barisal",
-                exp: "3+",
-                subject: "Bangla",
-                class: "Class 1-5",
-                rating: 4.9,
-                reviews: 35,
-              },
-            ].map((tutor, index) => (
-              <motion.div key={index} variants={itemVariants}>
-                <Card className="h-full card-hover group overflow-hidden">
-                  <CardContent className="p-6">
-                    <div className="flex items-center gap-4 mb-4">
-                      <div className="relative">
-                        <ProtectedImage
-                          src={`https://i.pravatar.cc/80?img=${index + 20}`}
-                          alt={tutor.name}
-                          className="w-16 h-16 rounded-2xl object-cover ring-2 ring-gray-100 dark:ring-gray-700 group-hover:ring-indigo-200 dark:group-hover:ring-indigo-800 transition-all"
-                        />
-                        <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-green-500 rounded-full border-2 border-white dark:border-gray-800 flex items-center justify-center">
-                          <ShieldCheckIcon className="w-3 h-3 text-white" />
+            {usersLoading
+              ? [...Array(6)].map((_, index) => (
+                  <div key={index} className="animate-pulse">
+                    <Card className="h-full">
+                      <CardContent className="p-6">
+                        <div className="flex items-center gap-4 mb-4">
+                          <div className="w-16 h-16 bg-gray-200 dark:bg-gray-700 rounded-2xl" />
+                          <div className="space-y-2">
+                            <div className="h-5 bg-gray-200 dark:bg-gray-700 rounded w-32" />
+                            <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-24" />
+                          </div>
                         </div>
-                      </div>
-                      <div>
-                        <h3 className="text-lg font-bold text-gray-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
-                          {tutor.name}
-                        </h3>
-                        <p className="text-sm text-gray-500 dark:text-gray-400 flex items-center gap-1">
-                          <MapPinIcon className="w-3 h-3" />
-                          {tutor.city} • {tutor.exp} years
-                        </p>
-                      </div>
-                    </div>
+                        <div className="flex gap-2 mb-4">
+                          <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded-full w-20" />
+                          <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded-full w-20" />
+                        </div>
+                        <div className="h-8 bg-gray-200 dark:bg-gray-700 rounded w-full" />
+                      </CardContent>
+                    </Card>
+                  </div>
+                ))
+              : (topTutors?.data || []).slice(0, 6).map((tutor, index) => (
+                  <motion.div key={tutor._id} variants={itemVariants}>
+                    <Card className="h-full card-hover group overflow-hidden">
+                      <CardContent className="p-6">
+                        <div className="flex items-center gap-4 mb-4">
+                          <div className="relative">
+                            <ProtectedImage
+                              src={
+                                tutor.photoUrl ||
+                                `https://ui-avatars.com/api/?name=${tutor.name}&background=random`
+                              }
+                              alt={tutor.name}
+                              className="w-16 h-16 rounded-2xl object-cover ring-2 ring-gray-100 dark:ring-gray-700 group-hover:ring-indigo-200 dark:group-hover:ring-indigo-800 transition-all"
+                            />
+                            <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-green-500 rounded-full border-2 border-white dark:border-gray-800 flex items-center justify-center">
+                              <ShieldCheckIcon className="w-3 h-3 text-white" />
+                            </div>
+                          </div>
+                          <div>
+                            <h3 className="text-lg font-bold text-gray-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
+                              {tutor.name}
+                            </h3>
+                            <p className="text-sm text-gray-500 dark:text-gray-400 flex items-center gap-1">
+                              <MapPinIcon className="w-3 h-3" />
+                              {tutor.city} • {tutor.experienceYears || "1+"}{" "}
+                              years
+                            </p>
+                          </div>
+                        </div>
 
-                    <div className="flex flex-wrap gap-2 mb-4">
-                      <span className="px-3 py-1 rounded-full text-xs font-medium bg-indigo-100 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400">
-                        {tutor.subject}
-                      </span>
-                      <span className="px-3 py-1 rounded-full text-xs font-medium bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400">
-                        {tutor.class}
-                      </span>
-                    </div>
+                        <div className="flex flex-wrap gap-2 mb-4">
+                          <span className="px-3 py-1 rounded-full text-xs font-medium bg-indigo-100 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400">
+                            {tutor.subjects || "General"}
+                          </span>
+                          <span className="px-3 py-1 rounded-full text-xs font-medium bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400">
+                            {tutor.classLevels || "All Classes"}
+                          </span>
+                        </div>
 
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-1">
-                        <StarSolid className="w-5 h-5 text-amber-400" />
-                        <span className="font-semibold text-gray-900 dark:text-white">
-                          {tutor.rating}
-                        </span>
-                        <span className="text-sm text-gray-500 dark:text-gray-400">
-                          ({tutor.reviews} reviews)
-                        </span>
-                      </div>
-                      <Link to={`/tutors/${index + 1}`}>
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          className="group-hover:text-indigo-600 dark:group-hover:text-indigo-400"
-                        >
-                          View →
-                        </Button>
-                      </Link>
-                    </div>
-                  </CardContent>
-                </Card>
-              </motion.div>
-            ))}
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-1">
+                            <StarSolid className="w-5 h-5 text-amber-400" />
+                            <span className="font-semibold text-gray-900 dark:text-white">
+                              {tutor.averageRating
+                                ? tutor.averageRating.toFixed(1)
+                                : "New"}
+                            </span>
+                            <span className="text-sm text-gray-500 dark:text-gray-400">
+                              ({tutor.reviewCount || 0} reviews)
+                            </span>
+                          </div>
+                          <Link to={`/tutors`}>
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              className="group-hover:text-indigo-600 dark:group-hover:text-indigo-400"
+                            >
+                              View →
+                            </Button>
+                          </Link>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </motion.div>
+                ))}
           </motion.div>
         </div>
       </section>
