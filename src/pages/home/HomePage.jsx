@@ -336,7 +336,7 @@ const HomePage = () => {
               <motion.div key={index} variants={itemVariants}>
                 <Card className="relative overflow-hidden group card-hover border-0 shadow-lg dark:shadow-indigo-900/10 h-full">
                   <div
-                    className={`absolute top-0 left-0 right-0 h-1 bg-gradient-to-r ${item.gradient}`}
+                    className={`absolute top-0 left-0 right-0 h-1 bg-linear-to-r ${item.gradient}`}
                   />
                   <CardContent className="p-8">
                     {/* Step Number */}
